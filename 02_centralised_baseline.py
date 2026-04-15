@@ -243,6 +243,11 @@ joblib.dump(xgb_final, os.path.join(MODELS_DIR, 'centralised_xgb.pkl'))
 np.save(os.path.join(MODELS_DIR, 'centralised_probs.npy'), y_prob_xgb)
 print(f"      Model saved -> models/centralised_xgb.pkl")
 
+# Save prediction arrays for 07_statistical_analysis.py
+np.save(os.path.join(RESULTS_DIR, 'y_true_internal.npy'), y)
+np.save(os.path.join(RESULTS_DIR, 'pred_xgb_internal.npy'), y_prob_xgb)
+print(f"      CI arrays   -> results/y_true_internal.npy, pred_xgb_internal.npy")
+
 # ── Metrics ───────────────────────────────────────────────────────────────────
 print("\n[4/5] Computing metrics and fairness analysis...")
 metrics_xgb = compute_metrics(y, y_prob_xgb)

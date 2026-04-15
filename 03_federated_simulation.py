@@ -75,6 +75,18 @@ def eval_global(params) -> float:
         return 0.0
 
 
+@torch.no_grad()
+def save_internal_preds(weights_path, filename):
+    """Load saved weights and save internal prediction array for CI analysis."""
+    model = DiabetesNet().to(DEVICE)
+    model.load_state_dict(torch.load(weights_path, map_location=DEVICE))
+    model.eval()
+    X_t = torch.FloatTensor(X_eval_sc).to(DEVICE)
+    probs = torch.sigmoid(model(X_t)).cpu().numpy()
+    np.save(os.path.join(RESULTS_DIR, filename), probs)
+    print(f"  Saved predictions -> results/{filename}")
+
+
 # ──────────────────────────────────────────────────────────────────────────────
 #  PER-NODE DATA LOADERS
 # ──────────────────────────────────────────────────────────────────────────────
@@ -279,17 +291,20 @@ all_results = {}
 all_results['FedAvg'] = run_federated(
     'FedAvg', fedavg_aggregate, loaders, n_samples, proximal_mu=0.0
 )
+save_internal_preds(all_results['FedAvg']['weights_path'], 'pred_fedavg_internal.npy')
 
 # ── (B) FedProx ───────────────────────────────────────────────────────────
 all_results['FedProx'] = run_federated(
     f'FedProx (μ={FEDPROX_MU})', fedprox_aggregate,
     loaders, n_samples, proximal_mu=FEDPROX_MU
 )
+save_internal_preds(all_results['FedProx']['weights_path'], 'pred_fedprox_internal.npy')
 
 # ── (C) FedNova ───────────────────────────────────────────────────────────
 all_results['FedNova'] = run_federated(
     'FedNova', fednova_aggregate, loaders, n_samples, proximal_mu=0.0
 )
+save_internal_preds(all_results['FedNova']['weights_path'], 'pred_fednova_internal.npy')
 
 # ── Save results ─────────────────────────────────────────────────────────────
 with open(os.path.join(RESULTS_DIR, 'federated_convergence.json'), 'w') as f:

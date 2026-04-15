@@ -328,6 +328,14 @@ with open(os.path.join(RESULTS_DIR, 'external_validation.json'), 'w', encoding='
     json.dump(results_ext, f, indent=2)
 print(f"\n  Saved: results/external_validation.json")
 
+# Save prediction arrays for 07_statistical_analysis.py
+np.save(os.path.join(RESULTS_DIR, 'y_true_brfss.npy'), y_brfss)
+print(f"  Saved: results/y_true_brfss.npy")
+for name, probs in fed_probs.items():
+    fname = f"pred_{name.lower()}_external.npy"
+    np.save(os.path.join(RESULTS_DIR, fname), probs)
+    print(f"  Saved: results/{fname}")
+
 
 # ──────────────────────────────────────────────────────────────────────────────
 #  (5) PLOTS

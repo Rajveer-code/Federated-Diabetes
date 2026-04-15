@@ -130,7 +130,7 @@ def fednova_aggregate(updates, n_samples, local_steps):
     τ_eff = harmonic mean of local step counts.
     """
     total = sum(n_samples)
-    # τ_eff (effective local steps) — equal local_steps → simplifies to local_steps
+    # τ_eff (effective local steps) — equal local_steps -> simplifies to local_steps
     tau_eff = local_steps
 
     agg = []
@@ -294,7 +294,7 @@ all_results['FedNova'] = run_federated(
 # ── Save results ─────────────────────────────────────────────────────────────
 with open(os.path.join(RESULTS_DIR, 'federated_convergence.json'), 'w') as f:
     json.dump(all_results, f, indent=2)
-print(f"\n  Saved → results/federated_convergence.json")
+print(f"\n  Saved -> results/federated_convergence.json")
 
 # ──────────────────────────────────────────────────────────────────────────────
 #  PLOT 1 — CONVERGENCE CURVES

@@ -69,7 +69,7 @@ for col, mean_, scale_ in zip(FEATURE_COLS, scaler.mean_, scaler.scale_):
 X_train_sc = scaler.transform(X_train)
 assert np.abs(X_train_sc.mean(axis=0)).max() < 1e-5, "Scaler sanity check failed"
 
-print(f"\n  Saved global scaler → {GLOBAL_SCALER_PATH}")
+print(f"\n  Saved global scaler -> {GLOBAL_SCALER_PATH}")
 print("  Sanity check passed: scaled train mean ≈ 0")
 print("\n  NEXT: run scripts in order:")
 print("    python 02_centralised_baseline.py")

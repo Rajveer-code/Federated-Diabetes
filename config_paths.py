@@ -106,7 +106,7 @@ FEDPROX_MU       = 0.1
 
 # FedNova — heterogeneous local epochs (Wang et al. NeurIPS 2020)
 # Nodes with greater distribution shift use FEWER local steps to prevent drift.
-# Node B (elderly-rural, high shift) → fewest steps; Node A (urban, low shift) → most
+# Node B (elderly-rural, high shift) -> fewest steps; Node A (urban, low shift) -> most
 NODE_LOCAL_EPOCHS_FEDNOVA = {
     0: 5,   # Node A — Young Urban:    low distribution shift, safe to do more local work
     1: 3,   # Node B — Elderly Rural:  HIGH distribution shift, FEWER steps to reduce drift

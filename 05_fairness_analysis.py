@@ -439,7 +439,7 @@ fairness_metrics = {
 }
 with open(os.path.join(RESULTS_DIR, 'fairness_metrics.json'), 'w') as f:
     json.dump(fairness_metrics, f, indent=2)
-print(f"  Saved → results/fairness_metrics.json")
+print(f"  Saved -> results/fairness_metrics.json")
 
 # Save
 all_fairness = {
@@ -451,7 +451,7 @@ all_fairness = {
 }
 with open(os.path.join(RESULTS_DIR, 'fairness_comparison.json'), 'w') as f:
     json.dump(all_fairness, f, indent=2)
-print(f"  Saved → results/fairness_comparison.json")
+print(f"  Saved -> results/fairness_comparison.json")
 
 
 # ──────────────────────────────────────────────────────────────────────────────

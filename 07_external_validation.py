@@ -56,7 +56,7 @@ RED    = '#DC2626'
 GREEN  = '#16A34A'
 GREY   = '#94A3B8'
 
-# ── BRFSS → NHANES column mapping ─────────────────────────────────────────────
+# ── BRFSS -> NHANES column mapping ─────────────────────────────────────────────
 BRFSS_COL_MAP = {
     'Age'                 : 'RIDAGEYR',
     'Gender'              : 'RIAGENDR',
@@ -143,7 +143,7 @@ print(f"      Columns: {list(df_brfss.columns)}")
 df_brfss = df_brfss.rename(columns=BRFSS_COL_MAP)
 
 # ── Gender encoding fix ────────────────────────────────────────────────────────
-# BRFSS: 0=Female, 1=Male  →  NHANES: 1=Male, 2=Female
+# BRFSS: 0=Female, 1=Male  ->  NHANES: 1=Male, 2=Female
 if df_brfss['RIAGENDR'].max() <= 1.0:
     df_brfss['RIAGENDR'] = df_brfss['RIAGENDR'].map({1.0: 1.0, 0.0: 2.0})
     print("      Gender remapped: BRFSS 0/1 -> NHANES 1/2")

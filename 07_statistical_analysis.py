@@ -12,11 +12,11 @@ reject the paper outright.
 METHODS
 -------
   Internal validation (NHANES test set, n ~ 3,130):
-    → Stratified bootstrap CI (N_BOOTSTRAP=2000, percentile method)
+    -> Stratified bootstrap CI (N_BOOTSTRAP=2000, percentile method)
 
   External validation (BRFSS, n = 1,282,897):
-    → DeLong CI (structural components, Hanley-McNeil)
-    → Paired DeLong test for FedProx vs FedAvg
+    -> DeLong CI (structural components, Hanley-McNeil)
+    -> Paired DeLong test for FedProx vs FedAvg
 
   References:
     DeLong, DeLong, Clarke-Pearson (1988) Biometrics 44(3):837-845.
@@ -300,7 +300,7 @@ output = {
 out_path = os.path.join(RESULTS_DIR, 'auc_confidence_intervals.json')
 with open(out_path, 'w') as f:
     json.dump(output, f, indent=2)
-print(f"\n  Saved → {out_path}")
+print(f"\n  Saved -> {out_path}")
 
 # ── Manuscript summary ────────────────────────────────────────────────────────
 print("\n" + "=" * 65)

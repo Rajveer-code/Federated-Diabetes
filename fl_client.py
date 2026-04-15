@@ -77,7 +77,7 @@ class DiabetesClient(fl.client.NumPyClient):
     def fit(
         self, parameters: NDArrays, config: Dict
     ) -> Tuple[NDArrays, int, Dict]:
-        """Receive global weights → train locally → return updated weights."""
+        """Receive global weights -> train locally -> return updated weights."""
         self.set_parameters(parameters)
 
         # Cache global weights for FedProx proximal term
@@ -103,7 +103,7 @@ class DiabetesClient(fl.client.NumPyClient):
     def evaluate(
         self, parameters: NDArrays, config: Dict
     ) -> Tuple[float, int, Dict]:
-        """Receive global weights → evaluate on local val set → return AUC."""
+        """Receive global weights -> evaluate on local val set -> return AUC."""
         self.set_parameters(parameters)
         val_loss, y_true, y_prob = evaluate_model(
             self.model, self.val_dl, self.criterion, self.device

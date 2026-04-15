@@ -19,7 +19,7 @@ PROBLEM:  The original 03_federated_simulation.py used equal local epochs
 FIX:      Assign heterogeneous local epochs reflecting DISTRIBUTION SHIFT
           across nodes, per Wang et al. Theorem 2:
             Node A — Young Urban (low dist. shift):    τ_A = 5
-            Node B — Elderly Rural (HIGH dist. shift): τ_B = 3  ← FEWER steps
+            Node B — Elderly Rural (HIGH dist. shift): τ_B = 3  <- FEWER steps
             Node C — Mixed Metro (intermediate):       τ_C = 4
 
           CRITICAL: The original fix assigned τ_B = 7 (most steps to the most
@@ -83,7 +83,7 @@ DEVICE = get_device()
 # Wang et al. Theorem 2: nodes with greater divergence from the global
 # objective should perform FEWER local steps to prevent client drift.
 # Node B has 82% elderly, 28.5% diabetes prevalence — highest distributional
-# deviation from the pooled NHANES training distribution → fewest local steps.
+# deviation from the pooled NHANES training distribution -> fewest local steps.
 #
 # Also imports from config_paths for single source of truth:
 from config_paths import NODE_LOCAL_EPOCHS_FEDNOVA as NODE_LOCAL_EPOCHS
@@ -95,7 +95,7 @@ print("=" * 65)
 print("  SCRIPT 03b — FedNova CORRECTED (heterogeneous local epochs)")
 print("=" * 65)
 print(f"\n  Fix: heterogeneous τᵢ = {list(NODE_LOCAL_EPOCHS.values())}")
-print(f"  (Equal τ collapses FedNova → FedAvg; see Wang et al. NeurIPS 2020)")
+print(f"  (Equal τ collapses FedNova -> FedAvg; see Wang et al. NeurIPS 2020)")
 print("=" * 65)
 
 # ── Load centralised eval set (for per-round AUC tracking) ────────────────────
@@ -320,15 +320,15 @@ print("\n" + "=" * 65)
 print("  FedNova CORRECTED — SUMMARY")
 print("=" * 65)
 print(f"\n  Strategy              : FedNova (heterogeneous τ)")
-print(f"  Node A epochs (τ_A)  : {NODE_LOCAL_EPOCHS[0]}  (Young Urban,   LOW dist. shift → more local steps)")
-print(f"  Node B epochs (τ_B)  : {NODE_LOCAL_EPOCHS[1]}  (Elderly Rural, HIGH dist. shift → FEWER steps — corrected)")
+print(f"  Node A epochs (τ_A)  : {NODE_LOCAL_EPOCHS[0]}  (Young Urban,   LOW dist. shift -> more local steps)")
+print(f"  Node B epochs (τ_B)  : {NODE_LOCAL_EPOCHS[1]}  (Elderly Rural, HIGH dist. shift -> FEWER steps — corrected)")
 print(f"  Node C epochs (τ_C)  : {NODE_LOCAL_EPOCHS[2]}  (Mixed Metro,   intermediate heterogeneity)")
 print(f"  Effective τ (τ_eff)  : {tau_eff:.4f}")
 print(f"  Final AUC (internal) : {round_aucs[-1]:.4f}")
 print(f"  Best AUC (internal)  : {best_auc:.4f}  (round {best_rnd})")
 print(f"\n  NEXT STEPS:")
-print(f"  1. Run 05_fairness_analysis.py → load fednova_corrected_weights.pt")
-print(f"  2. Run 07_external_validation.py → add 'fednova_corrected' to fed_models dict")
+print(f"  1. Run 05_fairness_analysis.py -> load fednova_corrected_weights.pt")
+print(f"  2. Run 07_external_validation.py -> add 'fednova_corrected' to fed_models dict")
 print(f"  3. Update paper Table 1, Table 2, Table 3 with new FedNova numbers")
 print(f"\n  FedNova weights: {weights_path}")
 print("=" * 65)

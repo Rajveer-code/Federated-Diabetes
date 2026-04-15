@@ -1,8 +1,8 @@
 """
 nn_model.py — 3-Layer PyTorch Neural Network for Diabetes Prediction
 =====================================================================
-Architecture: Input(8) → Dense(64,BN,ReLU,Drop) → Dense(32,BN,ReLU,Drop)
-                       → Dense(16,BN,ReLU,Drop) → Dense(1)
+Architecture: Input(8) -> Dense(64,BN,ReLU,Drop) -> Dense(32,BN,ReLU,Drop)
+                       -> Dense(16,BN,ReLU,Drop) -> Dense(1)
 
 Works standalone AND inside Flower federated clients.
 """
@@ -78,7 +78,7 @@ def train_one_epoch(
 ) -> float:
     """
     Train for one epoch. Returns mean loss.
-    proximal_mu > 0 → FedProx: adds ||w - w_global||² penalty.
+    proximal_mu > 0 -> FedProx: adds ||w - w_global||² penalty.
     """
     model.train()
     total_loss, n_batches = 0.0, 0

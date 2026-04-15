@@ -244,6 +244,17 @@ os.makedirs(MODELS_DIR, exist_ok=True)
 weights_path = os.path.join(MODELS_DIR, 'fednova_corrected_weights.pt')
 torch.save(final_model.state_dict(), weights_path)
 
+# Save corrected FedNova predictions for 07_statistical_analysis.py
+# (overwrites pred_fednova_internal.npy from 03_federated_simulation.py)
+final_model.to(DEVICE)
+final_model.eval()
+with torch.no_grad():
+    X_t = torch.FloatTensor(X_eval_sc).to(DEVICE)
+    fednova_probs = torch.sigmoid(final_model(X_t)).cpu().numpy()
+os.makedirs(RESULTS_DIR, exist_ok=True)
+np.save(os.path.join(RESULTS_DIR, 'pred_fednova_internal.npy'), fednova_probs)
+print(f"  Saved corrected FedNova preds -> results/pred_fednova_internal.npy")
+
 elapsed_total = time.time() - t0
 best_auc  = max(round_aucs)
 best_rnd  = round_aucs.index(best_auc) + 1

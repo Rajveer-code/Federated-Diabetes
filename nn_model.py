@@ -7,6 +7,7 @@ Architecture: Input(8) -> Dense(64,BN,ReLU,Drop) -> Dense(32,BN,ReLU,Drop)
 Works standalone AND inside Flower federated clients.
 """
 
+import contextlib
 import torch
 import torch.nn as nn
 import numpy as np
@@ -75,29 +76,52 @@ def train_one_epoch(
     device:        torch.device,
     proximal_mu:   float = 0.0,
     global_params: list  = None,
+    scaler=None,
 ) -> float:
     """
     Train for one epoch. Returns mean loss.
-    proximal_mu > 0 -> FedProx: adds ||w - w_global||² penalty.
+    proximal_mu > 0  -> FedProx: adds ||w - w_global||^2 penalty.
+    scaler not None  -> AMP GradScaler (pass from outer training loop for stable scaling).
+
+    On RTX 4060 with CUDA torch, AMP (FP16) gives ~1.5x throughput; pass a
+    torch.amp.GradScaler instance from the caller to enable it.
     """
     model.train()
     total_loss, n_batches = 0.0, 0
 
+    # Mixed-precision context: active on CUDA, no-op on CPU
+    use_amp = device.type == 'cuda'
+    amp_ctx = (
+        torch.autocast(device_type='cuda', dtype=torch.float16)
+        if use_amp else contextlib.nullcontext()
+    )
+
     for X_b, y_b in dataloader:
-        X_b, y_b = X_b.to(device), y_b.to(device)
+        # non_blocking=True overlaps H->D transfer with compute (requires pin_memory)
+        X_b = X_b.to(device, non_blocking=True)
+        y_b = y_b.to(device, non_blocking=True)
         optimizer.zero_grad()
-        loss = criterion(model(X_b), y_b)
 
-        if proximal_mu > 0.0 and global_params is not None:
-            prox = sum(
-                (p - g.to(device)).pow(2).sum()
-                for p, g in zip(model.parameters(), global_params)
-            )
-            loss = loss + (proximal_mu / 2.0) * prox
+        with amp_ctx:
+            loss = criterion(model(X_b), y_b)
+            if proximal_mu > 0.0 and global_params is not None:
+                prox = sum(
+                    (p - g.to(device)).pow(2).sum()
+                    for p, g in zip(model.parameters(), global_params)
+                )
+                loss = loss + (proximal_mu / 2.0) * prox
 
-        loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-        optimizer.step()
+        if scaler is not None:
+            scaler.scale(loss).backward()
+            scaler.unscale_(optimizer)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            scaler.step(optimizer)
+            scaler.update()
+        else:
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            optimizer.step()
+
         total_loss += loss.item()
         n_batches  += 1
 

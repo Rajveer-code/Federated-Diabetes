@@ -124,13 +124,14 @@ def eval_global(params) -> float:
 print("\n  Loading node data...")
 loaders, n_train_per_node, all_y_train = [], [], []
 
+use_pin = DEVICE.type == 'cuda'
 for node_idx, path in enumerate(NODE_PATHS):
     X_tr, y_tr, X_val, y_val, sc = load_node_data(
         path, val_size=0.2, seed=SEED
     )
     epochs = NODE_LOCAL_EPOCHS[node_idx]
     tr_dl, _ = get_dataloaders(
-        X_tr, y_tr, X_val, y_val, NN_BATCH_SIZE
+        X_tr, y_tr, X_val, y_val, NN_BATCH_SIZE, pin_memory=use_pin
     )
     loaders.append(tr_dl)
     n_train_per_node.append(len(X_tr))
@@ -163,10 +164,11 @@ def local_train_node(node_idx, global_params, train_dl, y_train):
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=NN_LR, weight_decay=NN_WEIGHT_DECAY
     )
+    scaler = torch.amp.GradScaler('cuda') if DEVICE.type == 'cuda' else None
 
     for _ in range(epochs):
         train_one_epoch(model, train_dl, optimizer, criterion, DEVICE,
-                        proximal_mu=0.0, global_params=None)
+                        proximal_mu=0.0, global_params=None, scaler=scaler)
 
     return get_params_as_numpy(model)
 

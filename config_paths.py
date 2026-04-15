@@ -88,7 +88,7 @@ NN_HIDDEN_DIMS   = [64, 32, 16]
 NN_DROPOUT       = 0.3
 NN_LR            = 1e-3
 NN_LOCAL_EPOCHS  = 5
-NN_BATCH_SIZE    = 64
+NN_BATCH_SIZE    = 256   # 256 saturates RTX 4060 Tensor Cores; use 64 for CPU-only
 NN_WEIGHT_DECAY  = 1e-4
 
 # Aliases for new scripts
@@ -98,6 +98,13 @@ FL_LEARNING_RATE    = NN_LR
 FL_LOCAL_EPOCHS_DEFAULT = NN_LOCAL_EPOCHS
 FL_BATCH_SIZE       = NN_BATCH_SIZE
 FL_WEIGHT_DECAY     = NN_WEIGHT_DECAY
+
+# ── HARDWARE ACCELERATION ─────────────────────────────────────────────────────
+# Tuned for i7-13650HX + RTX 4060 (8 GB VRAM). All flags are checked at
+# runtime — safe to leave as-is on a CPU-only machine.
+USE_AMP      = True   # FP16 mixed-precision via torch.autocast; ~1.5x on Ampere+
+NUM_WORKERS  = 0      # 0 = safest on Windows (no subprocess spawning issues);
+                      # raise to 4 on Linux/WSL for larger datasets
 
 # ── FEDERATED LEARNING ────────────────────────────────────────────────────────
 FL_NUM_ROUNDS    = 50

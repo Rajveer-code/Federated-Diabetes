@@ -63,6 +63,11 @@ class DiabetesClient(fl.client.NumPyClient):
         self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             self.optimizer, T_max=FL_NUM_ROUNDS, eta_min=1e-6
         )
+        # AMP GradScaler — active on CUDA, disabled on CPU
+        self.scaler = (
+            torch.amp.GradScaler('cuda')
+            if self.device.type == 'cuda' else None
+        )
 
         print(f"    Client {node_id}: n_train={self.n_train} | "
               f"n_val={self.n_val} | pos_w={pos_weight:.2f} | mu={proximal_mu}")
@@ -91,6 +96,7 @@ class DiabetesClient(fl.client.NumPyClient):
                 self.model, self.train_dl, self.optimizer,
                 self.criterion, self.device,
                 self.proximal_mu, global_params,
+                scaler=self.scaler,
             )
             losses.append(loss)
         self.scheduler.step()

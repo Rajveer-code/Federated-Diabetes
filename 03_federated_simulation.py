@@ -54,7 +54,7 @@ DEVICE = get_device()
 df_eval  = pd.read_csv(CENTRALISED_PATH)
 X_eval   = df_eval[FEATURE_COLS].values.astype(np.float32)
 y_eval   = df_eval[TARGET_COL].values.astype(np.float32)
-_scaler  = StandardScaler()
+_scaler   = StandardScaler()
 X_eval_sc = _scaler.fit_transform(X_eval).astype(np.float32)
 
 
@@ -92,10 +92,13 @@ def save_internal_preds(weights_path, filename):
 # ──────────────────────────────────────────────────────────────────────────────
 def build_node_loaders():
     """Load all 3 nodes, fit scaler on each node independently (real FL)."""
+    use_pin = DEVICE.type == 'cuda'
     loaders, n_samples, scalers = [], [], []
     for path in NODE_PATHS:
         X_tr, y_tr, X_val, y_val, sc = load_node_data(path, val_size=0.2, seed=SEED)
-        tr_dl, val_dl = get_dataloaders(X_tr, y_tr, X_val, y_val, NN_BATCH_SIZE)
+        tr_dl, val_dl = get_dataloaders(
+            X_tr, y_tr, X_val, y_val, NN_BATCH_SIZE, pin_memory=use_pin
+        )
         loaders.append((tr_dl, val_dl, y_tr, y_val))
         n_samples.append(len(X_tr))
         scalers.append(sc)
@@ -163,6 +166,8 @@ def local_train(global_params, train_dl, y_train, proximal_mu=0.0):
     """
     One client's local training for one FL round.
     Returns updated parameters as list of numpy arrays.
+    AMP GradScaler is created once per client call and reused across local epochs
+    so the scale factor stabilises within the local training phase.
     """
     pos_weight = compute_class_weight(y_train)
     model      = DiabetesNet().to(DEVICE)
@@ -175,13 +180,16 @@ def local_train(global_params, train_dl, y_train, proximal_mu=0.0):
         model.parameters(), lr=NN_LR, weight_decay=NN_WEIGHT_DECAY
     )
 
+    # One scaler per client per round — stable across the local epoch loop
+    scaler = torch.amp.GradScaler('cuda') if DEVICE.type == 'cuda' else None
+
     global_tensors = None
     if proximal_mu > 0.0:
         global_tensors = [p.detach().clone() for p in model.parameters()]
 
     for _ in range(NN_LOCAL_EPOCHS):
         train_one_epoch(model, train_dl, optimizer, criterion,
-                        DEVICE, proximal_mu, global_tensors)
+                        DEVICE, proximal_mu, global_tensors, scaler=scaler)
 
     return get_params_as_numpy(model)
 

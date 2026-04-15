@@ -210,6 +210,16 @@ print("=" * 65)
 print("  SCRIPT 02 — CENTRALISED BASELINE")
 print("=" * 65)
 
+# ── GPU detection for XGBoost ─────────────────────────────────────────────────
+import torch as _torch
+_XGB_PARAMS = dict(XGB_PARAMS)
+if _torch.cuda.is_available():
+    _XGB_PARAMS['device'] = 'cuda'
+    print(f"  XGBoost device: GPU ({_torch.cuda.get_device_name(0)})")
+else:
+    print("  XGBoost device: CPU")
+XGB_PARAMS = _XGB_PARAMS   # shadow the imported constant with GPU version
+
 # ── Load data ─────────────────────────────────────────────────────────────────
 print(f"\n[1/5] Loading: {CENTRALISED_PATH}")
 df  = pd.read_csv(CENTRALISED_PATH)

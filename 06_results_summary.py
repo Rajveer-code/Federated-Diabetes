@@ -56,6 +56,14 @@ central  = load_json('centralised_metrics.json')
 fl_res   = load_json('federated_convergence.json')
 dp_res   = load_json('dp_results.json')
 fairness = load_json('fairness_comparison.json')
+ext_val  = load_json('external_validation.json')   # Gap-2 fix: load external AUCs
+
+# Extract external AUCs from external_validation.json
+_ext_xgb  = ext_val.get('centralised', {}).get('metrics', {}).get('auc', '--')
+_ext_fed  = {name: v.get('metrics', {}).get('auc', '--')
+             for name, v in ext_val.get('federated', {}).items()}
+_ext_fair = {name: v.get('fairness', {})
+             for name, v in ext_val.get('federated', {}).items()}
 
 # ──────────────────────────────────────────────────────────────────────────────
 #  MASTER RESULTS TABLE
@@ -84,7 +92,7 @@ if central:
         'Model'         : 'XGBoost (our replication)',
         'Setting'       : 'Centralised',
         'AUC_internal'  : round(xgb_m.get('auc', 0), 4),
-        'AUC_external'  : '--',
+        'AUC_external'  : round(_ext_xgb, 4) if isinstance(_ext_xgb, float) else '--',
         'Elderly_AUC'   : round(c_elderly.get('auc', 0), 4) if isinstance(c_elderly, dict) else '--',
         'Young_AUC'     : round(c_young.get('auc', 0), 4)   if isinstance(c_young, dict)   else '--',
         'Fairness_Gap'  : round(fair_c.get('elderly_gap', 0), 4),
@@ -99,10 +107,10 @@ for strat, res in fl_res.items():
         'Model'         : f'DiabetesNet ({strat})',
         'Setting'       : 'Federated (3 nodes)',
         'AUC_internal'  : round(res['final_auc'], 4),
-        'AUC_external'  : '--',
-        'Elderly_AUC'   : round(fair_fed.get('age_60+', 0), 4)    if is_fedprox else '--',
-        'Young_AUC'     : round(fair_fed.get('age_18-39', 0), 4)  if is_fedprox else '--',
-        'Fairness_Gap'  : round(fair_fed.get('elderly_gap', 0), 4) if is_fedprox else '--',
+        'AUC_external'  : round(_ext_fed.get(strat, '--'), 4) if isinstance(_ext_fed.get(strat), float) else '--',
+        'Elderly_AUC'   : round(_ext_fair.get(strat, {}).get('age_60+', 0), 4)     if strat in _ext_fair else '--',
+        'Young_AUC'     : round(_ext_fair.get(strat, {}).get('age_18-39', 0), 4)   if strat in _ext_fair else '--',
+        'Fairness_Gap'  : round(_ext_fair.get(strat, {}).get('elderly_gap', 0), 4) if strat in _ext_fair else '--',
         'Brier'         : '--',
         'F1'            : '--',
     })

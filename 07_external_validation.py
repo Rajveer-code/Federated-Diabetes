@@ -241,7 +241,9 @@ def eval_fed_model(weights_path, name):
 fed_models = {
     'FedAvg' : os.path.join(MODELS_DIR, 'fedavg_weights.pt'),
     'FedProx': os.path.join(MODELS_DIR, 'fedprox_weights.pt'),
-    'FedNova': os.path.join(MODELS_DIR, 'fednova_weights.pt'),
+    # Use corrected FedNova (tau_B=3, tau_A=5, tau_C=4 per Wang NeurIPS 2020 Theorem 2)
+    # The uniform-tau version (fednova_weights.pt) is superseded.
+    'FedNova': os.path.join(MODELS_DIR, 'fednova_corrected_weights.pt'),
 }
 
 fed_metrics  = {}

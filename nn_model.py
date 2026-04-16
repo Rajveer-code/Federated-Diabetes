@@ -38,7 +38,7 @@ class DiabetesNet(nn.Module):
             layers += [
                 nn.Linear(in_dim, h),
                 nn.BatchNorm1d(h),
-                nn.ReLU(inplace=True),
+                nn.ReLU(inplace=False),  # inplace=False required by Opacus
                 nn.Dropout(dropout if i < len(hidden_dims)-1 else dropout*0.6),
             ]
             in_dim = h

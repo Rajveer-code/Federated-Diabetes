@@ -56,7 +56,11 @@ RED    = '#DC2626'
 GREEN  = '#16A34A'
 GREY   = '#94A3B8'
 
+<<<<<<< HEAD
 # ── BRFSS → NHANES column mapping ─────────────────────────────────────────────
+=======
+# ── BRFSS -> NHANES column mapping ─────────────────────────────────────────────
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 BRFSS_COL_MAP = {
     'Age'                 : 'RIDAGEYR',
     'Gender'              : 'RIAGENDR',
@@ -143,7 +147,11 @@ print(f"      Columns: {list(df_brfss.columns)}")
 df_brfss = df_brfss.rename(columns=BRFSS_COL_MAP)
 
 # ── Gender encoding fix ────────────────────────────────────────────────────────
+<<<<<<< HEAD
 # BRFSS: 0=Female, 1=Male  →  NHANES: 1=Male, 2=Female
+=======
+# BRFSS: 0=Female, 1=Male  ->  NHANES: 1=Male, 2=Female
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 if df_brfss['RIAGENDR'].max() <= 1.0:
     df_brfss['RIAGENDR'] = df_brfss['RIAGENDR'].map({1.0: 1.0, 0.0: 2.0})
     print("      Gender remapped: BRFSS 0/1 -> NHANES 1/2")
@@ -241,7 +249,13 @@ def eval_fed_model(weights_path, name):
 fed_models = {
     'FedAvg' : os.path.join(MODELS_DIR, 'fedavg_weights.pt'),
     'FedProx': os.path.join(MODELS_DIR, 'fedprox_weights.pt'),
+<<<<<<< HEAD
     'FedNova': os.path.join(MODELS_DIR, 'fednova_weights.pt'),
+=======
+    # Use corrected FedNova (tau_B=3, tau_A=5, tau_C=4 per Wang NeurIPS 2020 Theorem 2)
+    # The uniform-tau version (fednova_weights.pt) is superseded.
+    'FedNova': os.path.join(MODELS_DIR, 'fednova_corrected_weights.pt'),
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 }
 
 fed_metrics  = {}
@@ -328,6 +342,17 @@ with open(os.path.join(RESULTS_DIR, 'external_validation.json'), 'w', encoding='
     json.dump(results_ext, f, indent=2)
 print(f"\n  Saved: results/external_validation.json")
 
+<<<<<<< HEAD
+=======
+# Save prediction arrays for 07_statistical_analysis.py
+np.save(os.path.join(RESULTS_DIR, 'y_true_brfss.npy'), y_brfss)
+print(f"  Saved: results/y_true_brfss.npy")
+for name, probs in fed_probs.items():
+    fname = f"pred_{name.lower()}_external.npy"
+    np.save(os.path.join(RESULTS_DIR, fname), probs)
+    print(f"  Saved: results/{fname}")
+
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
 # ──────────────────────────────────────────────────────────────────────────────
 #  (5) PLOTS

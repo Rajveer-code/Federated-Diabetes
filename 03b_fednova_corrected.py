@@ -19,7 +19,11 @@ PROBLEM:  The original 03_federated_simulation.py used equal local epochs
 FIX:      Assign heterogeneous local epochs reflecting DISTRIBUTION SHIFT
           across nodes, per Wang et al. Theorem 2:
             Node A — Young Urban (low dist. shift):    τ_A = 5
+<<<<<<< HEAD
             Node B — Elderly Rural (HIGH dist. shift): τ_B = 3  ← FEWER steps
+=======
+            Node B — Elderly Rural (HIGH dist. shift): τ_B = 3  <- FEWER steps
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
             Node C — Mixed Metro (intermediate):       τ_C = 4
 
           CRITICAL: The original fix assigned τ_B = 7 (most steps to the most
@@ -83,7 +87,11 @@ DEVICE = get_device()
 # Wang et al. Theorem 2: nodes with greater divergence from the global
 # objective should perform FEWER local steps to prevent client drift.
 # Node B has 82% elderly, 28.5% diabetes prevalence — highest distributional
+<<<<<<< HEAD
 # deviation from the pooled NHANES training distribution → fewest local steps.
+=======
+# deviation from the pooled NHANES training distribution -> fewest local steps.
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 #
 # Also imports from config_paths for single source of truth:
 from config_paths import NODE_LOCAL_EPOCHS_FEDNOVA as NODE_LOCAL_EPOCHS
@@ -95,7 +103,11 @@ print("=" * 65)
 print("  SCRIPT 03b — FedNova CORRECTED (heterogeneous local epochs)")
 print("=" * 65)
 print(f"\n  Fix: heterogeneous τᵢ = {list(NODE_LOCAL_EPOCHS.values())}")
+<<<<<<< HEAD
 print(f"  (Equal τ collapses FedNova → FedAvg; see Wang et al. NeurIPS 2020)")
+=======
+print(f"  (Equal τ collapses FedNova -> FedAvg; see Wang et al. NeurIPS 2020)")
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 print("=" * 65)
 
 # ── Load centralised eval set (for per-round AUC tracking) ────────────────────
@@ -124,13 +136,21 @@ def eval_global(params) -> float:
 print("\n  Loading node data...")
 loaders, n_train_per_node, all_y_train = [], [], []
 
+<<<<<<< HEAD
+=======
+use_pin = DEVICE.type == 'cuda'
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 for node_idx, path in enumerate(NODE_PATHS):
     X_tr, y_tr, X_val, y_val, sc = load_node_data(
         path, val_size=0.2, seed=SEED
     )
     epochs = NODE_LOCAL_EPOCHS[node_idx]
     tr_dl, _ = get_dataloaders(
+<<<<<<< HEAD
         X_tr, y_tr, X_val, y_val, NN_BATCH_SIZE
+=======
+        X_tr, y_tr, X_val, y_val, NN_BATCH_SIZE, pin_memory=use_pin
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
     )
     loaders.append(tr_dl)
     n_train_per_node.append(len(X_tr))
@@ -163,10 +183,18 @@ def local_train_node(node_idx, global_params, train_dl, y_train):
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=NN_LR, weight_decay=NN_WEIGHT_DECAY
     )
+<<<<<<< HEAD
 
     for _ in range(epochs):
         train_one_epoch(model, train_dl, optimizer, criterion, DEVICE,
                         proximal_mu=0.0, global_params=None)
+=======
+    scaler = torch.amp.GradScaler('cuda') if DEVICE.type == 'cuda' else None
+
+    for _ in range(epochs):
+        train_one_epoch(model, train_dl, optimizer, criterion, DEVICE,
+                        proximal_mu=0.0, global_params=None, scaler=scaler)
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
     return get_params_as_numpy(model)
 
@@ -244,6 +272,20 @@ os.makedirs(MODELS_DIR, exist_ok=True)
 weights_path = os.path.join(MODELS_DIR, 'fednova_corrected_weights.pt')
 torch.save(final_model.state_dict(), weights_path)
 
+<<<<<<< HEAD
+=======
+# Save corrected FedNova predictions for 07_statistical_analysis.py
+# (overwrites pred_fednova_internal.npy from 03_federated_simulation.py)
+final_model.to(DEVICE)
+final_model.eval()
+with torch.no_grad():
+    X_t = torch.FloatTensor(X_eval_sc).to(DEVICE)
+    fednova_probs = torch.sigmoid(final_model(X_t)).cpu().numpy()
+os.makedirs(RESULTS_DIR, exist_ok=True)
+np.save(os.path.join(RESULTS_DIR, 'pred_fednova_internal.npy'), fednova_probs)
+print(f"  Saved corrected FedNova preds -> results/pred_fednova_internal.npy")
+
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 elapsed_total = time.time() - t0
 best_auc  = max(round_aucs)
 best_rnd  = round_aucs.index(best_auc) + 1
@@ -320,15 +362,25 @@ print("\n" + "=" * 65)
 print("  FedNova CORRECTED — SUMMARY")
 print("=" * 65)
 print(f"\n  Strategy              : FedNova (heterogeneous τ)")
+<<<<<<< HEAD
 print(f"  Node A epochs (τ_A)  : {NODE_LOCAL_EPOCHS[0]}  (Young Urban,   LOW dist. shift → more local steps)")
 print(f"  Node B epochs (τ_B)  : {NODE_LOCAL_EPOCHS[1]}  (Elderly Rural, HIGH dist. shift → FEWER steps — corrected)")
+=======
+print(f"  Node A epochs (τ_A)  : {NODE_LOCAL_EPOCHS[0]}  (Young Urban,   LOW dist. shift -> more local steps)")
+print(f"  Node B epochs (τ_B)  : {NODE_LOCAL_EPOCHS[1]}  (Elderly Rural, HIGH dist. shift -> FEWER steps — corrected)")
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 print(f"  Node C epochs (τ_C)  : {NODE_LOCAL_EPOCHS[2]}  (Mixed Metro,   intermediate heterogeneity)")
 print(f"  Effective τ (τ_eff)  : {tau_eff:.4f}")
 print(f"  Final AUC (internal) : {round_aucs[-1]:.4f}")
 print(f"  Best AUC (internal)  : {best_auc:.4f}  (round {best_rnd})")
 print(f"\n  NEXT STEPS:")
+<<<<<<< HEAD
 print(f"  1. Run 05_fairness_analysis.py → load fednova_corrected_weights.pt")
 print(f"  2. Run 07_external_validation.py → add 'fednova_corrected' to fed_models dict")
+=======
+print(f"  1. Run 05_fairness_analysis.py -> load fednova_corrected_weights.pt")
+print(f"  2. Run 07_external_validation.py -> add 'fednova_corrected' to fed_models dict")
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 print(f"  3. Update paper Table 1, Table 2, Table 3 with new FedNova numbers")
 print(f"\n  FedNova weights: {weights_path}")
 print("=" * 65)

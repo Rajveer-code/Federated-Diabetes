@@ -73,6 +73,7 @@ def get_dataloaders(
     y_train: np.ndarray,
     X_val:   np.ndarray,
     y_val:   np.ndarray,
+<<<<<<< HEAD
     batch_size: int = 64,
 ) -> Tuple[DataLoader, DataLoader]:
     """Wrap numpy arrays into PyTorch DataLoaders."""
@@ -83,6 +84,28 @@ def get_dataloaders(
     val_dl = DataLoader(
         DiabetesDataset(X_val, y_val),
         batch_size=batch_size, shuffle=False, drop_last=False
+=======
+    batch_size:  int  = 64,
+    pin_memory:  bool = False,
+    num_workers: int  = 0,
+) -> Tuple[DataLoader, DataLoader]:
+    """
+    Wrap numpy arrays into PyTorch DataLoaders.
+    pin_memory=True + non_blocking GPU transfers are the key speedup on RTX 40xx.
+    num_workers=0 is safest on Windows (avoids subprocess-spawn overhead for small datasets).
+    """
+    train_dl = DataLoader(
+        DiabetesDataset(X_train, y_train),
+        batch_size=batch_size, shuffle=True, drop_last=False,
+        pin_memory=pin_memory, num_workers=num_workers,
+        persistent_workers=(num_workers > 0),
+    )
+    val_dl = DataLoader(
+        DiabetesDataset(X_val, y_val),
+        batch_size=batch_size, shuffle=False, drop_last=False,
+        pin_memory=pin_memory, num_workers=num_workers,
+        persistent_workers=(num_workers > 0),
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
     )
     return train_dl, val_dl
 
@@ -110,8 +133,22 @@ def get_device() -> torch.device:
     """Auto-detect GPU (RTX 4060) or fall back to CPU."""
     if torch.cuda.is_available():
         device = torch.device('cuda')
+<<<<<<< HEAD
         print(f"  Device: GPU — {torch.cuda.get_device_name(0)}")
     else:
         device = torch.device('cpu')
         print("  Device: CPU (CUDA not available)")
+=======
+        torch.backends.cudnn.benchmark = True   # auto-tune cuDNN kernels
+        props = torch.cuda.get_device_properties(0)
+        vram  = props.total_memory / 1024**3
+        print(f"  Device: GPU — {props.name}  ({vram:.1f} GB VRAM)")
+    else:
+        device = torch.device('cpu')
+        print("  Device: CPU  (CUDA not available — scripts run on CPU)")
+        print("  TIP: Install CUDA PyTorch for ~10x speedup on your RTX 4060:")
+        print("       pip uninstall torch torchvision torchaudio -y")
+        print("       pip install torch torchvision torchaudio "
+              "--index-url https://download.pytorch.org/whl/cu124")
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
     return device

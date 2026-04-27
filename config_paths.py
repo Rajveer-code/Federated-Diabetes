@@ -88,7 +88,11 @@ NN_HIDDEN_DIMS   = [64, 32, 16]
 NN_DROPOUT       = 0.3
 NN_LR            = 1e-3
 NN_LOCAL_EPOCHS  = 5
+<<<<<<< HEAD
 NN_BATCH_SIZE    = 64
+=======
+NN_BATCH_SIZE    = 256   # 256 saturates RTX 4060 Tensor Cores; use 64 for CPU-only
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 NN_WEIGHT_DECAY  = 1e-4
 
 # Aliases for new scripts
@@ -99,6 +103,16 @@ FL_LOCAL_EPOCHS_DEFAULT = NN_LOCAL_EPOCHS
 FL_BATCH_SIZE       = NN_BATCH_SIZE
 FL_WEIGHT_DECAY     = NN_WEIGHT_DECAY
 
+<<<<<<< HEAD
+=======
+# ── HARDWARE ACCELERATION ─────────────────────────────────────────────────────
+# Tuned for i7-13650HX + RTX 4060 (8 GB VRAM). All flags are checked at
+# runtime — safe to leave as-is on a CPU-only machine.
+USE_AMP      = True   # FP16 mixed-precision via torch.autocast; ~1.5x on Ampere+
+NUM_WORKERS  = 0      # 0 = safest on Windows (no subprocess spawning issues);
+                      # raise to 4 on Linux/WSL for larger datasets
+
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 # ── FEDERATED LEARNING ────────────────────────────────────────────────────────
 FL_NUM_ROUNDS    = 50
 FL_NUM_CLIENTS   = 3
@@ -106,7 +120,11 @@ FEDPROX_MU       = 0.1
 
 # FedNova — heterogeneous local epochs (Wang et al. NeurIPS 2020)
 # Nodes with greater distribution shift use FEWER local steps to prevent drift.
+<<<<<<< HEAD
 # Node B (elderly-rural, high shift) → fewest steps; Node A (urban, low shift) → most
+=======
+# Node B (elderly-rural, high shift) -> fewest steps; Node A (urban, low shift) -> most
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 NODE_LOCAL_EPOCHS_FEDNOVA = {
     0: 5,   # Node A — Young Urban:    low distribution shift, safe to do more local work
     1: 3,   # Node B — Elderly Rural:  HIGH distribution shift, FEWER steps to reduce drift

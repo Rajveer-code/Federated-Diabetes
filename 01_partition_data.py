@@ -1,7 +1,11 @@
 """
 SCRIPT 01 — DATA PARTITIONING
 ==============================
+<<<<<<< HEAD
 Loads nhanes_merged.csv → replicates IEEE paper preprocessing →
+=======
+Loads nhanes_merged.csv -> replicates IEEE paper preprocessing ->
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 partitions into 3 federated nodes with realistic demographic variation.
 
 Run FIRST before any other script.
@@ -35,7 +39,11 @@ print("\n[2/6] Creating composite diabetes label (same as IEEE paper)...")
 #   Priority order: self-report > HbA1c >= 6.5 > fasting glucose >= 126
 
 df['DIABETES'] = np.nan
+<<<<<<< HEAD
 # Step-wise assignment (later lines override earlier → highest priority last)
+=======
+# Step-wise assignment (later lines override earlier -> highest priority last)
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 df.loc[df['LBXGLU'] < 126,  'DIABETES'] = 0
 df.loc[df['LBXGH']  < 6.5,  'DIABETES'] = 0
 df.loc[df['DIQ010'] == 2,   'DIABETES'] = 0
@@ -85,6 +93,7 @@ print("""
   Strategy:
   ┌─────────────────────────────────────────────────────────────┐
   │ Node A — Young Urban   : age<45 OR minority race            │
+<<<<<<< HEAD
   │           → Simulates community health clinic               │
   │                                                             │
   │ Node B — Elderly Rural : age≥55 AND (White OR MexAmerican)  │
@@ -93,6 +102,16 @@ print("""
   │                                                             │
   │ Node C — Mixed Metro   : remaining population               │
   │           → Simulates academic medical center               │
+=======
+  │           -> Simulates community health clinic               │
+  │                                                             │
+  │ Node B — Elderly Rural : age≥55 AND (White OR MexAmerican)  │
+  │           -> Simulates rural critical access hospital        │
+  │           -> This is the HARD node (elderly fairness gap)    │
+  │                                                             │
+  │ Node C — Mixed Metro   : remaining population               │
+  │           -> Simulates academic medical center               │
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
   └─────────────────────────────────────────────────────────────┘
 """)
 

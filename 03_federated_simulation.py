@@ -54,7 +54,11 @@ DEVICE = get_device()
 df_eval  = pd.read_csv(CENTRALISED_PATH)
 X_eval   = df_eval[FEATURE_COLS].values.astype(np.float32)
 y_eval   = df_eval[TARGET_COL].values.astype(np.float32)
+<<<<<<< HEAD
 _scaler  = StandardScaler()
+=======
+_scaler   = StandardScaler()
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 X_eval_sc = _scaler.fit_transform(X_eval).astype(np.float32)
 
 
@@ -75,15 +79,40 @@ def eval_global(params) -> float:
         return 0.0
 
 
+<<<<<<< HEAD
+=======
+@torch.no_grad()
+def save_internal_preds(weights_path, filename):
+    """Load saved weights and save internal prediction array for CI analysis."""
+    model = DiabetesNet().to(DEVICE)
+    model.load_state_dict(torch.load(weights_path, map_location=DEVICE))
+    model.eval()
+    X_t = torch.FloatTensor(X_eval_sc).to(DEVICE)
+    probs = torch.sigmoid(model(X_t)).cpu().numpy()
+    np.save(os.path.join(RESULTS_DIR, filename), probs)
+    print(f"  Saved predictions -> results/{filename}")
+
+
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 # ──────────────────────────────────────────────────────────────────────────────
 #  PER-NODE DATA LOADERS
 # ──────────────────────────────────────────────────────────────────────────────
 def build_node_loaders():
     """Load all 3 nodes, fit scaler on each node independently (real FL)."""
+<<<<<<< HEAD
     loaders, n_samples, scalers = [], [], []
     for path in NODE_PATHS:
         X_tr, y_tr, X_val, y_val, sc = load_node_data(path, val_size=0.2, seed=SEED)
         tr_dl, val_dl = get_dataloaders(X_tr, y_tr, X_val, y_val, NN_BATCH_SIZE)
+=======
+    use_pin = DEVICE.type == 'cuda'
+    loaders, n_samples, scalers = [], [], []
+    for path in NODE_PATHS:
+        X_tr, y_tr, X_val, y_val, sc = load_node_data(path, val_size=0.2, seed=SEED)
+        tr_dl, val_dl = get_dataloaders(
+            X_tr, y_tr, X_val, y_val, NN_BATCH_SIZE, pin_memory=use_pin
+        )
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
         loaders.append((tr_dl, val_dl, y_tr, y_val))
         n_samples.append(len(X_tr))
         scalers.append(sc)
@@ -130,7 +159,11 @@ def fednova_aggregate(updates, n_samples, local_steps):
     τ_eff = harmonic mean of local step counts.
     """
     total = sum(n_samples)
+<<<<<<< HEAD
     # τ_eff (effective local steps) — equal local_steps → simplifies to local_steps
+=======
+    # τ_eff (effective local steps) — equal local_steps -> simplifies to local_steps
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
     tau_eff = local_steps
 
     agg = []
@@ -151,6 +184,11 @@ def local_train(global_params, train_dl, y_train, proximal_mu=0.0):
     """
     One client's local training for one FL round.
     Returns updated parameters as list of numpy arrays.
+<<<<<<< HEAD
+=======
+    AMP GradScaler is created once per client call and reused across local epochs
+    so the scale factor stabilises within the local training phase.
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
     """
     pos_weight = compute_class_weight(y_train)
     model      = DiabetesNet().to(DEVICE)
@@ -163,13 +201,23 @@ def local_train(global_params, train_dl, y_train, proximal_mu=0.0):
         model.parameters(), lr=NN_LR, weight_decay=NN_WEIGHT_DECAY
     )
 
+<<<<<<< HEAD
+=======
+    # One scaler per client per round — stable across the local epoch loop
+    scaler = torch.amp.GradScaler('cuda') if DEVICE.type == 'cuda' else None
+
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
     global_tensors = None
     if proximal_mu > 0.0:
         global_tensors = [p.detach().clone() for p in model.parameters()]
 
     for _ in range(NN_LOCAL_EPOCHS):
         train_one_epoch(model, train_dl, optimizer, criterion,
+<<<<<<< HEAD
                         DEVICE, proximal_mu, global_tensors)
+=======
+                        DEVICE, proximal_mu, global_tensors, scaler=scaler)
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
     return get_params_as_numpy(model)
 
@@ -279,22 +327,38 @@ all_results = {}
 all_results['FedAvg'] = run_federated(
     'FedAvg', fedavg_aggregate, loaders, n_samples, proximal_mu=0.0
 )
+<<<<<<< HEAD
+=======
+save_internal_preds(all_results['FedAvg']['weights_path'], 'pred_fedavg_internal.npy')
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
 # ── (B) FedProx ───────────────────────────────────────────────────────────
 all_results['FedProx'] = run_federated(
     f'FedProx (μ={FEDPROX_MU})', fedprox_aggregate,
     loaders, n_samples, proximal_mu=FEDPROX_MU
 )
+<<<<<<< HEAD
+=======
+save_internal_preds(all_results['FedProx']['weights_path'], 'pred_fedprox_internal.npy')
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
 # ── (C) FedNova ───────────────────────────────────────────────────────────
 all_results['FedNova'] = run_federated(
     'FedNova', fednova_aggregate, loaders, n_samples, proximal_mu=0.0
 )
+<<<<<<< HEAD
+=======
+save_internal_preds(all_results['FedNova']['weights_path'], 'pred_fednova_internal.npy')
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
 # ── Save results ─────────────────────────────────────────────────────────────
 with open(os.path.join(RESULTS_DIR, 'federated_convergence.json'), 'w') as f:
     json.dump(all_results, f, indent=2)
+<<<<<<< HEAD
 print(f"\n  Saved → results/federated_convergence.json")
+=======
+print(f"\n  Saved -> results/federated_convergence.json")
+>>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
 # ──────────────────────────────────────────────────────────────────────────────
 #  PLOT 1 — CONVERGENCE CURVES

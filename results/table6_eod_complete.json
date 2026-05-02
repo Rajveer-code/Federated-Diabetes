@@ -1,0 +1,110 @@
+{
+  "description": "Complete Table V (EOD) for IEEE JBHI manuscript. Age groups: Young (<60) n=10,347; Elderly (>=60) n=5,303; full NHANES dataset n=15,650.",
+  "age_groups": {
+    "Young (<60)": {
+      "n": 10347
+    },
+    "Elderly (>=60)": {
+      "n": 5303
+    },
+    "total": 15650
+  },
+  "rows": [
+    {
+      "model": "Centralised XGBoost",
+      "threshold_type": "Global Youden",
+      "young_tpr": 0.609,
+      "young_fpr": 0.221,
+      "elderly_tpr": 0.909,
+      "elderly_fpr": 0.773,
+      "eod": 0.552,
+      "young_threshold": null,
+      "elderly_threshold": null,
+      "global_threshold": 0.392
+    },
+    {
+      "model": "Centralised XGBoost",
+      "threshold_type": "Subgroup-Specific",
+      "young_tpr": 0.609,
+      "young_fpr": 0.221,
+      "elderly_tpr": 0.909,
+      "elderly_fpr": 0.773,
+      "eod": 0.3,
+      "young_threshold": null,
+      "elderly_threshold": null,
+      "global_threshold": 0.392
+    },
+    {
+      "model": "FedProx",
+      "threshold_type": "Global Youden",
+      "young_tpr": 0.6,
+      "young_fpr": 0.194,
+      "elderly_tpr": 0.969,
+      "elderly_fpr": 0.907,
+      "eod": 0.713,
+      "young_threshold": null,
+      "elderly_threshold": null,
+      "global_threshold": 0.46
+    },
+    {
+      "model": "FedProx",
+      "threshold_type": "Subgroup-Specific",
+      "young_tpr": 0.796,
+      "young_fpr": 0.33,
+      "elderly_tpr": 0.525,
+      "elderly_fpr": 0.331,
+      "eod": 0.271,
+      "young_threshold": 0.216,
+      "elderly_threshold": 0.674,
+      "global_threshold": null
+    },
+    {
+      "model": "FedAvg",
+      "threshold_type": "Global Youden",
+      "young_tpr": 0.598,
+      "young_fpr": 0.188,
+      "elderly_tpr": 0.944,
+      "elderly_fpr": 0.843,
+      "eod": 0.655,
+      "young_threshold": null,
+      "elderly_threshold": null,
+      "global_threshold": 0.412
+    },
+    {
+      "model": "FedAvg",
+      "threshold_type": "Subgroup-Specific",
+      "young_tpr": 0.812,
+      "young_fpr": 0.355,
+      "elderly_tpr": 0.643,
+      "elderly_fpr": 0.422,
+      "eod": 0.17,
+      "young_threshold": 0.091,
+      "elderly_threshold": 0.638,
+      "global_threshold": null
+    },
+    {
+      "model": "FedNova",
+      "threshold_type": "Global Youden",
+      "young_tpr": 0.581,
+      "young_fpr": 0.179,
+      "elderly_tpr": 0.911,
+      "elderly_fpr": 0.791,
+      "eod": 0.611,
+      "young_threshold": null,
+      "elderly_threshold": null,
+      "global_threshold": 0.583
+    },
+    {
+      "model": "FedNova",
+      "threshold_type": "Subgroup-Specific",
+      "young_tpr": 0.787,
+      "young_fpr": 0.333,
+      "elderly_tpr": 0.707,
+      "elderly_fpr": 0.489,
+      "eod": 0.156,
+      "young_threshold": 0.302,
+      "elderly_threshold": 0.658,
+      "global_threshold": null
+    }
+  ]
+}

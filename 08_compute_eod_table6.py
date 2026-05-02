@@ -78,11 +78,12 @@ def compute_ece(y_true, y_prob, n_bins=10):
     """
     y_true = np.asarray(y_true, dtype=float)
     y_prob = np.asarray(y_prob, dtype=float)
+    y_prob = np.clip(y_prob, 0.0, 1.0)
     n_total = len(y_true)
     bins = np.linspace(0.0, 1.0, n_bins + 1)
     ece = 0.0
-    for lo, hi in zip(bins[:-1], bins[1:]):
-        mask = (y_prob >= lo) & (y_prob < hi)
+    for i, (lo, hi) in enumerate(zip(bins[:-1], bins[1:])):
+        mask = (y_prob >= lo) & (y_prob < hi if i < n_bins - 1 else y_prob <= hi)
         if mask.sum() == 0:
             continue
         mean_pred = y_prob[mask].mean()

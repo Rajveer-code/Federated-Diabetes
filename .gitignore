@@ -55,6 +55,10 @@ plots/*.svg
 # Manuscript docx (large binary, managed separately)
 *.docx
 
+# Worktrees
+.worktrees/
+worktrees/
+
 # Misc
 *.log
 *.tmp

@@ -127,7 +127,7 @@ tr.font.size = Pt(14)
 auth_p = doc.add_paragraph()
 auth_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
 auth_p.paragraph_format.space_after = Pt(6)
-ar = auth_p.add_run('Rajveer Singh Pall¹, Sameer Yadav¹, [et al.]')
+ar = auth_p.add_run('Rajveer Singh Pall¹, Sameer Yadav¹')
 ar.font.size = Pt(11)
 
 aff_p = doc.add_paragraph()
@@ -158,8 +158,9 @@ highlights = [
     'Federated learning across three demographically distinct hospital nodes achieves '
     'external AUC = 0.757 [95% CI: 0.756–0.758], surpassing the centralised XGBoost '
     'baseline (AUC = 0.700).',
-    'FedAvg reduces the elderly fairness gap to ΔAUC = 0.054, a 60.7% improvement '
-    'over the published benchmark (ΔAUC = 0.135).',
+    'FedAvg reduces the elderly fairness gap to ΔAUC = 0.054 — a 60.7% reduction '
+    'relative to the published benchmark (Ahsan et al. 2022, ΔAUC = 0.135) and a '
+    '21.7% improvement over the centralised XGBoost baseline (0.069 → 0.054).',
     'Isotonic recalibration eliminates model overconfidence (ECE: 0.319 → 0.001) '
     'without degrading discrimination.',
     'Tight differential privacy (ε ≤ 5) causes model collapse under realistic '
@@ -444,7 +445,13 @@ for item in node_items:
 add_para(doc,
     'This partition deliberately mirrors realistic demographic heterogeneity across '
     'rural and urban facilities. The 80/20 train/validation split was applied '
-    'independently within each node using stratified sampling.',
+    'independently within each node using stratified sampling. '
+    'We acknowledge that partitioning a single national survey by age simulates '
+    'demographic heterogeneity but does not reproduce the independent data '
+    'collection processes, batch effects, and measurement protocol differences '
+    'present in genuine multi-institutional deployments. Results should be '
+    'interpreted as proof-of-concept under controlled non-IID simulation, not '
+    'as a guarantee of performance in real hospital federations.',
     indent=True)
 
 add_heading(doc, '3.3 Neural Network Architecture', 2)
@@ -668,23 +675,35 @@ add_para(doc,
     'is dominated by the majority subgroup. The resulting 60.7% reduction in '
     'the elderly gap, from the published benchmark 0.135 [2] to 0.054 (FedAvg), '
     'is clinically meaningful: a model that performs less well on elderly patients '
-    'will fail to identify a cohort at substantially higher complication risk.',
+    'will fail to identify a cohort at substantially higher complication risk. '
+    'The 60.7% reduction is measured against the published benchmark gap of 0.135 '
+    'reported by Ahsan et al. [2] on a comparable BRFSS cohort; within our own '
+    'experimental comparison, FedAvg reduces the gap by 21.7% relative to the '
+    'centralised XGBoost baseline (0.069 → 0.054).',
     indent=True)
 
 add_heading(doc, '5.2 SCAFFOLD and the Optimizer Interaction', 2)
 add_para(doc,
-    'SCAFFOLD’s underperformance relative to FedAvg is noteworthy because '
+    'SCAFFOLD was implemented with SGD to satisfy its theoretical convergence '
+    'guarantees (Karimireddy et al. [12]), while FedAvg, FedProx, and FedNova '
+    'used AdamW. The lower performance of SCAFFOLD (AUC = 0.642) therefore '
+    'reflects a combined effect of the algorithm\'s gradient correction mechanism '
+    'and the optimizer difference — these two factors cannot be disentangled '
+    'without an AdamW-based SCAFFOLD ablation. A direct comparison with '
+    'AdamW-based SCAFFOLD would isolate the algorithm\'s contribution and represents '
+    'a valuable direction for future work. We report SCAFFOLD\'s SGD-based result '
+    'because it corresponds to the theoretically grounded implementation as '
+    'originally specified.',
+    indent=True)
+add_para(doc,
+    'SCAFFOLD\'s underperformance relative to FedAvg is noteworthy because '
     'it was specifically designed for heterogeneous (non-i.i.d.) data. We '
     'hypothesise that the performance gap is primarily explained by the '
-    'optimiser mismatch: SCAFFOLD’s convergence proof assumes SGD, while '
-    'FedAvg, FedProx, and FedNova were paired with AdamW. Adaptive moment '
-    'estimation provides significantly faster loss reduction per round on '
-    'the tabular health data used here. A future experiment pairing SCAFFOLD '
-    'with AdamW (accepting the loss of formal convergence guarantees) would '
-    'test whether the algorithm’s bias correction provides value once '
-    'the optimiser disadvantage is removed. This interaction between '
-    'aggregation strategy and local optimiser is underexplored in the FL '
-    'literature and represents a productive direction for future work.',
+    'optimiser mismatch: adaptive moment estimation (AdamW) provides '
+    'significantly faster loss reduction per round on the tabular health data '
+    'used here. This interaction between aggregation strategy and local '
+    'optimiser is underexplored in the FL literature and represents a '
+    'productive direction for future investigation.',
     indent=True)
 
 add_heading(doc, '5.3 Calibration and Clinical Deployment', 2)
@@ -751,11 +770,12 @@ add_para(doc,
     'centralised training for diabetes risk prediction across demographically '
     'heterogeneous hospital nodes on both internal and external validation. '
     'FedAvg achieved the best external AUC of 0.757 [0.756–0.758] on '
-    '1.28 million BRFSS respondents and reduced the elderly fairness gap by '
-    '60.7% relative to the published benchmark. Post-hoc isotonic calibration '
-    'essentially eliminated model overconfidence (ECE: 0.319 → 0.001). '
-    'These results confirm that federated learning is a clinically viable '
-    'framework for privacy-preserving diabetes screening at scale.',
+    '1.28 million BRFSS respondents and reduced the elderly fairness gap from '
+    '0.069 (centralised baseline) to 0.054 — a 21.7% within-study improvement '
+    'and a 60.7% reduction relative to the published benchmark of Ahsan et al. [2]. '
+    'Post-hoc isotonic calibration essentially eliminated model overconfidence '
+    '(ECE: 0.319 → 0.001). These results confirm that federated learning is a '
+    'clinically viable framework for privacy-preserving diabetes screening at scale.',
     indent=True)
 add_para(doc,
     'Practical adoption of federated diabetes risk models requires careful '

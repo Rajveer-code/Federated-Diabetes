@@ -63,14 +63,11 @@ class DiabetesClient(fl.client.NumPyClient):
         self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             self.optimizer, T_max=FL_NUM_ROUNDS, eta_min=1e-6
         )
-<<<<<<< HEAD
-=======
         # AMP GradScaler — active on CUDA, disabled on CPU
         self.scaler = (
             torch.amp.GradScaler('cuda')
             if self.device.type == 'cuda' else None
         )
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
         print(f"    Client {node_id}: n_train={self.n_train} | "
               f"n_val={self.n_val} | pos_w={pos_weight:.2f} | mu={proximal_mu}")
@@ -85,11 +82,7 @@ class DiabetesClient(fl.client.NumPyClient):
     def fit(
         self, parameters: NDArrays, config: Dict
     ) -> Tuple[NDArrays, int, Dict]:
-<<<<<<< HEAD
-        """Receive global weights → train locally → return updated weights."""
-=======
         """Receive global weights -> train locally -> return updated weights."""
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
         self.set_parameters(parameters)
 
         # Cache global weights for FedProx proximal term
@@ -103,10 +96,7 @@ class DiabetesClient(fl.client.NumPyClient):
                 self.model, self.train_dl, self.optimizer,
                 self.criterion, self.device,
                 self.proximal_mu, global_params,
-<<<<<<< HEAD
-=======
                 scaler=self.scaler,
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
             )
             losses.append(loss)
         self.scheduler.step()
@@ -119,11 +109,7 @@ class DiabetesClient(fl.client.NumPyClient):
     def evaluate(
         self, parameters: NDArrays, config: Dict
     ) -> Tuple[float, int, Dict]:
-<<<<<<< HEAD
-        """Receive global weights → evaluate on local val set → return AUC."""
-=======
         """Receive global weights -> evaluate on local val set -> return AUC."""
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
         self.set_parameters(parameters)
         val_loss, y_true, y_prob = evaluate_model(
             self.model, self.val_dl, self.criterion, self.device

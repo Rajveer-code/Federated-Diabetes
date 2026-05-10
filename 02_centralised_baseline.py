@@ -210,8 +210,7 @@ print("=" * 65)
 print("  SCRIPT 02 — CENTRALISED BASELINE")
 print("=" * 65)
 
-<<<<<<< HEAD
-=======
+
 # ── GPU detection for XGBoost ─────────────────────────────────────────────────
 import torch as _torch
 _XGB_PARAMS = dict(XGB_PARAMS)
@@ -222,7 +221,7 @@ else:
     print("  XGBoost device: CPU")
 XGB_PARAMS = _XGB_PARAMS   # shadow the imported constant with GPU version
 
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
+
 # ── Load data ─────────────────────────────────────────────────────────────────
 print(f"\n[1/5] Loading: {CENTRALISED_PATH}")
 df  = pd.read_csv(CENTRALISED_PATH)
@@ -234,11 +233,7 @@ print(f"      n = {len(df):,}  |  Diabetes prevalence: {y.mean():.1%}")
 scaler  = StandardScaler()
 X_sc    = scaler.fit_transform(X).astype(np.float32)
 joblib.dump(scaler, os.path.join(MODELS_DIR, 'scaler.pkl'))
-<<<<<<< HEAD
-print(f"      Scaler saved → models/scaler.pkl")
-=======
 print(f"      Scaler saved -> models/scaler.pkl")
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
 # ── 5-fold CV XGBoost ─────────────────────────────────────────────────────────
 print("\n[2/5] Running 5-fold CV — XGBoost (paper hyperparameters)...")
@@ -258,16 +253,12 @@ xgb_final = xgb.XGBClassifier(**XGB_PARAMS, scale_pos_weight=scale_pos)
 xgb_final.fit(X_sc, y)
 joblib.dump(xgb_final, os.path.join(MODELS_DIR, 'centralised_xgb.pkl'))
 np.save(os.path.join(MODELS_DIR, 'centralised_probs.npy'), y_prob_xgb)
-<<<<<<< HEAD
-print(f"      Model saved → models/centralised_xgb.pkl")
-=======
 print(f"      Model saved -> models/centralised_xgb.pkl")
 
 # Save prediction arrays for 07_statistical_analysis.py
 np.save(os.path.join(RESULTS_DIR, 'y_true_internal.npy'), y)
 np.save(os.path.join(RESULTS_DIR, 'pred_xgb_internal.npy'), y_prob_xgb)
 print(f"      CI arrays   -> results/y_true_internal.npy, pred_xgb_internal.npy")
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
 # ── Metrics ───────────────────────────────────────────────────────────────────
 print("\n[4/5] Computing metrics and fairness analysis...")
@@ -311,11 +302,7 @@ if gap:
 with open(os.path.join(RESULTS_DIR, 'centralised_metrics.json'), 'w') as f:
     json.dump({'xgboost': metrics_xgb, 'logistic_reg': metrics_lr,
                'fairness': fairness}, f, indent=2)
-<<<<<<< HEAD
-print(f"\n  Saved → results/centralised_metrics.json")
-=======
 print(f"\n  Saved -> results/centralised_metrics.json")
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
 # ── Plots ─────────────────────────────────────────────────────────────────────
 print("\n[5/5] Generating plots...")

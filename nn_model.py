@@ -1,21 +1,13 @@
 """
 nn_model.py — 3-Layer PyTorch Neural Network for Diabetes Prediction
 =====================================================================
-<<<<<<< HEAD
-Architecture: Input(8) → Dense(64,BN,ReLU,Drop) → Dense(32,BN,ReLU,Drop)
-                       → Dense(16,BN,ReLU,Drop) → Dense(1)
-=======
 Architecture: Input(8) -> Dense(64,BN,ReLU,Drop) -> Dense(32,BN,ReLU,Drop)
                        -> Dense(16,BN,ReLU,Drop) -> Dense(1)
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
 Works standalone AND inside Flower federated clients.
 """
 
-<<<<<<< HEAD
-=======
 import contextlib
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 import torch
 import torch.nn as nn
 import numpy as np
@@ -46,11 +38,7 @@ class DiabetesNet(nn.Module):
             layers += [
                 nn.Linear(in_dim, h),
                 nn.BatchNorm1d(h),
-<<<<<<< HEAD
-                nn.ReLU(inplace=True),
-=======
                 nn.ReLU(inplace=False),  # inplace=False required by Opacus
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
                 nn.Dropout(dropout if i < len(hidden_dims)-1 else dropout*0.6),
             ]
             in_dim = h
@@ -88,12 +76,6 @@ def train_one_epoch(
     device:        torch.device,
     proximal_mu:   float = 0.0,
     global_params: list  = None,
-<<<<<<< HEAD
-) -> float:
-    """
-    Train for one epoch. Returns mean loss.
-    proximal_mu > 0 → FedProx: adds ||w - w_global||² penalty.
-=======
     scaler=None,
 ) -> float:
     """
@@ -103,28 +85,10 @@ def train_one_epoch(
 
     On RTX 4060 with CUDA torch, AMP (FP16) gives ~1.5x throughput; pass a
     torch.amp.GradScaler instance from the caller to enable it.
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
     """
     model.train()
     total_loss, n_batches = 0.0, 0
 
-<<<<<<< HEAD
-    for X_b, y_b in dataloader:
-        X_b, y_b = X_b.to(device), y_b.to(device)
-        optimizer.zero_grad()
-        loss = criterion(model(X_b), y_b)
-
-        if proximal_mu > 0.0 and global_params is not None:
-            prox = sum(
-                (p - g.to(device)).pow(2).sum()
-                for p, g in zip(model.parameters(), global_params)
-            )
-            loss = loss + (proximal_mu / 2.0) * prox
-
-        loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-        optimizer.step()
-=======
     # Mixed-precision context: active on CUDA, no-op on CPU
     use_amp = device.type == 'cuda'
     amp_ctx = (
@@ -158,7 +122,7 @@ def train_one_epoch(
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
 
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
+
         total_loss += loss.item()
         n_batches  += 1
 

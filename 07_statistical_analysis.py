@@ -12,19 +12,11 @@ reject the paper outright.
 METHODS
 -------
   Internal validation (NHANES test set, n ~ 3,130):
-<<<<<<< HEAD
-    → Stratified bootstrap CI (N_BOOTSTRAP=2000, percentile method)
-
-  External validation (BRFSS, n = 1,282,897):
-    → DeLong CI (structural components, Hanley-McNeil)
-    → Paired DeLong test for FedProx vs FedAvg
-=======
     -> Stratified bootstrap CI (N_BOOTSTRAP=2000, percentile method)
 
   External validation (BRFSS, n = 1,282,897):
     -> DeLong CI (structural components, Hanley-McNeil)
     -> Paired DeLong test for FedProx vs FedAvg
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
   References:
     DeLong, DeLong, Clarke-Pearson (1988) Biometrics 44(3):837-845.
@@ -73,13 +65,6 @@ def delong_ci(y_true, y_score, alpha=CI_ALPHA):
     DeLong 95% CI using structural components (Hanley-McNeil method).
     DeLong, DeLong, Clarke-Pearson (1988) Biometrics 44(3):837-845.
 
-<<<<<<< HEAD
-    Use this for EXTERNAL validation (large n — BRFSS n=1,282,897).
-    With n=1.28M the SE is ~0.0003-0.0005, so CIs will be very tight.
-
-    Returns dict with auc, lower, upper, se, V10, V01.
-    V10 / V01 are needed for the paired test.
-=======
     Uses sorted + searchsorted for O((n_pos + n_neg) * log n) time and O(n) memory.
 
     The original kernel-matrix approach allocates an (n_pos x n_neg) float array.
@@ -91,7 +76,6 @@ def delong_ci(y_true, y_score, alpha=CI_ALPHA):
 
     Returns dict with auc, lower, upper, se, V10, V01.
     V10 / V01 are retained for the paired DeLong test.
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
     """
     y_true  = np.asarray(y_true)
     y_score = np.asarray(y_score)
@@ -100,16 +84,6 @@ def delong_ci(y_true, y_score, alpha=CI_ALPHA):
     neg_scores = y_score[y_true == 0]
     n_pos, n_neg = len(pos_scores), len(neg_scores)
 
-<<<<<<< HEAD
-    # Structural components (kernel matrix approach)
-    diff   = pos_scores[:, None] - neg_scores[None, :]
-    kernel = np.where(diff > 0, 1.0, np.where(diff == 0, 0.5, 0.0))
-
-    V10 = kernel.mean(axis=1)           # shape (n_pos,)
-    V01 = 1.0 - kernel.mean(axis=0)    # shape (n_neg,)
-    auc = float(V10.mean())
-
-=======
     # -- V10: for each positive, what fraction of negatives does it beat? --
     neg_sorted = np.sort(neg_scores)
     n_below = np.searchsorted(neg_sorted, pos_scores, side='left')    # neg < pos[i]
@@ -124,7 +98,6 @@ def delong_ci(y_true, y_score, alpha=CI_ALPHA):
     V01 = (n_above.astype(np.float64) + 0.5 * n_equal_01) / n_pos
 
     auc = float(V10.mean())
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
     s10 = np.var(V10, ddof=1) / n_pos
     s01 = np.var(V01, ddof=1) / n_neg
     se  = float(np.sqrt(s10 + s01))
@@ -135,13 +108,8 @@ def delong_ci(y_true, y_score, alpha=CI_ALPHA):
         'lower': float(max(0.0, auc - z * se)),
         'upper': float(min(1.0, auc + z * se)),
         'se'   : se,
-<<<<<<< HEAD
-        'V10'  : V10,   # kept for paired test
-        'V01'  : V01,
-=======
         'V10'  : V10,   # shape (n_pos,) — for paired test
         'V01'  : V01,   # shape (n_neg,) — for paired test
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
     }
 
 
@@ -344,11 +312,7 @@ output = {
 out_path = os.path.join(RESULTS_DIR, 'auc_confidence_intervals.json')
 with open(out_path, 'w') as f:
     json.dump(output, f, indent=2)
-<<<<<<< HEAD
-print(f"\n  Saved → {out_path}")
-=======
 print(f"\n  Saved -> {out_path}")
->>>>>>> 435718c297f04a6b74b12d2ac00504407237e06b
 
 # ── Manuscript summary ────────────────────────────────────────────────────────
 print("\n" + "=" * 65)

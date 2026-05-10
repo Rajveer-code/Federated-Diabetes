@@ -34,7 +34,6 @@ import matplotlib.patches as mpatches
 warnings.filterwarnings('ignore')
 
 from sklearn.metrics import roc_auc_score, roc_curve
-from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 import xgboost as xgb
 
@@ -209,8 +208,11 @@ df_c  = pd.read_csv(CENTRALISED_PATH)
 X_c   = df_c[FEATURE_COLS].values.astype(np.float32)
 y_c   = df_c[TARGET_COL].values.astype(np.float32)
 
-scaler   = StandardScaler()
-X_c_sc   = scaler.fit_transform(X_c).astype(np.float32)
+# CORRECT: load global NHANES-fitted scaler (00_fit_global_scaler.py).
+# Never call fit_transform() on node data — that would contaminate
+# evaluation with node-local statistics (data leakage).
+scaler   = joblib.load(GLOBAL_SCALER_PATH)
+X_c_sc   = scaler.transform(X_c).astype(np.float32)
 scale_pos = float((y_c==0).sum() / (y_c==1).sum())
 
 xgb_clf  = xgb.XGBClassifier(**XGB_PARAMS, scale_pos_weight=scale_pos)

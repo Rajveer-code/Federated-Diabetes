@@ -54,14 +54,14 @@ import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 warnings.filterwarnings('ignore')
 
+import joblib
 from sklearn.metrics import roc_auc_score
-from sklearn.preprocessing import StandardScaler
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config_paths import (
     NODE_PATHS, NODE_NAMES, CENTRALISED_PATH,
     RESULTS_DIR, PLOTS_DIR, MODELS_DIR,
-    FEATURE_COLS, TARGET_COL,
+    FEATURE_COLS, TARGET_COL, GLOBAL_SCALER_PATH,
     FL_NUM_ROUNDS, FEDPROX_MU,
     NN_BATCH_SIZE, NN_LR, NN_WEIGHT_DECAY,
     PUBLISHED_INTERNAL_AUC, PUBLISHED_EXTERNAL_AUC, SEED,
@@ -102,8 +102,11 @@ print("=" * 65)
 df_eval  = pd.read_csv(CENTRALISED_PATH)
 X_eval   = df_eval[FEATURE_COLS].values.astype(np.float32)
 y_eval   = df_eval[TARGET_COL].values.astype(np.float32)
-_scaler  = StandardScaler()
-X_eval_sc = _scaler.fit_transform(X_eval).astype(np.float32)
+# CORRECT: load global NHANES-fitted scaler (00_fit_global_scaler.py).
+# Never call fit_transform() on node data — that would contaminate
+# evaluation with node-local statistics (data leakage).
+_scaler  = joblib.load(GLOBAL_SCALER_PATH)
+X_eval_sc = _scaler.transform(X_eval).astype(np.float32)
 
 
 @torch.no_grad()

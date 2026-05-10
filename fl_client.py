@@ -17,7 +17,8 @@ from flwr.common import NDArrays, Scalar
 from nn_model   import DiabetesNet, train_one_epoch, evaluate_model
 from data_utils import (load_node_data, get_dataloaders, compute_class_weight,
                          get_params_as_numpy, set_params_from_numpy, get_device)
-from config_paths import FL_NUM_ROUNDS
+import joblib
+from config_paths import FL_NUM_ROUNDS, GLOBAL_SCALER_PATH
 
 
 class DiabetesClient(fl.client.NumPyClient):
@@ -43,7 +44,8 @@ class DiabetesClient(fl.client.NumPyClient):
 
         # Load + split + scale data
         X_tr, y_tr, X_val, y_val, self.scaler = load_node_data(
-            data_path, val_size=0.2, seed=seed
+            data_path, val_size=0.2, seed=seed,
+            scaler=joblib.load(GLOBAL_SCALER_PATH), fit_scaler=False
         )
         self.train_dl, self.val_dl = get_dataloaders(
             X_tr, y_tr, X_val, y_val, batch_size=batch_size

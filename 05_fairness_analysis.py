@@ -237,7 +237,8 @@ def train_fedprox(num_rounds=FL_NUM_ROUNDS):
     all_loaders, all_n, all_y = [], [], []
     for path in NODE_PATHS:
         X_tr, y_tr, X_val, y_val, _ = load_node_data(
-            path, val_size=0.2, seed=SEED
+            path, val_size=0.2, seed=SEED,
+            scaler=joblib.load(GLOBAL_SCALER_PATH), fit_scaler=False
         )
         tr_dl, _ = get_dataloaders(X_tr, y_tr, X_val, y_val, NN_BATCH_SIZE)
         all_loaders.append(tr_dl)

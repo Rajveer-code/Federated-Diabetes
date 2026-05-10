@@ -25,15 +25,15 @@ import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 warnings.filterwarnings('ignore')
 
+import joblib
 from sklearn.metrics import roc_auc_score
-from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config_paths import (
     NODE_PATHS, CENTRALISED_PATH, RESULTS_DIR, PLOTS_DIR,
-    FEATURE_COLS, TARGET_COL,
+    FEATURE_COLS, TARGET_COL, GLOBAL_SCALER_PATH,
     DP_EPSILON_LEVELS, DP_TARGET_DELTA, DP_MAX_GRAD_NORM,
     PUBLISHED_ELDERLY_GAP, PUBLISHED_INTERNAL_AUC, PUBLISHED_EXTERNAL_AUC,
     NN_LR, SEED,
@@ -150,8 +150,11 @@ df_pool = pd.concat([pd.read_csv(p) for p in NODE_PATHS], ignore_index=True)
 X_pool  = df_pool[FEATURE_COLS].values.astype(np.float32)
 y_pool  = df_pool[TARGET_COL].values.astype(np.float32)
 
-scaler    = StandardScaler()
-X_pool_sc = scaler.fit_transform(X_pool).astype(np.float32)
+# CORRECT: load global NHANES-fitted scaler (00_fit_global_scaler.py).
+# Never call fit_transform() on node data — that would contaminate
+# evaluation with node-local statistics (data leakage).
+scaler    = joblib.load(GLOBAL_SCALER_PATH)
+X_pool_sc = scaler.transform(X_pool).astype(np.float32)
 
 idx_tr, idx_val = train_test_split(
     np.arange(len(X_pool_sc)), test_size=0.2,

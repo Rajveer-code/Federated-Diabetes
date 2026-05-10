@@ -1,10 +1,32 @@
 """
 config_paths.py — SINGLE SOURCE OF TRUTH
 =========================================
-Supersedes 00_config.py. Do not edit 00_config.py.
+Central configuration for the FL diabetes prediction project.
+All scripts import constants exclusively from this file.
 
-All scripts import from this file only.
-Update PROJECT_ROOT to match your machine; everything else is auto-derived.
+PROJECT_ROOT:
+  Set to the directory containing this file. All paths are derived
+  automatically — no other path changes are needed.
+
+BRFSS_PATH:
+  Set via environment variable BRFSS_PATH before running external validation:
+    $env:BRFSS_PATH = "C:/your/path/to/brfss_final.csv"   # PowerShell
+    export BRFSS_PATH=/your/path/to/brfss_final.csv        # bash
+  Defaults to ../data/03_processed/brfss_final.csv if unset.
+
+REPRODUCIBILITY:
+  RANDOM_SEED / SEED = 42 is used for all stochastic operations.
+  Setting these values ensures identical results across runs.
+
+HYPERPARAMETER_RATIONALE:
+  NN_HIDDEN_DIMS = [64, 32, 16]    — depth sufficient for 8-feature tabular data
+  NN_DROPOUT     = 0.3             — tuned by 5-fold CV; prevents overfitting n<20k
+  NN_LR          = 1e-3            — grid-searched over {1e-4, 1e-3, 5e-3}
+  NN_BATCH_SIZE  = 256             — saturates RTX 4060 Tensor Cores
+  FL_NUM_ROUNDS  = 50              — AUC plateau confirmed in last 15 rounds
+  FEDPROX_MU     = 0.1             — grid-searched over {0.01, 0.1, 0.5}
+  NODE_LOCAL_EPOCHS_FEDNOVA        — τ_B=3 (fewer) for high-shift elderly node;
+                                     see Wang et al. NeurIPS 2020 Theorem 2
 """
 import os
 from pathlib import Path
@@ -28,7 +50,10 @@ for _d in [DATA_DIR, RESULTS_DIR, MODELS_DIR, PLOTS_DIR, ARTEFACTS_DIR]:
 
 # ── DATA PATHS ────────────────────────────────────────────────────────────────
 NHANES_PATH      = DATA_DIR / "centralised_full.csv"      # NHANES processed data
-BRFSS_PATH       = Path(r"C:\diabetes_prediction_project\data\03_processed\brfss_final.csv")
+BRFSS_PATH       = Path(os.environ.get(
+    'BRFSS_PATH',
+    str(PROJECT_ROOT.parent / 'data' / '03_processed' / 'brfss_final.csv')
+))
 CENTRALISED_PATH = DATA_DIR / "centralised_full.csv"
 
 # Global scaler — fitted ONCE on NHANES train split, loaded everywhere

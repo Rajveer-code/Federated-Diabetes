@@ -18,19 +18,17 @@ env/
 .ipynb_checkpoints/
 *.ipynb
 
-# IDE
+# IDE and tool configuration (never committed)
 .vscode/
 .idea/
 *.suo
 *.user
+.claude/
 
 # OS
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# Claude Code internal (never committed)
-.claude/
 
 # Manuscripts — unpublished research, not committed to public repo
 *.docx
@@ -67,10 +65,7 @@ federated/plots/
 .worktrees/
 worktrees/
 
-# Pip install artifacts
-=1.4.0
-=1.5.0
-
 # Misc
 *.log
 *.tmp
+=*.0

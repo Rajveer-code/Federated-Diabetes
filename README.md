@@ -1,273 +1,283 @@
 # Privacy-Preserving Federated Learning for Diabetes Risk Prediction
 
-**Multi-site machine learning with fairness analysis, differential privacy, and post-hoc calibration**
+> Multi-site machine learning with demographic fairness analysis, differential privacy, and post-hoc calibration — validated on 1.28 million patients.
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
 [![PyTorch 2.0+](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C.svg)](https://pytorch.org)
-[![Flower FL](https://img.shields.io/badge/Flower-1.5-blueviolet.svg)](https://flower.dev)
+[![Flower FL](https://img.shields.io/badge/Flower-1.5%2B-blueviolet.svg)](https://flower.dev)
+[![Opacus DP](https://img.shields.io/badge/Opacus-1.4%2B-ff69b4.svg)](https://opacus.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
-[![Journal: JBI](https://img.shields.io/badge/Target-JBI%20Q1-orange.svg)](https://www.journals.elsevier.com/journal-of-biomedical-informatics)
+[![Target: JBI Q1](https://img.shields.io/badge/Target-JBI%20Q1%20Elsevier-orange.svg)](https://www.journals.elsevier.com/journal-of-biomedical-informatics)
 
 **Author:** Rajveer Singh Pall  
 **Affiliation:** Gyan Ganga Institute of Technology and Sciences, Jabalpur, India  
-**Target venue:** *Journal of Biomedical Informatics* (JBI/Elsevier, Q1)
+**Submitted to:** *Journal of Biomedical Informatics* (JBI/Elsevier, Q1)
 
 ---
 
-## Abstract
+## Overview
 
-Centralised machine learning for diabetes risk prediction requires aggregating sensitive patient records across institutions — a practice that conflicts with HIPAA, GDPR, and institutional policy. This project implements and evaluates a privacy-preserving **federated learning (FL)** framework that trains across three demographically heterogeneous hospital nodes without sharing raw data.
+Centralised machine learning for healthcare requires pooling raw patient records across institutions — a practice that conflicts with HIPAA, GDPR, and the practical realities of hospital data governance. This project implements and evaluates a **privacy-preserving federated learning (FL)** framework for type-2 diabetes risk prediction that keeps patient data on-site while still enabling multi-institutional collaboration.
 
-Four FL aggregation strategies — FedAvg, FedProx (μ=0.1), FedNova (τ={5,3,4}), and SCAFFOLD (Option II) — are benchmarked against a centralised XGBoost baseline on NHANES training data and validated externally on **1,282,897 BRFSS respondents** — the largest independent validation reported for this prediction task. The study jointly evaluates discrimination, **demographic fairness** (elderly–young AUC gap), **post-hoc calibration** (Platt, isotonic, temperature scaling), and the **differential privacy–utility tradeoff** (DP-SGD, ε ∈ {0.5, 1.0, 2.0, 5.0, ∞}).
+Four FL aggregation strategies — **FedAvg**, **FedProx** (μ=0.1), **FedNova** (τ={5,3,4}), and **SCAFFOLD** (Option II) — are trained on demographically partitioned NHANES data and validated externally on **1,282,897 BRFSS respondents**, the largest independent validation reported for this prediction task. Beyond discrimination (AUC), the study rigorously evaluates **demographic fairness** (elderly–young AUC gap), **calibration** (Platt, isotonic, temperature scaling), and the **differential privacy–utility tradeoff** (DP-SGD, ε ∈ {0.5, 1.0, 2.0, 5.0, ∞}).
 
-FedAvg achieves an external AUC of **0.757 [0.756–0.758]**, a 8.2-point improvement over the centralised baseline (0.700), while reducing the elderly fairness gap from a published benchmark of 0.135 to **0.054 — a 60.7% improvement**. Isotonic recalibration reduces the Expected Calibration Error from 0.319 to **0.001**. Tight differential privacy (ε ≤ 5) causes model collapse at the per-node sample sizes typical in healthcare FL, revealing a fundamental privacy–utility tension that informs realistic deployment decisions.
+FedAvg achieves an external AUC of **0.757 [0.756–0.758]**, outperforming the centralised XGBoost baseline (0.700) by 8.2 percentage points. The federated framework reduces the elderly–young fairness gap from 0.069 (centralised) to **0.054**, and isotonic recalibration reduces the Expected Calibration Error from 0.319 to **< 0.002**. Tight differential privacy (ε ≤ 5) causes model collapse at the per-node sample sizes typical in healthcare, surfacing a fundamental privacy–utility tension relevant to real-world deployment.
 
 ---
 
-## Key Results
+## Results at a Glance
+
+### Discrimination — Internal (NHANES) and External (BRFSS) Validation
 
 | Model | Internal AUC [95% CI] | External AUC [95% CI] | Elderly Gap (Δ) |
-|---|---|---|---|
+|:---|:---:|:---:|:---:|
 | Centralised XGBoost (baseline) | 0.769 [0.760–0.777] | 0.700 [0.698–0.701] | 0.069 |
-| **FedAvg** | **0.788 [0.779–0.796]** | **0.757 [0.756–0.758]** | **0.054** |
+| **FedAvg** ⭐ | **0.788 [0.779–0.796]** | **0.757 [0.756–0.758]** | **0.054** |
 | FedProx (μ=0.1) | 0.785 [0.776–0.793] | 0.752 [0.751–0.753] | 0.066 |
 | FedNova (τ={5,3,4}) | 0.786 [0.778–0.794] | 0.744 [0.743–0.745] | 0.064 |
-| SCAFFOLD (Option II, SGD) | 0.642 (50 rounds) | — | — |
-| Published benchmark [Ahsan 2022] | 0.742 (young) | — | 0.135 |
+| SCAFFOLD (SGD, 50 rounds) | 0.642 (internal only) | — | — |
+| Published benchmark [Ahsan et al. 2022] | 0.742 (young subgroup) | — | 0.135 |
 
-**Calibration (FedProx, BRFSS external):**
+Internal CIs: stratified bootstrap (N=2,000, n=15,650). External CIs: DeLong structural components estimator (n=1,282,897).
 
-| Method | ECE | AUC |
-|---|---|---|
-| Uncalibrated | 0.319 | 0.752 |
-| Platt scaling | 0.016 | 0.752 |
-| Isotonic regression | **0.001** | 0.752 |
-| Temperature (T=2.25) | 0.311 | 0.752 |
+### Calibration — FedProx on BRFSS External Set
 
-Internal CIs: stratified bootstrap (N=2,000, NHANES test n=15,650).  
-External CIs: DeLong structural components estimator (O(n log n), BRFSS n=1,282,897).
+| Method | ECE | AUC | Notes |
+|:---|:---:|:---:|:---|
+| Uncalibrated | 0.319 | 0.752 | Severe overconfidence |
+| Platt scaling | 0.016 | 0.752 | Two-parameter fix; robust to small cal sets |
+| **Isotonic regression** ⭐ | **0.001** | 0.752 | Near-perfect calibration |
+| Temperature scaling (T=2.25) | 0.311 | 0.752 | Limited benefit; non-monotone curve |
+
+### Differential Privacy Tradeoff
+
+| ε (target) | AUC | Outcome |
+|:---:|:---:|:---|
+| 0.5 | 0.500 | Model collapse |
+| 1.0 | 0.498 | Model collapse |
+| 2.0 | 0.516 | Model collapse |
+| 5.0 | 0.500 | Model collapse |
+| ∞ (no DP) | 0.766 | Full recovery |
+
+All collapse at ε ≤ 5 reflects the high noise multiplier required at healthcare-scale sampling rates (~5–15%).
 
 ---
 
 ## Research Questions
 
-| RQ | Question | Finding |
-|---|---|---|
-| **RQ1 — Performance** | Can FL match or exceed a centralised model on held-out external data? | ✅ FedAvg +8.2pp external AUC over centralised XGBoost |
-| **RQ2 — Fairness** | Does federated training reduce demographic AUC disparity? | ✅ Elderly gap: 0.135 → 0.054 (FedAvg); 60.7% improvement vs. benchmark |
-| **RQ3 — Privacy** | What is the accuracy cost of differential privacy at clinically meaningful ε? | ⚠️ Model collapse at ε ≤ 5 for healthcare-scale per-node sample counts |
-| **RQ4 — Calibration** | Are federated risk scores clinically trustworthy (well-calibrated)? | ✅ Isotonic recalibration: ECE 0.319 → 0.001; Platt: 0.319 → 0.016 |
+| | Question | Finding |
+|:---|:---|:---|
+| **RQ1 · Performance** | Can FL match or exceed a centralised model on external data? | ✅ FedAvg +8.2 pp external AUC vs. centralised XGBoost |
+| **RQ2 · Fairness** | Does federated training reduce demographic AUC disparity? | ✅ Elderly gap: 0.069 → 0.054 (21.7% within-study improvement) |
+| **RQ3 · Privacy** | What is the accuracy cost of differential privacy? | ⚠️ Model collapse at ε ≤ 5 for per-node sample sizes of 3–4.5k |
+| **RQ4 · Calibration** | Are federated risk scores clinically trustworthy? | ✅ ECE 0.319 → 0.001 after isotonic recalibration |
 
 ---
 
 ## Repository Structure
 
 ```
-diabetes_prediction_project/
-├── federated/                           # Core FL codebase (git submodule)
-│   ├── 00_fit_global_scaler.py          # Fit NHANES scaler (must run first)
-│   ├── 01_partition_data.py             # Partition NHANES into 3 nodes
-│   ├── 02_centralised_baseline.py       # XGBoost + centralised DiabetesNet
-│   ├── 03_federated_simulation.py       # FedAvg / FedProx simulation
-│   ├── 03b_fednova_corrected.py         # FedNova (gradient normalisation)
-│   ├── 04_differential_privacy.py       # DP-SGD privacy-utility tradeoff
-│   ├── 05_fairness_analysis.py          # Subgroup AUC + EOD fairness
-│   ├── 06_results_summary.py            # Consolidated results table
-│   ├── 07_external_validation.py        # BRFSS external validation
-│   ├── 07_statistical_analysis.py       # Bootstrap + DeLong CIs
-│   ├── 08_scaffold_baseline.py          # SCAFFOLD Option II (Karimireddy 2020)
-│   ├── 09_calibration_analysis.py       # Platt / Isotonic / Temperature scaling
-│   ├── 10_stratified_centralised_experiment.py  # Mechanism analysis
-│   ├── 11_subgroup_confidence_intervals.py      # Bootstrap subgroup CIs
-│   ├── 12_dp_technical_details.py       # RDP accounting tables
-│   ├── 13_apply_manuscript_edits.py     # Patches v4 manuscript
-│   ├── generate_publication_figures.py  # All 8 publication figures
-│   ├── write_manuscript_v5.py           # Generates full manuscript DOCX
-│   ├── config_paths.py                  # Centralised hyperparameters + paths
-│   ├── nn_model.py                      # DiabetesNet architecture
-│   ├── fl_client.py                     # Flower FL client (DiabetesClient)
-│   ├── data_utils.py                    # Data loading + preprocessing
-│   ├── data/                            # NHANES node CSVs (not committed)
-│   ├── models/                          # Trained weights (not committed)
-│   ├── artefacts/                       # Global scaler (not committed)
-│   └── results/                         # JSON metrics + .npy predictions
-│       ├── auc_confidence_intervals.json
-│       ├── external_validation.json
-│       ├── calibration_results.json
-│       ├── scaffold_results.json
-│       ├── dp_results.json
-│       └── figures/                     # 8 × 300 dpi publication figures
-├── docs/
-│   ├── FL_Diabetes_Manuscript_v5_Submission.docx  # Final submission manuscript
-│   └── Supplementary_Material.docx                # Tables S1–S4
+Federated-Diabetes/
+│
+├── federated/                              # Core FL pipeline
+│   │
+│   ├── ── Core modules ──
+│   ├── config_paths.py                     # All hyperparameters and paths (single source of truth)
+│   ├── nn_model.py                         # DiabetesNet: 4-layer MLP, BatchNorm, AdamW
+│   ├── fl_client.py                        # Flower FL client (DiabetesClient)
+│   ├── data_utils.py                       # Data loading, preprocessing, node splits
+│   │
+│   ├── ── Pipeline (run in order) ──
+│   ├── 00_fit_global_scaler.py             # Fit StandardScaler on NHANES training split only
+│   ├── 01_partition_data.py                # Partition NHANES into 3 demographically distinct nodes
+│   ├── 02_centralised_baseline.py          # XGBoost + centralised DiabetesNet baselines
+│   ├── 03_federated_simulation.py          # FedAvg + FedProx (50 rounds, 3 nodes)
+│   ├── 03b_fednova_corrected.py            # FedNova with corrected gradient normalisation
+│   ├── 04_differential_privacy.py          # DP-SGD experiments (ε ∈ {0.5, 1, 2, 5, ∞})
+│   ├── 05_fairness_analysis.py             # Subgroup AUC, fairness gap, equalised odds
+│   ├── 06_results_summary.py               # Consolidated results table
+│   ├── 07_external_validation.py           # BRFSS 2020–2022 external validation (n=1.28M)
+│   ├── 07_statistical_analysis.py          # Stratified bootstrap + DeLong CIs
+│   ├── 08_scaffold_baseline.py             # SCAFFOLD Option II (Karimireddy et al. ICML 2020)
+│   ├── 09_calibration_analysis.py          # Platt / isotonic / temperature scaling + ECE
+│   ├── 10_stratified_centralised_experiment.py  # Mechanism analysis (federation vs. composition)
+│   ├── 11_subgroup_confidence_intervals.py      # Bootstrap CIs for fairness gap
+│   ├── 12_dp_technical_details.py               # RDP accounting tables
+│   │
+│   ├── ── Outputs ──
+│   ├── generate_publication_figures.py     # All 8 publication figures (300 dpi)
+│   ├── write_manuscript_v5.py              # Generates complete JBI manuscript (DOCX)
+│   │
+│   └── results/                            # All committed result artefacts
+│       ├── auc_confidence_intervals.json   # Bootstrap + DeLong CIs for all models
+│       ├── external_validation.json        # BRFSS AUC + subgroup fairness
+│       ├── calibration_results.json        # ECE before/after calibration
+│       ├── federated_convergence.json      # Round-by-round AUC for FedAvg/FedProx
+│       ├── fednova_corrected.json          # FedNova results
+│       ├── scaffold_results.json           # SCAFFOLD convergence (50 rounds)
+│       ├── dp_results.json                 # DP-SGD results per ε level
+│       ├── fairness_metrics.json           # Subgroup AUC + fairness gaps
+│       └── figures/                        # 8 × 300 dpi publication figures
+│           ├── fig1_architecture.png       # System architecture + DiabetesNet diagram
+│           ├── fig2_convergence.png        # Round-by-round AUC convergence
+│           ├── fig3_roc_curves.png         # ROC curves (internal + external)
+│           ├── fig4_fairness.png           # Age-stratified AUC + fairness gap
+│           ├── fig5_dp_tradeoff.png        # Privacy–utility tradeoff
+│           ├── fig6_calibration.png        # Reliability diagrams (4 methods)
+│           ├── fig7_generalisation_gap.png # Internal vs. external AUC gap
+│           └── fig8_summary_comparison.png # Overall model comparison
+│
 ├── README.md
+├── requirements.txt
+├── LICENSE                                 # MIT
 └── .gitignore
 ```
 
----
-
-## Requirements
-
-```
-python         >= 3.10
-torch          >= 2.0.0
-flwr           >= 1.5.0
-scikit-learn   >= 1.3.0
-xgboost        >= 1.7.0
-numpy          >= 1.24.0
-pandas         >= 2.0.0
-matplotlib     >= 3.7.0
-opacus         >= 1.4.0   # differential privacy
-python-docx    >= 0.8.11  # manuscript generation
-joblib         >= 1.3.0
-scipy          >= 1.11.0
-```
-
-Install: `pip install -r requirements.txt`
+> **Not tracked** (reproducible or sensitive): raw data (`data/`), model weights (`models/`), scaler artefacts (`artefacts/`), prediction arrays (`*.npy`), manuscript DOCX (under review).
 
 ---
 
-## Data Access
+## Setup
 
-### NHANES (Training)
-- Source: [CDC NHANES 2013–2020](https://wwwn.cdc.gov/nchs/nhanes/)
-- Download XPT files for cycles: 2013-14, 2015-16, 2017-18, 2019-20
-- Features used: `RIDAGEYR`, `BMXBMI`, `BPXOSY3`, `LBXGH`, `LBXGLU`, `LBXTC`, `PAQ650`, `SMQ020`, `RIAGENDR`
-- Preprocessing: `01_partition_data.py` handles cleaning, imputation, and node assignment
-
-### BRFSS (External Validation)
-- Source: [CDC BRFSS 2020–2022](https://www.cdc.gov/brfss/annual_data/annual_data.htm)
-- Download `.XPT` or `.SAS7BDAT` for years 2020, 2021, 2022
-- Set environment variable before running:
-
-```powershell
-$env:BRFSS_PATH = "C:\path\to\brfss_final.csv"
-```
+**Prerequisites:** Python 3.10+, CUDA-capable GPU recommended (CPU works but is slower).
 
 ```bash
+git clone https://github.com/Rajveer-code/Federated-Diabetes.git
+cd Federated-Diabetes
+pip install -r requirements.txt
+```
+
+**Data acquisition:**
+
+| Dataset | Source | Purpose |
+|:---|:---|:---|
+| NHANES 2013–2020 | [cdc.gov/nchs/nhanes](https://wwwn.cdc.gov/nchs/nhanes/) | Training (n=15,650) |
+| BRFSS 2020–2022 | [cdc.gov/brfss](https://www.cdc.gov/brfss/annual_data/annual_data.htm) | External validation (n=1,282,897) |
+
+Download NHANES XPT files for cycles 2013-14, 2015-16, 2017-18, 2019-20. Features used: `RIDAGEYR`, `BMXBMI`, `BPXOSY3`, `LBXGH`, `LBXGLU`, `LBXTC`, `PAQ650`, `SMQ020`, `RIAGENDR`.
+
+For BRFSS external validation, set the path via environment variable:
+```bash
+# Linux / macOS
 export BRFSS_PATH="/path/to/brfss_final.csv"
+
+# Windows (PowerShell)
+$env:BRFSS_PATH = "C:\path\to\brfss_final.csv"
 ```
 
 ---
 
 ## Reproducing Results
 
-Run scripts in order. Expected runtime on a modern GPU (RTX 3060+): ~25 minutes total.
+Run scripts in order from the `federated/` directory. Total expected runtime on an RTX 3060+: **~25 minutes**.
 
 ```bash
 cd federated/
 
-# 1. Fit global scaler on NHANES (MUST run first; prevents data leakage)
+# Step 1 — Fit global scaler (MUST run first; prevents data leakage)
 python 00_fit_global_scaler.py
-# Output: artefacts/global_nhanes_scaler.joblib
+# → artefacts/global_nhanes_scaler.joblib
 
-# 2. Partition NHANES into 3 demographically stratified nodes
+# Step 2 — Partition NHANES into 3 demographically stratified nodes
 python 01_partition_data.py
-# Output: data/node_{A,B,C}_train.csv, data/node_{A,B,C}_val.csv
+# → data/node_{A,B,C}_{train,val}.csv
 
-# 3. Centralised baselines (XGBoost + DiabetesNet)   ~2 min
+# Step 3 — Centralised baselines (~2 min)
 python 02_centralised_baseline.py
-# Output: results/centralised_metrics.json, models/centralised_weights.pt
+# → results/centralised_metrics.json
 
-# 4. Federated simulation: FedAvg + FedProx          ~5 min
+# Step 4 — FedAvg + FedProx simulation (~5 min)
 python 03_federated_simulation.py
-# Output: results/federated_convergence.json, models/fedavg_weights.pt
+# → results/federated_convergence.json
 
-# 5. FedNova (gradient normalisation)                ~5 min
+# Step 5 — FedNova with corrected gradient normalisation (~5 min)
 python 03b_fednova_corrected.py
-# Output: results/fednova_corrected.json, models/fednova_weights.pt
+# → results/fednova_corrected.json
 
-# 6. Differential privacy tradeoff                   ~3 min
+# Step 6 — Differential privacy experiments (~3 min)
 python 04_differential_privacy.py
-# Output: results/dp_results.json
+# → results/dp_results.json
 
-# 7. Fairness analysis (subgroup AUC + EOD)          ~2 min
+# Step 7 — Fairness analysis: subgroup AUC + equalised odds (~2 min)
 python 05_fairness_analysis.py
-# Output: results/fairness_metrics.json
+# → results/fairness_metrics.json
 
-# 8. Results summary table
+# Step 8 — Results summary
 python 06_results_summary.py
 
-# 9. External validation on BRFSS                    ~4 min
-# (requires BRFSS_PATH env var)
+# Step 9 — External validation on BRFSS 2020–2022 (~4 min)
 python 07_external_validation.py
-# Output: results/external_validation.json, results/pred_*_external.npy
+# → results/external_validation.json
 
-# 10. Statistical CIs (bootstrap + DeLong)           ~3 min
+# Step 10 — Statistical CIs: stratified bootstrap + DeLong (~3 min)
 python 07_statistical_analysis.py
-# Output: results/auc_confidence_intervals.json
+# → results/auc_confidence_intervals.json
 
-# 11. SCAFFOLD Option II                             ~1 min
+# Step 11 — SCAFFOLD Option II (~1 min)
 python 08_scaffold_baseline.py
-# Output: results/scaffold_results.json
+# → results/scaffold_results.json
 
-# 12. Post-hoc calibration                          ~2 min
+# Step 12 — Post-hoc calibration analysis (~2 min)
 python 09_calibration_analysis.py
-# Output: results/calibration_results.json
+# → results/calibration_results.json
 
-# 13. Generate all 8 publication figures
+# Step 13 — Generate all 8 publication figures (300 dpi)
 python generate_publication_figures.py
-# Output: results/figures/fig1_architecture.png ... fig8_summary_comparison.png
+# → results/figures/fig{1..8}_*.png
 
-# 14. Generate complete manuscript
+# Step 14 — Generate complete manuscript
 python write_manuscript_v5.py
-# Output: ../FL_Diabetes_Manuscript_v5_Submission.docx
+# → ../FL_Diabetes_Manuscript_v5_Submission.docx
 ```
 
-**Expected outputs after full run:**
-- `results/auc_confidence_intervals.json` — all model CIs
-- `results/external_validation.json` — BRFSS AUC + fairness per model
-- `results/calibration_results.json` — ECE before/after calibration
-- `results/scaffold_results.json` — SCAFFOLD convergence
-- `results/figures/fig{1..8}_*.png` — 8 × 300 dpi publication figures
-- `FL_Diabetes_Manuscript_v5_Submission.docx` — complete manuscript
+All pre-computed results are committed under `federated/results/` so you can inspect metrics and figures immediately without running the full pipeline.
 
 ---
 
 ## Hyperparameters
 
-All hyperparameters are centralised in `federated/config_paths.py` and documented in Supplementary Table S2.
+All hyperparameters are centralised in `federated/config_paths.py`.
 
 | Parameter | Value | Rationale |
-|---|---|---|
-| `FL_NUM_ROUNDS` | 50 | Convergence achieved by round 38 (ΔAUC < 0.001) |
-| `NN_LOCAL_EPOCHS` | 5 | Balance between convergence speed and communication cost |
-| `NN_BATCH_SIZE` | 256 | GPU-optimised; fits within 4 GB VRAM for 8-feature input |
-| `FedProx μ` | 0.1 | Grid search over {0.01, 0.1, 1.0}; 0.1 best external AUC |
-| `FedNova τ` | {5, 3, 4} | Node-specific local update counts matching local dataset sizes |
+|:---|:---:|:---|
+| `FL_NUM_ROUNDS` | 50 | Convergence criterion ΔAUC < 0.001 met by round 38 |
+| `NN_LOCAL_EPOCHS` | 5 | Balances convergence speed and communication cost |
+| `NN_BATCH_SIZE` | 256 | GPU-optimised; fits 4 GB VRAM for 8-feature input |
+| `FedProx μ` | 0.1 | Grid search over {0.01, 0.1, 1.0}; best external AUC |
+| `FedNova τ` | {5, 3, 4} | Node-specific local update counts (high-shift nodes use fewer steps) |
 | `AdamW lr` | 0.001 | CosineAnnealingLR schedule; η_min = 10⁻⁶ |
-| `RANDOM_SEED` | 42 | All experiments; ensures reproducibility |
-| `DP δ` | 10⁻⁵ | Standard for datasets with n < 10⁶ |
+| `RANDOM_SEED` | 42 | Fixed across all experiments for reproducibility |
+| `DP δ` | 10⁻⁵ | Standard choice for datasets with n < 10⁶ |
 | `DP clipping C` | 1.0 | Gradient clipping norm for DP-SGD |
 
 ---
 
-## Key Technical Design Decisions
+## Key Technical Decisions
 
-### Global Scaler (preventing data leakage)
-A single `StandardScaler` is fitted **once** on the NHANES training split by `00_fit_global_scaler.py` and saved as `artefacts/global_nhanes_scaler.joblib`. All nodes call `.transform()` only — never `.fit_transform()`. This prevents the data leakage that would arise if each node independently fitted its own scaler on local data, which would contaminate evaluation with node-local statistics.
+### Global Scaler — Preventing Data Leakage
+A single `StandardScaler` is fitted **once** on the NHANES training split (`00_fit_global_scaler.py`) and saved as a shared artefact. Every node calls `.transform()` only — never `.fit_transform()`. Fitting separate scalers per node would contaminate evaluation with node-local statistics, a subtle but critical form of data leakage that invalidates cross-node comparisons.
 
-### DeLong CI for Large External Set
-Computing bootstrap CIs on 1.28 million BRFSS records is intractable (kernel matrix: 708 GB). We use the DeLong structural components estimator, an O(n log n) algorithm based on searchsorted that produces mathematically equivalent 95% CIs in seconds.
+### DeLong Estimator for Large-Scale CIs
+Stratified bootstrap on 1.28 million BRFSS records is computationally intractable (kernel matrix ≈ 708 GB). We use the DeLong structural components estimator — an O(n log n) algorithm implemented via `numpy.searchsorted` — which produces mathematically equivalent 95% CIs in seconds and is used throughout the external validation analysis.
 
-### SCAFFOLD Optimizer Note
-SCAFFOLD's convergence proof assumes SGD. Our implementation uses SGD with η_l = 0.001, which underperforms AdamW-based strategies at 50 rounds. This is an honest finding: the optimizer choice matters as much as the aggregation strategy in small federated settings.
+### SCAFFOLD with SGD
+SCAFFOLD's convergence guarantee (Karimireddy et al., ICML 2020) requires SGD. Our implementation respects this, which means SCAFFOLD is compared against AdamW-based strategies under an inherent optimizer mismatch. The lower AUC (0.642 vs. 0.788) reflects this combined effect and is reported transparently as an honest finding. A matched AdamW-SCAFFOLD ablation is a natural extension.
 
 ---
 
-## Known Limitations
+## Limitations
 
-- Node partitioning is **simulated** from a single NHANES cohort; real multi-site deployments would have additional between-site batch effects not captured here.
-- The BRFSS smoking variable mapping introduces measurement error (binary cigarette-use vs. clinical NHANES measure).
-- SCAFFOLD was evaluated with SGD (theoretically required); an AdamW variant may perform comparably to FedAvg.
-- Tight differential privacy (ε ≤ 5) causes model collapse at per-node sample sizes of ~3,000–4,500; deployment at these sizes requires either more data or weaker DP notions.
-- All nodes use identical DiabetesNet architecture; personalised FL (per-node models) was not evaluated.
+- Node partitioning is **simulated** from a single national cohort (NHANES). Real deployments involve genuine between-site batch effects, divergent measurement protocols, and independent patient populations not captured here.
+- The BRFSS smoking variable mapping (cigarette-days-per-year → binary) introduces measurement error relative to the clinical NHANES measure.
+- SCAFFOLD was evaluated with SGD (required by theory); performance relative to AdamW-based methods may improve with an adaptive optimiser.
+- Tight differential privacy (ε ≤ 5) causes model collapse at per-node sample sizes of ~3,000–4,500. Realistic deployment at these sizes requires either larger cohorts or weaker DP notions (local DP, shuffling).
+- All nodes share the same DiabetesNet architecture; personalised FL with heterogeneous local models was not evaluated.
 
 ---
 
 ## Citation
 
-If you use this code or build on this work, please cite:
+If this work is useful to you, please cite:
 
 ```bibtex
 @article{pall2025fl_diabetes,
@@ -284,15 +294,13 @@ If you use this code or build on this work, please cite:
 
 ## Ethics Statement
 
-- **NHANES** (training): publicly available, de-identified, conducted under US federal ethics oversight (NCHS IRB).
-- **BRFSS** (external validation): publicly available, de-identified, state-administered with CDC oversight.
-- No new patient data were collected. No IRB approval was required for secondary analysis of public datasets.
-- All model outputs are for research purposes only. This tool is **not** a validated clinical diagnostic instrument.
+- **NHANES** (training data): publicly available, de-identified survey data collected under US federal ethics oversight (NCHS IRB protocol).
+- **BRFSS** (external validation): publicly available, de-identified, state-administered telephone survey with CDC oversight.
+- No new patient data were collected for this study. Secondary analysis of publicly released, de-identified datasets does not require IRB approval under US federal regulations (45 CFR 46.104).
+- All model outputs are for **research purposes only**. This codebase does not constitute a validated clinical diagnostic tool and should not be used for patient-level clinical decisions.
 
 ---
 
 ## License
 
-MIT License — see [LICENSE](LICENSE).
-
-Free to use, modify, and distribute with attribution.
+MIT License — see [LICENSE](LICENSE). Free to use, modify, and distribute with attribution.

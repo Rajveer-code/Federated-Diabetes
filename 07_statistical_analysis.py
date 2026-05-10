@@ -230,6 +230,7 @@ y_true_brfss   = load_npy('y_true_brfss.npy')
 pred_fedprox_x = load_npy('pred_fedprox_external.npy')
 pred_fedavg_x  = load_npy('pred_fedavg_external.npy')
 pred_fednova_x = load_npy('pred_fednova_external.npy')
+pred_xgb_x     = load_npy('pred_xgb_external.npy')
 
 # ── Internal AUCs (Bootstrap CI) ─────────────────────────────────────────────
 print("\n[2/4] Internal AUC (Bootstrap CI, N_BOOTSTRAP={})...".format(N_BOOTSTRAP))
@@ -263,6 +264,7 @@ external_models = [
     ('FedProx', pred_fedprox_x),
     ('FedAvg',  pred_fedavg_x),
     ('FedNova', pred_fednova_x),
+    ('XGBoost', load_npy('pred_xgb_external.npy')),
 ]
 
 if y_true_brfss is not None:

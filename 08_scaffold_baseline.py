@@ -155,7 +155,7 @@ def scaffold_client_update(node_idx, global_params, c_i, c_global, train_dl):
             optimizer.zero_grad()
             if scaler_amp is not None:
                 with torch.autocast('cuda'):
-                    loss = criterion(model(X_batch).squeeze(1), y_batch)
+                    loss = criterion(model(X_batch), y_batch)
                 scaler_amp.scale(loss).backward()
                 # Apply SCAFFOLD correction: grad = grad - c_i + c_global
                 scaler_amp.unscale_(optimizer)
@@ -165,7 +165,7 @@ def scaffold_client_update(node_idx, global_params, c_i, c_global, train_dl):
                 scaler_amp.step(optimizer)
                 scaler_amp.update()
             else:
-                loss = criterion(model(X_batch).squeeze(1), y_batch)
+                loss = criterion(model(X_batch), y_batch)
                 loss.backward()
                 for param, ci_v, cg_v in zip(model.parameters(), c_i_t, c_g_t):
                     if param.grad is not None:

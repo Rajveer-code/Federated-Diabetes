@@ -203,6 +203,7 @@ print("\n[2/5] Evaluating centralised XGBoost...")
 xgb_path = os.path.join(MODELS_DIR, 'centralised_xgb.pkl')
 xgb_model = joblib.load(xgb_path)
 y_prob_xgb = xgb_model.predict_proba(X_brfss_sc)[:, 1]
+np.save(os.path.join(RESULTS_DIR, 'pred_xgb_external.npy'), y_prob_xgb)
 metrics_xgb = compute_metrics(y_brfss, y_prob_xgb)
 fairness_xgb = fairness_on_brfss(y_brfss, y_prob_xgb, df_brfss)
 

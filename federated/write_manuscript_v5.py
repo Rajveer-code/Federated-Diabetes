@@ -866,7 +866,7 @@ refs = [
     'Scientific Reports. 2020;10:12598.',
     'Erlingsson Ú, Pihur V, Korolova A. RAPPOR: Randomized aggregatable '
     'privacy-preserving ordinal response. CCS 2014.',
-    'Tramr F, Boneh D. Differentially private learning needs better features. '
+    'Tramèr F, Boneh D. Differentially private learning needs better features. '
     'ICLR 2021.',
 ]
 for i, ref in enumerate(refs, 1):
@@ -915,7 +915,8 @@ for i, row_data in enumerate(tbl1_data):
         if i == 0:
             run.bold = True
             shade_cell(cell, 'DBEAFE')
-        elif i == 2:  # FedAvg best row
+        elif i == 2:  # FedAvg best row — bold to match caption "Bold: best external AUC"
+            run.bold = True
             shade_cell(cell, 'F0FDF4')
         cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
 

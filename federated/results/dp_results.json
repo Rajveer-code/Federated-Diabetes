@@ -1,0 +1,45 @@
+{
+  "epsilon_target": [
+    "0.5",
+    "1.0",
+    "2.0",
+    "5.0",
+    "inf"
+  ],
+  "epsilon_actual": [
+    0.4914,
+    0.9977,
+    1.9985,
+    4.9962,
+    "inf"
+  ],
+  "auc": [
+    0.5,
+    0.49818,
+    0.51556,
+    0.5,
+    0.76636
+  ],
+  "elderly_gap": [
+    null,
+    0.00298,
+    -0.06841,
+    null,
+    0.16386
+  ],
+  "young_auc": [
+    0.5,
+    0.50192,
+    0.46047,
+    0.5,
+    0.79155
+  ],
+  "elderly_auc": [
+    0.5,
+    0.49895,
+    0.52888,
+    0.5,
+    0.62769
+  ],
+  "note": "batch_size=512, epochs=5. Collapse at tight eps reflects fundamental privacy-utility tension in healthcare FL."
+}

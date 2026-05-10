@@ -1,0 +1,71 @@
+{
+  "ece_10bins": 0.276172,
+  "brier_score": 0.217176,
+  "brier_reliability": 0.113363,
+  "brier_resolution": 0.011636,
+  "brier_uncertainty": 0.11545,
+  "n_samples": 1282897,
+  "n_bins": 10,
+  "bin_data": [
+    {
+      "bin": 1,
+      "mean_pred": 0.013938,
+      "frac_pos": 0.025156,
+      "count": 378235
+    },
+    {
+      "bin": 2,
+      "mean_pred": 0.147657,
+      "frac_pos": 0.059783,
+      "count": 47689
+    },
+    {
+      "bin": 3,
+      "mean_pred": 0.253729,
+      "frac_pos": 0.067107,
+      "count": 50829
+    },
+    {
+      "bin": 4,
+      "mean_pred": 0.351462,
+      "frac_pos": 0.079379,
+      "count": 74125
+    },
+    {
+      "bin": 5,
+      "mean_pred": 0.45631,
+      "frac_pos": 0.103971,
+      "count": 112252
+    },
+    {
+      "bin": 6,
+      "mean_pred": 0.559552,
+      "frac_pos": 0.136863,
+      "count": 210744
+    },
+    {
+      "bin": 7,
+      "mean_pred": 0.641644,
+      "frac_pos": 0.200969,
+      "count": 201091
+    },
+    {
+      "bin": 8,
+      "mean_pred": 0.745594,
+      "frac_pos": 0.276242,
+      "count": 111757
+    },
+    {
+      "bin": 9,
+      "mean_pred": 0.846352,
+      "frac_pos": 0.357723,
+      "count": 67337
+    },
+    {
+      "bin": 10,
+      "mean_pred": 0.933874,
+      "frac_pos": 0.461891,
+      "count": 28838
+    }
+  ]
+}

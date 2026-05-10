@@ -97,8 +97,9 @@ diabetes_prediction_project/
 │       ├── scaffold_results.json
 │       ├── dp_results.json
 │       └── figures/                     # 8 × 300 dpi publication figures
-├── FL_Diabetes_Manuscript_v5_Submission.docx    # Final manuscript
-├── Supplementary_Material.docx                  # Tables S1–S4
+├── docs/
+│   ├── FL_Diabetes_Manuscript_v5_Submission.docx  # Final submission manuscript
+│   └── Supplementary_Material.docx                # Tables S1–S4
 ├── README.md
 └── .gitignore
 ```

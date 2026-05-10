@@ -440,6 +440,84 @@ fairness_metrics = {
         },
     },
 }
+
+# ── FedAvg EOD (for Table 6 in manuscript) ──────────────────────────────────
+import sys as _sys
+_fedavg_path = os.path.join(MODELS_DIR, 'fedavg_weights.pt')
+_fednova_path = os.path.join(MODELS_DIR, 'fednova_corrected_weights.pt')
+
+def _compute_subgroup_specific_eod(y_true, y_score, sensitive_attr, names):
+    """EOD at subgroup-specific Youden thresholds."""
+    groups = [0, 1]
+    thresholds = {}
+    for g in groups:
+        m = sensitive_attr == g
+        fpr_g, tpr_g, thresh_g = roc_curve(y_true[m], y_score[m])
+        thresholds[g] = float(thresh_g[np.argmax(tpr_g - fpr_g)])
+
+    results = {}
+    for g in groups:
+        m = sensitive_attr == g
+        thresh = thresholds[g]
+        y_pred = (y_score >= thresh).astype(int)
+        tp = np.sum((y_pred[m] == 1) & (y_true[m] == 1))
+        fn = np.sum((y_pred[m] == 0) & (y_true[m] == 1))
+        fp = np.sum((y_pred[m] == 1) & (y_true[m] == 0))
+        tn = np.sum((y_pred[m] == 0) & (y_true[m] == 0))
+        results[g] = {
+            'tpr': float(tp/(tp+fn)) if (tp+fn) > 0 else 0.0,
+            'fpr': float(fp/(fp+tn)) if (fp+tn) > 0 else 0.0,
+            'threshold': thresh,
+            'name': names[g],
+        }
+    eod = max(
+        abs(results[0]['tpr'] - results[1]['tpr']),
+        abs(results[0]['fpr'] - results[1]['fpr']),
+    )
+    results['eod'] = float(eod)
+    return results
+
+eod_table6 = {}
+
+for _model_name, _weights_path in [('FedAvg', _fedavg_path), ('FedNova', _fednova_path)]:
+    if not os.path.exists(_weights_path):
+        print(f"  SKIP {_model_name}: weights not found at {_weights_path}")
+        continue
+    _m = DiabetesNet().to(DEVICE)
+    _m.load_state_dict(torch.load(_weights_path, map_location='cpu'))
+    _m = _m.to(DEVICE)
+    _m.eval()
+    with torch.no_grad():
+        _y_prob = torch.sigmoid(
+            _m(torch.FloatTensor(X_c_sc).to(DEVICE))
+        ).cpu().numpy()
+
+    # Global Youden threshold EOD
+    _eod_global = equalized_odds_diff(y_c, _y_prob, age_binary)
+
+    # Subgroup-specific Youden threshold EOD
+    _eod_specific = _compute_subgroup_specific_eod(y_c, _y_prob, age_binary, age_names)
+
+    eod_table6[_model_name] = {
+        'global': _eod_global,
+        'subgroup_specific': _eod_specific,
+    }
+
+    print(f"\n  {_model_name} EOD (global Youden threshold = {_eod_global['threshold']:.3f}):")
+    print(f"    Young  TPR={_eod_global[0]['tpr']:.3f}  FPR={_eod_global[0]['fpr']:.3f}")
+    print(f"    Elderly TPR={_eod_global[1]['tpr']:.3f}  FPR={_eod_global[1]['fpr']:.3f}")
+    print(f"    EOD = {_eod_global['eod']:.3f}")
+    print(f"  {_model_name} EOD (subgroup-specific thresholds):")
+    print(f"    Young  threshold={_eod_specific[0]['threshold']:.3f}  TPR={_eod_specific[0]['tpr']:.3f}  FPR={_eod_specific[0]['fpr']:.3f}")
+    print(f"    Elderly threshold={_eod_specific[1]['threshold']:.3f}  TPR={_eod_specific[1]['tpr']:.3f}  FPR={_eod_specific[1]['fpr']:.3f}")
+    print(f"    EOD = {_eod_specific['eod']:.3f}")
+
+# Save Table 6 EOD values
+with open(os.path.join(RESULTS_DIR, 'table6_eod_values.json'), 'w') as _f:
+    json.dump(eod_table6, _f, indent=2)
+print(f"\n  Saved EOD values for Table 6 → results/table6_eod_values.json")
+
+
 with open(os.path.join(RESULTS_DIR, 'fairness_metrics.json'), 'w') as f:
     json.dump(fairness_metrics, f, indent=2)
 print(f"  Saved -> results/fairness_metrics.json")

@@ -13,6 +13,11 @@
 **Affiliation:** Gyan Ganga Institute of Technology and Sciences, Jabalpur, India  
 **Submitted to:** *Journal of Biomedical Informatics* (JBI/Elsevier, Q1)
 
+> All commits are solely authored by Rajveer Singh Pall
+> (verified via Insights → Contributors graph).
+> AI coding tools were used locally for development
+> assistance and hold no commit authorship.
+
 ---
 
 ## Overview

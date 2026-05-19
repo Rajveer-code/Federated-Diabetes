@@ -3,9 +3,45 @@ const {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
   Header, Footer, AlignmentType, HeadingLevel, BorderStyle, WidthType,
   ShadingType, VerticalAlign, PageNumber, PageBreak, LevelFormat,
-  ExternalHyperlink, TabStopType, TabStopPosition, LineRuleType,
+  ExternalHyperlink, TabStopType, TabStopPosition, LineRuleType, ImageRun,
 } = require("docx");
 const fs = require("fs");
+const path = require("path");
+
+// ── Figure paths & display dimensions (pt at 300 DPI → fit A4 content width 451pt) ──
+const FIGS_DIR = "D:/Projects/diabetes_prediction_project/federated/results/figures";
+
+// [widthPt, heightPt] scaled to fit 451pt content width
+const FIG_DIMS = {
+  "fig1_architecture.png":    [451, 245],
+  "fig2_convergence.png":     [451, 267],
+  "fig3_roc_curves.png":      [451, 211],
+  "fig4_fairness.png":        [451, 190],
+  "fig5_dp_tradeoff.png":     [451, 267],
+  "fig6_calibration.png":     [451, 374],
+  "fig7_generalisation_gap.png": [451, 250],
+  "fig8_summary_comparison.png": [451, 214],
+};
+
+function figImage(n, filename, caption) {
+  const [w, h] = FIG_DIMS[filename] || [451, 250];
+  const imgData = fs.readFileSync(path.join(FIGS_DIR, filename));
+  return [
+    new Paragraph({
+      children: [new ImageRun({ data: imgData, transformation: { width: w, height: h }, type: "png" })],
+      alignment: AlignmentType.CENTER,
+      spacing: { before: 240, after: 60, line: 240, lineRule: LineRuleType.AUTO },
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({ text: `Figure ${n}. `, font: FONT, size: 22, bold: true }),
+        new TextRun({ text: caption, font: FONT, size: 22 }),
+      ],
+      spacing: { before: 60, after: 240, line: 320, lineRule: LineRuleType.AUTO },
+      alignment: AlignmentType.LEFT,
+    }),
+  ];
+}
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -206,7 +242,7 @@ function bullet(children) {
 // MANUSCRIPT DOCUMENT
 // ══════════════════════════════════════════════════════════════════════════════
 
-function buildManuscript() {
+function buildManuscript(embedFigs = false) {
   const children = [];
   const P = (...args) => { children.push(para(...args)); };
   const B = (...args) => { children.push(bullet(...args)); };
@@ -215,7 +251,9 @@ function buildManuscript() {
   const H3 = t => children.push(h3(t));
   const BLANK = () => children.push(blankLine());
   const PAGE = () => children.push(pageBreak());
-  const FIG = (n, file, cap) => figPlaceholder(n, file, cap).forEach(p => children.push(p));
+  const FIG = embedFigs
+    ? (n, file, cap) => figImage(n, file, cap).forEach(p => children.push(p))
+    : (n, file, cap) => figPlaceholder(n, file, cap).forEach(p => children.push(p));
   const TABLE = tbl => children.push(tbl);
   const NOTE = text => children.push(new Paragraph({
     children: [new TextRun({ text, font: FONT, size: 20, italics: true })],
@@ -904,25 +942,43 @@ function buildSupplementary() {
 async function main() {
   const outDir = "D:/Projects/diabetes_prediction_project";
 
-  console.log("Building manuscript...");
-  const ms = buildManuscript();
-  const msBuf = await Packer.toBuffer(ms);
-  fs.writeFileSync(`${outDir}/FL_Diabetes_Manuscript_REVISED_FINAL.docx`, msBuf);
-  console.log("  -> FL_Diabetes_Manuscript_REVISED_FINAL.docx written");
+  // ── WITHOUT figures (placeholders) — for journal portal upload ──────────────
+  console.log("\n[1/5] Building manuscript (no figures — journal submission)...");
+  const msNoFig = buildManuscript(false);
+  const msNoFigBuf = await Packer.toBuffer(msNoFig);
+  fs.writeFileSync(`${outDir}/FL_Diabetes_Manuscript_REVISED_FINAL.docx`, msNoFigBuf);
+  console.log(`  -> FL_Diabetes_Manuscript_REVISED_FINAL.docx  (${Math.round(msNoFigBuf.length/1024)} KB)`);
 
-  console.log("Building cover letter...");
+  // ── WITH figures embedded — for editor/reviewer preview ────────────────────
+  console.log("[2/5] Building manuscript (figures embedded — reviewer preview)...");
+  const msWithFig = buildManuscript(true);
+  const msWithFigBuf = await Packer.toBuffer(msWithFig);
+  fs.writeFileSync(`${outDir}/FL_Diabetes_Manuscript_REVISED_FINAL_with_figures.docx`, msWithFigBuf);
+  console.log(`  -> FL_Diabetes_Manuscript_REVISED_FINAL_with_figures.docx  (${Math.round(msWithFigBuf.length/1024)} KB)`);
+
+  // ── Cover letter ─────────────────────────────────────────────────────────────
+  console.log("[3/5] Building cover letter...");
   const cl = buildCoverLetter();
   const clBuf = await Packer.toBuffer(cl);
   fs.writeFileSync(`${outDir}/Cover_Letter_REVISED_FINAL.docx`, clBuf);
-  console.log("  -> Cover_Letter_REVISED_FINAL.docx written");
+  console.log(`  -> Cover_Letter_REVISED_FINAL.docx  (${Math.round(clBuf.length/1024)} KB)`);
 
-  console.log("Building supplementary...");
+  // ── Supplementary ─────────────────────────────────────────────────────────────
+  console.log("[4/5] Building supplementary...");
   const sp = buildSupplementary();
   const spBuf = await Packer.toBuffer(sp);
   fs.writeFileSync(`${outDir}/FL_Diabetes_Supplementary_REVISED_FINAL.docx`, spBuf);
-  console.log("  -> FL_Diabetes_Supplementary_REVISED_FINAL.docx written");
+  console.log(`  -> FL_Diabetes_Supplementary_REVISED_FINAL.docx  (${Math.round(spBuf.length/1024)} KB)`);
 
-  console.log("Done.");
+  console.log("\n[5/5] Done. Output files:");
+  console.log("  SUBMIT TO JOURNAL:");
+  console.log("    FL_Diabetes_Manuscript_REVISED_FINAL.docx          (figure placeholders)");
+  console.log("    Cover_Letter_REVISED_FINAL.docx");
+  console.log("    FL_Diabetes_Supplementary_REVISED_FINAL.docx");
+  console.log("    federated/results/figures/fig1_architecture.png     (upload separately)");
+  console.log("    ...fig2 through fig8.png");
+  console.log("  REVIEWER PREVIEW (do NOT upload to portal):");
+  console.log("    FL_Diabetes_Manuscript_REVISED_FINAL_with_figures.docx");
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

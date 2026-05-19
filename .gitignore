@@ -69,3 +69,23 @@ worktrees/
 *.log
 *.tmp
 =*.0
+
+# Node
+node_modules/
+skills-lock.json
+
+# Tool/agent session files
+.agents/
+
+# One-off patch and scratch scripts (working artifacts, not pipeline scripts)
+federated/patch_*.py
+federated/apply_v6*.py
+federated/fix_*.py
+federated/write_supplementary.py
+
+# Miscellaneous project-root junk
+ASCII
+Numerical_Changes_Summary.txt
+
+# Nested repo clone (local copy of remote, not part of project)
+federated/Federated-Diabetes/

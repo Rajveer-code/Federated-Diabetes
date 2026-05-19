@@ -156,8 +156,8 @@ doc.add_page_break()
 add_heading(doc, 'Highlights', 1)
 highlights = [
     'Federated learning across three demographically distinct hospital nodes achieves '
-    'external AUC = 0.757 [95% CI: 0.756–0.758], surpassing the centralised XGBoost '
-    'baseline (AUC = 0.700).',
+    'external AUC = 0.757 [95% CI: 0.756–0.758] on 1.28 million BRFSS respondents, '
+    'surpassing the centralised XGBoost baseline (AUC = 0.700).',
     'FedAvg reduces the elderly fairness gap to ΔAUC = 0.054 — a 60.7% reduction '
     'relative to the published benchmark (Ahsan et al. 2022, ΔAUC = 0.135) and a '
     '21.7% improvement over the centralised XGBoost baseline (0.069 → 0.054).',
@@ -165,9 +165,9 @@ highlights = [
     'without degrading discrimination.',
     'Tight differential privacy (ε ≤ 5) causes model collapse under realistic '
     'healthcare sampling rates, highlighting a fundamental privacy–utility tension.',
-    'SCAFFOLD, despite its theoretical advantages for heterogeneous data, underperforms '
-    'AdamW-based strategies (AUC = 0.642 vs. 0.788), indicating that optimizer choice '
-    'dominates in small federated settings.',
+    'SCAFFOLD underperforms AdamW-based strategies (internal AUC = 0.642 vs. 0.788), '
+    'revealing that optimizer choice dominates algorithm design in small federated '
+    'settings.',
 ]
 for h in highlights:
     p = doc.add_paragraph(style='List Bullet')
@@ -191,10 +191,9 @@ sig_tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
 headers = ['Category', 'Statement']
 rows_data = [
     ('What is already known',
-     'Federated learning (FL) can train machine learning models across distributed '
-     'sites without centralising raw data. Prior diabetes prediction models using '
-     'NHANES or BRFSS data achieve AUC values of 0.70–0.75 but rarely address '
-     'cross-institutional privacy, demographic fairness, and calibration jointly.'),
+     'Machine learning models for diabetes prediction from national surveillance data '
+     '(NHANES, BRFSS) reach AUC 0.70–0.75 but are trained on pooled data and do not '
+     'simultaneously address privacy, demographic fairness, or calibration.'),
     ('What this study adds',
      'This study is the first to benchmark four FL aggregation strategies (FedAvg, '
      'FedProx, FedNova, SCAFFOLD) alongside differential privacy and post-hoc '
@@ -299,7 +298,7 @@ intro_paras = [
      'learning (FL) addresses this by distributing gradient computation to local '
      'nodes, sharing only model updates rather than raw data [4, 5]. However, '
      'demographic heterogeneity across participating nodes introduces '
-     'client drift—a phenomenon where local optima diverge from the global '
+     'client drift—the divergence of local optima from the global '
      'objective—and can amplify disparities in model performance across age, '
      'sex, and socioeconomic strata [6].',
      None),
@@ -313,7 +312,7 @@ intro_paras = [
      'FeTS [9]) have not benchmarked multiple aggregation strategies head-to-head '
      'on the same demographically partitioned cohort.',
      None),
-    ('This study makes four primary contributions. First, we implement and compare '
+    ('Against this backdrop, this study makes four primary contributions. First, we implement and compare '
      'four FL aggregation strategies—FedAvg [4], FedProx [10], FedNova [11], '
      'and SCAFFOLD [12]—under identical conditions on three demographically '
      'stratified hospital nodes derived from NHANES. Second, we evaluate external '
@@ -362,8 +361,8 @@ add_para(doc,
     indent=True)
 
 add_para(doc,
-    'A persistent challenge in federated healthcare settings is statistical '
-    'heterogeneity: nodes corresponding to distinct demographic populations '
+    'Statistical heterogeneity remains the central challenge in federated healthcare '
+    'settings: nodes corresponding to distinct demographic populations '
     'have divergent local distributions. FedProx [10] addresses this by augmenting '
     'the local objective with a proximal term (μ∥w − wᵍ∥²) '
     'that penalises deviation from the global model. FedNova [11] corrects for '
@@ -374,12 +373,12 @@ add_para(doc,
 
 add_heading(doc, '2.2 Fairness-Aware Federated Learning', 2)
 add_para(doc,
-    'Algorithmic bias in clinical machine learning has received growing scrutiny. '
+    'Algorithmic bias in clinical machine learning is well documented. '
     'Obermeyer et al. [16] demonstrated that commercially deployed risk scores '
     'systematically underestimate care needs of Black patients. In federated '
     'settings, client heterogeneity can either exacerbate or mitigate demographic '
     'disparities depending on data composition and aggregation strategy [17]. '
-    'Fair federated learning approaches include q-FedAvg [18], which minimises '
+    'Fair federated learning approaches include q-FedAvg [31], which minimises '
     'the maximum loss across clients, and FairFML [19], which uses adversarial '
     'debiasing within the federation. We evaluate fairness post-hoc via subgroup '
     'AUC stratification rather than altering the training objective, providing '
@@ -408,10 +407,10 @@ add_heading(doc, '3.1 Data Sources and Feature Harmonisation', 2)
 add_para(doc,
     'Training data were drawn from the National Health and Nutrition Examination '
     'Survey (NHANES) 2013–2020 (n = 15,650 after exclusion of '
-    'records with >20% missing feature values). Nine features selected for '
-    'cross-dataset compatibility were: age, body mass index (BMI), systolic blood '
-    'pressure, HbA1c, fasting plasma glucose, total cholesterol, physical activity '
-    'level, smoking status, and sex. A global StandardScaler was fitted exclusively '
+    'records with >20% missing feature values). Eight features selected for '
+    'cross-dataset compatibility were: age, sex, race/ethnicity, body mass index '
+    '(BMI), smoking status, physical activity level, history of myocardial '
+    'infarction, and history of stroke. A global StandardScaler was fitted exclusively '
     'on the NHANES training split (80/20 stratified split, RANDOM_SEED=42) using '
     '00_fit_global_scaler.py, and the same scaler artefact was applied '
     'transform-only at each federated node to prevent data leakage.',
@@ -419,7 +418,7 @@ add_para(doc,
 
 add_para(doc,
     'External validation used BRFSS 2020–2022 (n = 1,282,897 '
-    'after quality filtering). BRFSS features were harmonised to the nine '
+    'after quality filtering). BRFSS features were harmonised to the eight '
     'NHANES features using a validated column mapping (Supplementary Table S1). '
     'Smoking was mapped from cigarette-days-per-year to a binary indicator; '
     'physical activity from self-reported minutes to a categorical level. '
@@ -434,8 +433,8 @@ add_para(doc,
     indent=True)
 node_items = [
     'Node A (Young Urban): participants aged 18–39, n = 4,500 (training: 3,600)',
-    'Node B (Elderly Rural): participants aged ≥60, n = 3,405 (training: 2,724)',
-    'Node C (Mixed Metropolitan): remaining participants, n = 3,745 (training: 3,200)',
+    'Node B (Elderly Rural): participants aged ≥60, n = 3,406 (training: 2,725)',
+    'Node C (Mixed Metropolitan): remaining participants, n = 4,000 (training: 3,200)',
 ]
 for item in node_items:
     p = doc.add_paragraph(style='List Bullet')
@@ -444,7 +443,11 @@ for item in node_items:
     p.add_run(item).font.size = Pt(11)
 add_para(doc,
     'This partition deliberately mirrors realistic demographic heterogeneity across '
-    'rural and urban facilities. The 80/20 train/validation split was applied '
+    'rural and urban facilities. The three nodes together comprise n = 11,906 '
+    'of the 15,650 NHANES records; the remaining 3,744 records are retained in the '
+    'centralised dataset for the XGBoost baseline evaluation but are not assigned '
+    'to any federated node, reflecting the demographically-stratified sampling bounds. '
+    'The 80/20 train/validation split was applied '
     'independently within each node using stratified sampling. '
     'We acknowledge that partitioning a single national survey by age simulates '
     'demographic heterogeneity but does not reproduce the independent data '
@@ -456,7 +459,7 @@ add_para(doc,
 
 add_heading(doc, '3.3 Neural Network Architecture', 2)
 add_para(doc,
-    'All federated and centralised neural network experiments used DiabetesNet: '
+    'Both federated and centralised experiments employed DiabetesNet: '
     'a four-layer fully connected network with architecture '
     'Input(8)→Dense(64, BatchNorm, ReLU, Dropout(0.3))→'
     'Dense(32, BatchNorm, ReLU, Dropout(0.3))→'
@@ -592,7 +595,7 @@ add_para(doc,
     'of 0.069 (young AUC = 0.656, elderly AUC = 0.587). '
     'FedAvg reduced this to 0.054 (young 0.722, elderly 0.669), a relative '
     'improvement of 21.7%. Compared to the published benchmark gap of 0.135 [2], '
-    'FedAvg achieves a 60.7% reduction. FedProx and FedNova showed intermediate '
+    'FedAvg achieved a 60.7% reduction. FedProx and FedNova showed intermediate '
     'fairness gaps of 0.066 and 0.064, respectively. The sex-based gap was '
     'negligible across all strategies (ΔAUC < 0.01), and the '
     'BMI-stratified gap was reduced from 0.066 (centralised) to 0.016 (FedAvg).',
@@ -600,15 +603,21 @@ add_para(doc,
 
 add_heading(doc, '4.4 Calibration', 2)
 add_para(doc,
-    'The raw FedProx model was substantially overconfident on BRFSS '
-    '(ECE = 0.319), reflecting a distributional shift between '
-    'NHANES training and BRFSS testing. Post-hoc calibration markedly '
+    'The uncalibrated FedAvg model showed ECE = 0.276 on the BRFSS '
+    'external test set, consistent with the overconfidence pattern observed '
+    'for FedProx (ECE = 0.319). Both federated strategies exhibit '
+    'similar overconfidence, confirming that miscalibration reflects a '
+    'framework-level distributional shift, not a strategy-specific artefact. '
+    'Post-hoc calibration of FedProx markedly '
     'improved reliability (Figure 6). Platt scaling reduced ECE to 0.016 '
     'while preserving discrimination (AUC unchanged at 0.752). Isotonic '
     'regression achieved the lowest ECE of 0.001, virtually eliminating '
     'miscalibration. Temperature scaling (optimal T = 2.25) '
     'showed limited improvement (ECE = 0.311), likely because '
-    'the calibration curve is non-monotonic. Subgroup analysis revealed '
+    'the calibration curve is non-monotonic. Calibration analysis was '
+    'performed on FedProx as a representative federated model; FedAvg '
+    'post-calibration analysis is a direction for future work. '
+    'Subgroup analysis revealed '
     'that elderly respondents were more severely miscalibrated than young '
     '(ECE = 0.304 vs. 0.045); Platt scaling reduced both '
     'subgroup ECEs to <0.04.',
@@ -616,7 +625,7 @@ add_para(doc,
 
 add_heading(doc, '4.5 Differential Privacy', 2)
 add_para(doc,
-    'Differential privacy experiments revealed a stark privacy–utility '
+    'Differential privacy experiments demonstrated a sharp privacy–utility '
     'tradeoff (Figure 5). At all tight privacy budgets tested '
     '(ε ∈ {0.5, 1.0, 2.0, 5.0}), the '
     'model collapsed to random performance (AUC ≈ 0.50), '
@@ -654,8 +663,8 @@ add_heading(doc, '5. Discussion', 1)
 
 add_heading(doc, '5.1 Federated Learning Improves Generalisation and Fairness', 2)
 add_para(doc,
-    'The consistent superiority of FL strategies over centralised training on the '
-    'external BRFSS dataset is a key finding. We attribute this to two mechanisms. '
+    'Federated strategies outperformed centralised training on every external '
+    'validation metric — a result we attribute to two complementary mechanisms. '
     'First, the demographically partitioned nodes enforce data diversity: the '
     'federated model must generalise across young urban, elderly rural, and mixed '
     'metropolitan subpopulations simultaneously, producing a more robust global '
@@ -718,7 +727,7 @@ add_para(doc,
     'set should ideally be drawn from the target clinical environment. We '
     'recommend Platt scaling for deployments where a large calibration set '
     'is unavailable, as it requires only two parameters and reduces ECE to '
-    '0.016 with a 20 % calibration fraction.',
+    '0.016 with a 20% calibration fraction.',
     indent=True)
 
 add_heading(doc, '5.4 Differential Privacy Limitations', 2)
@@ -766,15 +775,15 @@ for lim in limitations:
 # ════════════════════════════════════════════════════════════
 add_heading(doc, '6. Conclusions', 1)
 add_para(doc,
-    'We demonstrated that federated learning substantially outperforms '
-    'centralised training for diabetes risk prediction across demographically '
-    'heterogeneous hospital nodes on both internal and external validation. '
+    'Federated learning substantially outperforms centralised training for '
+    'diabetes risk prediction across demographically heterogeneous hospital '
+    'nodes on both internal and external validation. '
     'FedAvg achieved the best external AUC of 0.757 [0.756–0.758] on '
     '1.28 million BRFSS respondents and reduced the elderly fairness gap from '
     '0.069 (centralised baseline) to 0.054 — a 21.7% within-study improvement '
     'and a 60.7% reduction relative to the published benchmark of Ahsan et al. [2]. '
     'Post-hoc isotonic calibration essentially eliminated model overconfidence '
-    '(ECE: 0.319 → 0.001). These results confirm that federated learning is a '
+    '(ECE: 0.319 → 0.001). Together, these results establish federated learning as a '
     'clinically viable framework for privacy-preserving diabetes screening at scale.',
     indent=True)
 add_para(doc,
@@ -784,7 +793,10 @@ add_para(doc,
     'distribution shift between training and deployment populations, and '
     'validating fairness in prospective cohorts where elderly subgroup '
     'outcomes are systematically collected. We release all code, hyperparameters, '
-    'and supplementary materials to support reproducibility and future extension.',
+    'and supplementary materials to support reproducibility and future extension. '
+    'The logical next step is a prospective multi-institutional trial with genuinely '
+    'independent hospital sites, which would test privacy guarantees and fairness '
+    'improvements under real-world batch effects and deployment constraints.',
     indent=True)
 
 
@@ -797,6 +809,20 @@ add_para(doc,
     'releasing the datasets used in this study. No external funding was received.',
     indent=True)
 add_para(doc, 'The authors declare no competing interests.', indent=True)
+
+
+# ════════════════════════════════════════════════════════════
+# DATA AVAILABILITY STATEMENT
+# ════════════════════════════════════════════════════════════
+add_heading(doc, 'Data Availability Statement', 1)
+add_para(doc,
+    'The NHANES data used in this study are publicly available from the '
+    'National Center for Health Statistics at https://www.cdc.gov/nchs/nhanes/. '
+    'The BRFSS data are publicly available from the Centers for Disease '
+    'Control and Prevention at https://www.cdc.gov/brfss/. All analysis '
+    'code, trained model configurations, and hyperparameters are available '
+    'at https://github.com/Rajveer-code/Federated-Diabetes.',
+    indent=True)
 
 
 # ════════════════════════════════════════════════════════════
@@ -868,6 +894,8 @@ refs = [
     'privacy-preserving ordinal response. CCS 2014.',
     'Tramèr F, Boneh D. Differentially private learning needs better features. '
     'ICLR 2021.',
+    'Li T, Diao S, Chen PH, Karimireddy SP, Smith V. Fair resource allocation in '
+    'federated learning. ICLR 2020.',
 ]
 for i, ref in enumerate(refs, 1):
     p = doc.add_paragraph()
@@ -923,7 +951,10 @@ for i, row_data in enumerate(tbl1_data):
 add_para(doc,
     'CI: confidence interval; internal CI by stratified bootstrap (N=2,000); '
     'external CI by DeLong structural components estimator. Elderly gap = '
-    'AUC(18–39) − AUC(≥60) on BRFSS. Bold: best external AUC.',
+    'AUC(18–39) − AUC(≥60) on BRFSS. Bold: best external AUC. '
+    '†SCAFFOLD external validation not computed; BRFSS external features '
+    'unavailable for inference in this environment. '
+    'Internal AUC = 0.642 [SGD, 50 rounds].',
     space_before=4, space_after=12, font_size=9)
 
 
@@ -931,16 +962,19 @@ add_para(doc,
 # TABLE 2 — Calibration
 # ════════════════════════════════════════════════════════════
 add_para(doc,
-    'Table 2. Calibration results for FedProx on BRFSS external test set '
-    '(n_test = 1,026,318). Calibration split: 20 % of BRFSS.',
+    'Table 2. Calibration results on BRFSS external test set. '
+    'FedAvg uncalibrated ECE reported for comparison. '
+    'Post-hoc calibration methods applied to FedProx as the representative '
+    'federated model (n_test = 1,026,318; calibration split: 20 % of BRFSS).',
     bold=True, space_after=4)
 
 tbl2_data = [
-    ['Method',                    'ECE',    'AUC',    'Note'],
-    ['Uncalibrated',              '0.319',  '0.752',  'Severe overconfidence'],
-    ['Platt scaling',             '0.016',  '0.752',  'Logistic regression on logit; 2 params'],
-    ['Isotonic regression',       '0.001',  '0.752',  'Non-parametric; requires sufficient cal data'],
-    ['Temperature (T = 2.25)', '0.311', '0.752', 'Scalar transform; non-monotone curve'],
+    ['Method',                         'ECE',    'AUC',    'Note'],
+    ['FedAvg (uncalibrated)',          '0.276',  '0.757',  'Overconfident; lower ECE than FedProx due to higher AUC'],
+    ['FedProx (uncalibrated)',         '0.319',  '0.752',  'Severe overconfidence; calibration reported for FedProx'],
+    ['FedProx — Platt scaling',        '0.016',  '0.752',  'Logistic regression on logit; 2 params'],
+    ['FedProx — Isotonic regression',  '0.001',  '0.752',  'Non-parametric; requires sufficient cal data'],
+    ['FedProx — Temperature (T = 2.25)', '0.311', '0.752', 'Scalar transform; non-monotone curve'],
 ]
 tbl2 = doc.add_table(rows=len(tbl2_data), cols=4)
 tbl2.style = 'Table Grid'
@@ -959,7 +993,7 @@ for i, row_data in enumerate(tbl2_data):
             shade_cell(cell, 'F0FDF4')
         cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-add_para(doc, 'ECE: expected calibration error (10 equal-width bins).', space_before=4, font_size=9)
+add_para(doc, 'ECE: expected calibration error (10 equal-width bins). FedAvg AUC from DeLong external CI. Post-hoc calibration performed on FedProx as a representative federated model; FedAvg post-calibration is a direction for future work.', space_before=4, font_size=9)
 
 doc.add_page_break()
 

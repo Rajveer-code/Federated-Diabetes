@@ -1,0 +1,36 @@
+{
+  "method": "Paired DeLong (two-sided)",
+  "dataset": "BRFSS 2020-2022",
+  "n": 1282897,
+  "bonferroni_alpha": 0.016666666666666666,
+  "n_comparisons": 3,
+  "tests": {
+    "FedAvg_vs_FedProx": {
+      "auc1": 0.7568636550083387,
+      "auc2": 0.7517732748985053,
+      "delta": 0.005090380109833426,
+      "z": 26.992922337541007,
+      "p_value": 0.0,
+      "significant": true,
+      "significant_bonferroni": true
+    },
+    "FedAvg_vs_FedNova": {
+      "auc1": 0.7568636550083387,
+      "auc2": 0.7438600511288213,
+      "delta": 0.013003603879517489,
+      "z": 72.4913306793506,
+      "p_value": 0.0,
+      "significant": true,
+      "significant_bonferroni": true
+    },
+    "FedProx_vs_FedNova": {
+      "auc1": 0.7517732748985053,
+      "auc2": 0.7438600511288213,
+      "delta": 0.007913223769684063,
+      "z": 36.479978328426554,
+      "p_value": 0.0,
+      "significant": true,
+      "significant_bonferroni": true
+    }
+  }
+}

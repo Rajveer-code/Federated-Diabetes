@@ -1,0 +1,25 @@
+{
+  "model": "SCAFFOLD (Option II)",
+  "dataset": "BRFSS 2020-2022",
+  "n": 1282897,
+  "external_auc": 0.6652682167291659,
+  "external_ci_lower": 0.6639388508876916,
+  "external_ci_upper": 0.6665975825706403,
+  "external_se": 0.0006782603414962119,
+  "external_brier": 0.18681847853753167,
+  "sensitivity": 0.6839373083315776,
+  "specificity": 0.5708960827460435,
+  "threshold": 0.3852580785751343,
+  "fairness": {
+    "age_18-39": 0.5206019019234188,
+    "age_40-59": 0.5981142775056202,
+    "age_60+": 0.6125008549988318,
+    "bmi_Normal": 0.6699638426402476,
+    "bmi_Overweight": 0.6330391315679026,
+    "bmi_Obese": 0.6523637670062835,
+    "sex_Male": 0.7012740822224964,
+    "sex_Female": 0.64987041654846,
+    "elderly_gap": -0.0919
+  },
+  "elderly_gap": -0.0919
+}

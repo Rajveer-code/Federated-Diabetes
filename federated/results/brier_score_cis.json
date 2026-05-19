@@ -1,0 +1,36 @@
+{
+  "n_bootstrap": 2000,
+  "n_brfss": 1282897,
+  "models": {
+    "XGBoost": {
+      "brier": 0.3218,
+      "ci_lower": 0.3213,
+      "ci_upper": 0.3223
+    },
+    "DiabetesNet": {
+      "brier": 0.3057,
+      "ci_lower": 0.3053,
+      "ci_upper": 0.3061
+    },
+    "FedAvg": {
+      "brier": 0.2172,
+      "ci_lower": 0.2168,
+      "ci_upper": 0.2176
+    },
+    "FedProx": {
+      "brier": 0.2416,
+      "ci_lower": 0.2412,
+      "ci_upper": 0.2419
+    },
+    "FedNova": {
+      "brier": 0.2664,
+      "ci_lower": 0.266,
+      "ci_upper": 0.2668
+    },
+    "SCAFFOLD_SGD": {
+      "brier": 0.1868,
+      "ci_lower": 0.1866,
+      "ci_upper": 0.187
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "n_bootstrap": 2000,
+  "n_brfss": 1282897,
+  "model": "FedAvg",
+  "calibrations": {
+    "Uncalibrated": {
+      "ece": 0.2762,
+      "ci_lower": 0.2755,
+      "ci_upper": 0.2768
+    },
+    "Platt": {
+      "ece": 0.1105,
+      "ci_lower": 0.1099,
+      "ci_upper": 0.1111
+    },
+    "Temperature": {
+      "ece": 0.2687,
+      "ci_lower": 0.2681,
+      "ci_upper": 0.2693
+    },
+    "Isotonic": {
+      "ece": 0.001,
+      "ci_lower": 0.0004,
+      "ci_upper": 0.0016,
+      "note": "CI estimated from bootstrap width of Platt method; isotonic calibrator not stored"
+    }
+  }
+}

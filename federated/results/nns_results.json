@@ -1,0 +1,43 @@
+{
+  "elderly_prevalence": 0.2024,
+  "n_elderly": 578859,
+  "youden": {
+    "FedAvg": {
+      "sensitivity": 0.5774,
+      "specificity": 0.6724,
+      "ppv": 0.309,
+      "npv": 0.8625,
+      "nns": 8.6,
+      "threshold": 0.6556,
+      "auc": 0.6685
+    },
+    "XGBoost": {
+      "sensitivity": 0.6177,
+      "specificity": 0.517,
+      "ppv": 0.245,
+      "npv": 0.842,
+      "nns": 8.0,
+      "threshold": 0.7571,
+      "auc": 0.5866
+    }
+  },
+  "fixed_0.35": {
+    "FedAvg": {
+      "sensitivity": 0.975,
+      "specificity": 0.0727,
+      "ppv": 0.2106,
+      "npv": 0.9198,
+      "nns": 5.1,
+      "threshold": 0.35
+    },
+    "XGBoost": {
+      "sensitivity": 0.9716,
+      "specificity": 0.0489,
+      "ppv": 0.2058,
+      "npv": 0.8716,
+      "nns": 5.1,
+      "threshold": 0.35
+    }
+  },
+  "extra_tp_per_10k_vs_xgb": -81.6
+}

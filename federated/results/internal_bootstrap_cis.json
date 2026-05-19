@@ -1,0 +1,26 @@
+{
+  "SCAFFOLD_SGD": {
+    "auc": 0.642,
+    "ci_lower": 0.6312,
+    "ci_upper": 0.653,
+    "n": 15650
+  },
+  "FedAvg": {
+    "auc": 0.7877,
+    "ci_lower": 0.7796,
+    "ci_upper": 0.7956,
+    "n": 15650
+  },
+  "FedProx": {
+    "auc": 0.7851,
+    "ci_lower": 0.7768,
+    "ci_upper": 0.7934,
+    "n": 15650
+  },
+  "FedNova": {
+    "auc": 0.7863,
+    "ci_lower": 0.7776,
+    "ci_upper": 0.7941,
+    "n": 15650
+  }
+}

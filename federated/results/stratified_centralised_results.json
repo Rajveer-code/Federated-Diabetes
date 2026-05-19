@@ -1,0 +1,23 @@
+{
+  "conditions": {
+    "A_standard_centralised": {
+      "description": "Standard centralised DiabetesNet on full NHANES",
+      "n_train": 12520,
+      "auc_internal": 0.8017749923125476
+    },
+    "B_node_b_weighted": {
+      "description": "80% Node B (elderly-rural) + 20% centralised training data",
+      "n_train": 5910,
+      "node_b_fraction": 0.8,
+      "auc_internal": 0.7865474302329972
+    },
+    "C_fedavg_pretrained": {
+      "description": "FedAvg weights from 03_federated_simulation.py",
+      "auc_internal": 0.7935996563573884
+    }
+  },
+  "external": {
+    "FedAvg_external_AUC": 0.7568636550083386
+  },
+  "mechanism_finding": "composition_dominant_with_federation_overhead"
+}

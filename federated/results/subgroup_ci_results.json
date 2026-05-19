@@ -1,0 +1,192 @@
+{
+  "method": "DeLong structural components (Hanley-McNeil 1988), 95% CI",
+  "n_brfss": 1282897,
+  "models": {
+    "XGBoost": {
+      "overall": {
+        "auc": 0.6996,
+        "lower": 0.6984,
+        "upper": 0.7008,
+        "se": 0.00062,
+        "n": 1282897,
+        "n_pos": 170868
+      },
+      "young_18_39": {
+        "auc": 0.6556,
+        "lower": 0.6492,
+        "upper": 0.662,
+        "se": 0.00328,
+        "n": 300125,
+        "n_pos": 7322
+      },
+      "elderly_60plus": {
+        "auc": 0.5866,
+        "lower": 0.5847,
+        "upper": 0.5884,
+        "se": 0.00092,
+        "n": 578859,
+        "n_pos": 117152
+      },
+      "fairness_gap_ci": {
+        "gap": 0.069,
+        "lower": 0.0623,
+        "upper": 0.0757
+      }
+    },
+    "Centralised_NN": {
+      "overall": {
+        "auc": 0.7487,
+        "lower": 0.7476,
+        "upper": 0.7499,
+        "se": 0.00059,
+        "n": 1282897,
+        "n_pos": 170868
+      },
+      "young_18_39": {
+        "auc": 0.7204,
+        "lower": 0.7139,
+        "upper": 0.7268,
+        "se": 0.00328,
+        "n": 300125,
+        "n_pos": 7322
+      },
+      "elderly_60plus": {
+        "auc": 0.6572,
+        "lower": 0.6554,
+        "upper": 0.6589,
+        "se": 0.00091,
+        "n": 578859,
+        "n_pos": 117152
+      },
+      "fairness_gap_ci": {
+        "gap": 0.0632,
+        "lower": 0.0565,
+        "upper": 0.0699
+      }
+    },
+    "FedAvg": {
+      "overall": {
+        "auc": 0.7569,
+        "lower": 0.7557,
+        "upper": 0.758,
+        "se": 0.00058,
+        "n": 1282897,
+        "n_pos": 170868
+      },
+      "young_18_39": {
+        "auc": 0.7221,
+        "lower": 0.7157,
+        "upper": 0.7284,
+        "se": 0.00326,
+        "n": 300125,
+        "n_pos": 7322
+      },
+      "elderly_60plus": {
+        "auc": 0.6685,
+        "lower": 0.6668,
+        "upper": 0.6703,
+        "se": 0.00089,
+        "n": 578859,
+        "n_pos": 117152
+      },
+      "fairness_gap_ci": {
+        "gap": 0.0536,
+        "lower": 0.047,
+        "upper": 0.0602
+      }
+    },
+    "FedProx": {
+      "overall": {
+        "auc": 0.7518,
+        "lower": 0.7506,
+        "upper": 0.7529,
+        "se": 0.00058,
+        "n": 1282897,
+        "n_pos": 170868
+      },
+      "young_18_39": {
+        "auc": 0.7269,
+        "lower": 0.7206,
+        "upper": 0.7332,
+        "se": 0.00321,
+        "n": 300125,
+        "n_pos": 7322
+      },
+      "elderly_60plus": {
+        "auc": 0.6613,
+        "lower": 0.6595,
+        "upper": 0.663,
+        "se": 0.0009,
+        "n": 578859,
+        "n_pos": 117152
+      },
+      "fairness_gap_ci": {
+        "gap": 0.0656,
+        "lower": 0.0591,
+        "upper": 0.0721
+      }
+    },
+    "FedNova": {
+      "overall": {
+        "auc": 0.7439,
+        "lower": 0.7427,
+        "upper": 0.745,
+        "se": 0.0006,
+        "n": 1282897,
+        "n_pos": 170868
+      },
+      "young_18_39": {
+        "auc": 0.7148,
+        "lower": 0.7084,
+        "upper": 0.7213,
+        "se": 0.00329,
+        "n": 300125,
+        "n_pos": 7322
+      },
+      "elderly_60plus": {
+        "auc": 0.6504,
+        "lower": 0.6486,
+        "upper": 0.6522,
+        "se": 0.00091,
+        "n": 578859,
+        "n_pos": 117152
+      },
+      "fairness_gap_ci": {
+        "gap": 0.0644,
+        "lower": 0.0577,
+        "upper": 0.0711
+      }
+    },
+    "SCAFFOLD": {
+      "overall": {
+        "auc": 0.6653,
+        "lower": 0.6639,
+        "upper": 0.6666,
+        "se": 0.00068,
+        "n": 1282897,
+        "n_pos": 170868
+      },
+      "young_18_39": {
+        "auc": 0.5206,
+        "lower": 0.5135,
+        "upper": 0.5277,
+        "se": 0.00361,
+        "n": 300125,
+        "n_pos": 7322
+      },
+      "elderly_60plus": {
+        "auc": 0.6125,
+        "lower": 0.6107,
+        "upper": 0.6143,
+        "se": 0.00091,
+        "n": 578859,
+        "n_pos": 117152
+      },
+      "fairness_gap_ci": {
+        "gap": -0.0919,
+        "lower": -0.0992,
+        "upper": -0.0846
+      }
+    }
+  }
+}

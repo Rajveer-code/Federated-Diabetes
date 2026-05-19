@@ -694,7 +694,8 @@ function buildSupplementary() {
    "Table S3 — Node Partition Details",
    "Table S4 — Pairwise DeLong Tests Between FL Strategies",
    "Table S5 — FedProx Post-Hoc Calibration on BRFSS",
-   "Table S6 — DeLong Confidence Intervals for Demographic Fairness Gaps"].forEach(t => P(t));
+   "Table S6 — DeLong Confidence Intervals for Demographic Fairness Gaps",
+   "Appendix A — TRIPOD Compliance Checklist"].forEach(t => P(t));
   PAGE();
 
   // ── TABLE S1 ─────────────────────────────────────────────────────────────────
@@ -934,6 +935,72 @@ function buildSupplementary() {
     ],
   }));
   NOTE("All CIs computed by DeLong structural components estimator (Hanley-McNeil 1988) on BRFSS external set (n = 1,282,897). SCAFFOLD fairness gap is negative: elderly subgroup outperforms young (attributed to SGD convergence dynamics, not a genuine fairness advantage; see manuscript Section 4.6 and 5.2).");
+  PAGE();
+
+  // ── APPENDIX A (TRIPOD) ─────────────────────────────────────────────────────
+  H1("Appendix A. TRIPOD Compliance Checklist");
+  P("This study follows the Transparent Reporting of a multivariable prediction model for Individual Prognosis Or Diagnosis (TRIPOD) statement (Collins et al., BMJ 2015, 350:g7594). The 22 TRIPOD reporting items below indicate where each is addressed in this manuscript or supplementary material.");
+  BLANK();
+  const trCols = [600, 1900, 4200, 2326];
+  const trTotal = trCols.reduce(function(a, b) { return a + b; }, 0);
+  function trRow(itm, topic, desc, loc) {
+    return new TableRow({
+      children: [trCols[0], trCols[1], trCols[2], trCols[3]].map(function(w, i) {
+        return new TableCell({
+          borders: BORDERS,
+          margins: { top: 40, bottom: 40, left: 80, right: 80 },
+          width: { size: w, type: WidthType.DXA },
+          children: [new Paragraph({ children: [new TextRun({ text: [itm, topic, desc, loc][i], font: FONT, size: 18 })], spacing: { line: 280, lineRule: LineRuleType.AUTO } })],
+        });
+      }),
+    });
+  }
+  TABLE(new Table({
+    width: { size: trTotal, type: WidthType.DXA },
+    columnWidths: trCols,
+    rows: [
+      new TableRow({ tableHeader: true, children: trCols.map(function(w, i) { return hCell(["Item", "Section/Topic", "TRIPOD Reporting Item", "Location in This Study"][i], w); }) }),
+      trRow("1", "Title", "Identify the study as developing and/or validating a prediction model and the target population.", "Title page"),
+      trRow("2", "Abstract", "Provide a structured summary including objectives, methods, results, and conclusions.", "Abstract (Objective/Methods/Results/Conclusions)"),
+      trRow("3a", "Background", "Explain the medical context and rationale.", "Section 1"),
+      trRow("3b", "Objectives", "Specify objectives including development vs. validation.", "Section 1, final paragraph; Section 3"),
+      trRow("4a", "Source of Data", "Describe the study design or source of data.", "Section 3.1; Supplementary Table S1"),
+      trRow("4b", "Source of Data", "Specify the key study dates.", "Section 3.1 (NHANES 2013–2020; BRFSS 2020–2022)"),
+      trRow("5a", "Participants", "Specify key elements of the study setting and location.", "Section 3.1; Section 3.2; Supplementary Table S3"),
+      trRow("5b", "Participants", "Describe eligibility criteria.", "Section 3.1 (>20% missing features excluded)"),
+      trRow("5c", "Participants", "Give details of treatments received if relevant.", "Not applicable (observational prediction)"),
+      trRow("6a", "Outcome", "Clearly define the outcome predicted, including how and when assessed.", "Section 3.1; Supplementary Table S1 row 9"),
+      trRow("6b", "Outcome", "Report blinding actions for outcome assessment.", "Not applicable (binary survey outcome)"),
+      trRow("7a", "Predictors", "Clearly define all predictors used.", "Section 3.1; Supplementary Table S1 rows 1–8"),
+      trRow("7b", "Predictors", "Report blinding actions for predictor assessment.", "Not applicable"),
+      trRow("8", "Sample Size", "Explain how the study size was arrived at.", "Section 3.1; Section 3.2; BRFSS n = 1,282,897"),
+      trRow("9", "Missing Data", "Describe how missing data were handled.", "Section 3.1 (median/mode imputation within training split)"),
+      trRow("10a", "Statistical Methods", "Describe how predictors were handled in the analysis.", "Section 3.1 (StandardScaler on training split only); Section 3.3"),
+      trRow("10b", "Statistical Methods", "Specify the type of model, model-building procedures, and internal validation method.", "Section 3.3; Section 3.4; Section 3.7"),
+      trRow("10c", "Statistical Methods", "Describe how predictions were calculated for validation.", "Section 3.6; Section 3.7"),
+      trRow("10d", "Statistical Methods", "Specify performance measures and model comparisons.", "Section 3.7 (AUC, DeLong CIs, Brier, ECE, Bonferroni-corrected pairwise DeLong)"),
+      trRow("10e", "Statistical Methods", "Describe any model updating from validation.", "Section 4.4 (post-hoc calibration)"),
+      trRow("11", "Risk Groups", "Provide details on how risk groups were created.", "Section 4.3 (thresholds 0.35 and Youden-optimal)"),
+      trRow("12", "Development vs. Validation", "Identify differences between development and validation data.", "Section 5.5 (BRFSS smoking and outcome-mismatch limitations)"),
+      trRow("13a", "Participants", "Describe the flow of participants.", "Section 3.1; Section 3.2; Supplementary Table S3"),
+      trRow("13b", "Participants", "Describe characteristics of participants including events.", "Section 3.2; Supplementary Table S3"),
+      trRow("14a", "Model Development", "Specify number of participants and events per analysis.", "Section 3.2; Supplementary Table S3"),
+      trRow("14b", "Model Development", "Report unadjusted predictor–outcome associations if performed.", "Not performed (eight pre-specified features)"),
+      trRow("15a", "Model Specification", "Present the full prediction model.", "GitHub repository (weights, scaler, inference script)"),
+      trRow("15b", "Model Specification", "Explain how to use the prediction model.", "Section 3.3; Section 3.6; GitHub README"),
+      trRow("16", "Model Performance", "Report performance measures with confidence intervals.", "Table 1; Table 2; Section 4.2–4.4"),
+      trRow("17", "Model Updating", "Describe results of any updating in validation.", "Section 4.4 (Platt, isotonic, temperature)"),
+      trRow("18", "Discussion (Limitations)", "Discuss limitations of the study.", "Section 5.5 (seven limitations)"),
+      trRow("19a", "Discussion", "Discuss validation results with reference to development data.", "Section 4.2; Section 5.1"),
+      trRow("19b", "Discussion", "Discuss overall interpretation of results.", "Section 5.1; Section 6"),
+      trRow("20", "Discussion (Implications)", "Discuss potential clinical use and future research.", "Section 5; Section 6"),
+      trRow("21", "Other Information", "Provide information about supplementary resources.", "Data Availability Statement; GitHub"),
+      trRow("22", "Funding", "Give source of funding and role of funders.", "Acknowledgements (no external funding)"),
+    ],
+  }));
+  BLANK();
+  NOTE("TRIPOD reference: Collins GS, Reitsma JB, Altman DG, Moons KGM. Transparent reporting of a multivariable prediction model for individual prognosis or diagnosis (TRIPOD): the TRIPOD statement. BMJ 2015;350:g7594. doi: 10.1136/bmj.g7594.");
+
 
   return new Document({
     numbering: { config: [bulletConfig] },

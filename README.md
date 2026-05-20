@@ -7,11 +7,11 @@ What if hospitals could collaborate on a shared diabetes model without sharing a
 [![Flower FL](https://img.shields.io/badge/Flower-1.5%2B-blueviolet.svg)](https://flower.dev)
 [![Opacus DP](https://img.shields.io/badge/Opacus-1.4%2B-ff69b4.svg)](https://opacus.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
-[![Target: COBM Elsevier](https://img.shields.io/badge/Target-Computers%20in%20Biology%20and%20Medicine-orange.svg)](https://www.journals.elsevier.com/computers-in-biology-and-medicine)
+[![Target: CMPB Elsevier](https://img.shields.io/badge/Target-CMPB%20Elsevier-orange.svg)](https://www.journals.elsevier.com/computer-methods-and-programs-in-biomedicine)
 
-**Authors:** Rajveer Singh Pall, Sameer Yadav  
+**Author:** Rajveer Singh Pall  
 **Affiliation:** Gyan Ganga Institute of Technology and Sciences, Jabalpur, India  
-**Submitted to:** *Computers in Biology and Medicine* (COBM, Elsevier)
+**Submitted to:** *Computer Methods and Programs in Biomedicine* (CMPB, Elsevier)
 
 > All commits are solely authored by Rajveer Singh Pall  
 > (verified via Insights → Contributors graph).  
@@ -23,12 +23,12 @@ What if hospitals could collaborate on a shared diabetes model without sharing a
 
 Centralised machine learning for healthcare requires pooling raw patient records across institutions — a practice that conflicts with HIPAA, GDPR, and the practical realities of hospital data governance. This project implements and evaluates a **privacy-preserving federated learning (FL)** framework for type-2 diabetes risk prediction that keeps patient data on-site while enabling multi-institutional collaboration.
 
-Four FL aggregation strategies — **FedAvg**, **FedProx** (μ=0.1), **FedNova** (τ={5,3,4}), and **SCAFFOLD** (Option II) — are trained on demographically partitioned NHANES data and validated externally on **1,282,897 BRFSS respondents**, the largest independent validation reported for this task. Beyond discrimination (AUC), the study evaluates **demographic fairness** (elderly–young AUC gap), **calibration** (Platt, isotonic, temperature scaling on FedAvg), and the **differential privacy–utility tradeoff** (DP-SGD, ε ∈ {0.5, 1, 2, 5, 10, 20, 50, 100, ∞}).
+Four FL aggregation strategies — **FedAvg**, **FedProx** (μ=0.1), **FedNova** (τ={5,3,4}), and **SCAFFOLD** (Option II) — are trained on demographically partitioned NHANES data and validated externally on **1,282,897 BRFSS respondents**, the largest independent validation reported for this task. Beyond discrimination (AUC), the study evaluates **demographic fairness** (elderly–young AUC gap), **calibration** (Platt, isotonic, temperature scaling on FedAvg and FedProx), and the **differential privacy–utility tradeoff** (DP-SGD, ε ∈ {0.5, 1, 2, 5, 10, 20, 50, 100, ∞}).
 
 **0.757 AUC · 1.28M external patients · 40% narrower generalisation gap · ECE 0.276→0.001**
 
 > [!IMPORTANT]
-> The primary finding is not raw AUC gain. FedAvg's generalisation gap (internal→external AUC drop) is **40% smaller** than a matched centralised DiabetesNet (0.031 vs. 0.052), suggesting federation produces a qualitatively more population-robust model — not merely a higher-scoring one.
+> The primary finding is not raw AUC gain. FedAvg's generalisation gap (internal→external AUC drop) is **40% smaller** than a matched centralised DiabetesNet (0.031 vs. 0.052), suggesting federation produces a qualitatively more population-robust model — not merely a higher-scoring one. A sample-matched sensitivity analysis (n=11,906) shows a gap of 0.024, indicating that data composition partially contributes; federation additionally provides privacy preservation, improved elderly fairness, and operational feasibility under regulatory constraints.
 
 ---
 
@@ -36,29 +36,32 @@ Four FL aggregation strategies — **FedAvg**, **FedProx** (μ=0.1), **FedNova**
 
 ### Discrimination — Internal (NHANES) and External (BRFSS) Validation
 
-| Model | Internal AUC [95% CI] | External AUC [95% CI] | Gen. Gap | Elderly Gap (Δ) |
-|:---|:---:|:---:|:---:|:---:|
-| Centralised XGBoost | 0.769 [0.760–0.777] | 0.700 [0.698–0.701] | 0.069 | 0.069 |
-| Centralised DiabetesNet | 0.801 | 0.749 | 0.052 | — |
-| **FedAvg** ⭐ | **0.788 [0.779–0.796]** | **0.757 [0.756–0.758]** | **0.031** | **0.054** |
-| FedProx (μ=0.1) | 0.785 [0.776–0.793] | 0.752 [0.751–0.753] | 0.033 | 0.066 |
-| FedNova (τ={5,3,4}) | 0.786 [0.778–0.794] | 0.744 [0.743–0.745] | 0.042 | 0.064 |
-| SCAFFOLD (SGD, 50 rounds) | 0.642 | 0.665 [0.664–0.667] | — | — |
+| Model | Internal AUC [95% CI] | External AUC [95% CI] | Gen. Gap | Elderly Gap [95% CI] | Brier [95% CI] |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| Centralised XGBoost | 0.769 [0.760–0.777] | 0.700 [0.698–0.701] | 0.069 | 0.069 [0.062–0.076] | 0.322 [0.321–0.322] |
+| Centralised DiabetesNet | 0.801 | 0.749 [0.748–0.750] | 0.052 | — | 0.306 [0.305–0.306] |
+| **FedAvg** ⭐ | **0.788 [0.780–0.796]** | **0.757 [0.756–0.758]** | **0.031** | **0.054 [0.047–0.060]** | **0.217 [0.217–0.218]** |
+| FedProx (μ=0.1) | 0.785 [0.777–0.793] | 0.752 [0.751–0.753] | 0.033 | 0.066 [0.059–0.073] | 0.242 [0.241–0.242] |
+| FedNova (τ={5,3,4}) | 0.786 [0.778–0.794] | 0.744 [0.743–0.745] | 0.042 | 0.064 [0.058–0.071] | 0.266 [0.266–0.267] |
+| SCAFFOLD (SGD, 50 rds)† | 0.642 [0.631–0.653] | 0.665 [0.664–0.667] | −0.023‡ | −0.092 [−0.099–−0.085]§ | 0.187 [0.187–0.187] |
 
-Gen. Gap = Internal AUC − External AUC (lower is better; SCAFFOLD excluded due to optimizer mismatch).  
+Gen. Gap = Internal AUC − External AUC (lower is better).  
 Internal CIs: stratified bootstrap (N=2,000, n=15,650). External CIs: DeLong structural components estimator (n=1,282,897).  
-All pairwise FL strategy DeLong tests statistically significant at Bonferroni-corrected α=0.017.
+All pairwise FL strategy DeLong tests statistically significant at Bonferroni-corrected α=0.017.  
+† SCAFFOLD uses SGD (required by theory); AdamW-based strategies are not directly comparable on the optimiser dimension.  
+‡ SCAFFOLD Gen. Gap is negative (external > internal) due to SGD convergence dynamics, not a genuine generalisation advantage.  
+§ SCAFFOLD elderly–young gap is negative (elderly AUC > young AUC); this reflects near-random performance on young respondents (AUC=0.521), not improved elderly prediction. See Sections 4.6 and 5.2.
 
 ### Calibration — FedAvg on BRFSS External Set (n=1,026,318)
 
-| Method | ECE | AUC | Notes |
+| Method | ECE [95% CI] | AUC | Notes |
 |:---|:---:|:---:|:---|
-| Uncalibrated | 0.276 | 0.757 | Moderate overconfidence (scores biased high) |
-| Platt scaling | 0.007 | 0.757 | Two-parameter sigmoid; robust to small cal sets |
-| **Isotonic regression** ⭐ | **0.001** | 0.757 | Near-perfect calibration |
-| Temperature scaling (T=2.41) | 0.269 | 0.757 | Limited benefit; non-monotone logit curve |
+| Uncalibrated | 0.276 [0.276–0.277] | 0.757 | Moderate overconfidence (scores biased high) |
+| Platt scaling | 0.007 [0.006–0.008] | 0.757 | Two-parameter sigmoid; robust to small cal sets |
+| **Isotonic regression** ⭐ | **0.001 [0.000–0.002]** | 0.757 | Near-perfect calibration |
+| Temperature scaling (T=2.41) | 0.269 [0.268–0.270] | 0.757 | Limited benefit; non-monotone logit curve |
 
-FedProx calibration results are reported in Supplementary Table S4.
+FedProx calibration results (uncal ECE=0.319, Platt=0.016, isotonic=0.002) are reported in Supplementary Table S5.
 
 ### Differential Privacy Tradeoff
 
@@ -77,7 +80,7 @@ FedProx calibration results are reported in Supplementary Table S4.
 | 100.0 | 0.769 | Recovery |
 | ∞ (no DP) | 0.766 | FedAvg baseline |
 
-Recovery emerges sharply at ε=10 (AUC=0.769). Collapse at ε≤5 reflects the high noise multiplier required at healthcare-scale sampling rates (~5–15%), where per-node sample sizes of 3,000–4,500 cannot absorb tight DP budgets.
+Recovery emerges sharply at ε=10 (AUC=0.769). Collapse at ε≤5 reflects the high noise multiplier required at healthcare-scale sampling rates (~5–15%), where per-node sample sizes of 3,000–4,500 cannot absorb tight DP budgets. Opacus RDP accounting returns ε_actual=∞ at ε_target≥10, so ε=10 characterises the utility floor for this dataset-size regime rather than a formal cryptographic guarantee.
 
 </details>
 
@@ -87,10 +90,10 @@ Recovery emerges sharply at ε=10 (AUC=0.769). Collapse at ε≤5 reflects the h
 
 | | Question | Finding |
 |:---|:---|:---|
-| **RQ1 · Performance** | Does federated training generalise better than centralised? | ✅ FedAvg generalisation gap 40% smaller than matched centralised DiabetesNet (0.031 vs. 0.052) |
+| **RQ1 · Performance** | Does federated training generalise better than centralised? | ✅ FedAvg generalisation gap 40% smaller than matched centralised DiabetesNet (0.031 vs. 0.052); sample-matched sensitivity gap=0.024 indicates partial data-composition contribution |
 | **RQ2 · Fairness** | Does federated training reduce demographic AUC disparity? | ✅ Elderly gap: 0.069 → 0.054 (21.7% within-study improvement) |
-| **RQ3 · Privacy** | What is the accuracy cost of differential privacy? | ⚠️ Model collapse at ε≤5; recovery at ε≥10 (AUC=0.769) |
-| **RQ4 · Calibration** | Are federated risk scores clinically trustworthy? | ✅ ECE 0.276 → 0.001 after isotonic recalibration |
+| **RQ3 · Privacy** | What is the accuracy cost of differential privacy? | ⚠️ Model collapse at ε≤5; recovery at ε≥10 (AUC=0.769); formal DP requires substantially larger per-node cohorts |
+| **RQ4 · Calibration** | Are federated risk scores clinically trustworthy? | ✅ ECE 0.276 → 0.001 after isotonic recalibration; Platt scaling reduces ECE to 0.007 with only two parameters |
 
 ---
 
@@ -98,7 +101,7 @@ Recovery emerges sharply at ε=10 (AUC=0.769). Collapse at ε≤5 reflects the h
 
 ![System architecture](federated/results/figures/fig1_architecture.png)
 
-Three demographically distinct hospital nodes (Node A: elderly/high-BMI; Node B: middle-aged/moderate; Node C: young/low-prevalence) train local DiabetesNet models (4-layer MLP, BatchNorm, AdamW) and exchange only weight updates with a central aggregator. No raw patient records leave any node.
+Three demographically distinct hospital nodes (Node A: Young Urban community health clinic, n=4,500; Node B: Elderly Rural critical access hospital, n=3,406; Node C: Mixed Metropolitan academic centre, n=4,000) train local DiabetesNet models (4-layer MLP, BatchNorm, AdamW) and exchange only weight updates with a central aggregator. No raw patient records leave any node.
 
 ---
 
@@ -132,25 +135,20 @@ Federated-Diabetes/
 │   ├── 11_subgroup_confidence_intervals.py      # Bootstrap CIs for fairness gap
 │   ├── 12_dp_technical_details.py               # RDP accounting tables
 │   │
-│   ├── ── COBM extension scripts ──
+│   ├── ── CMPB extension scripts ──
 │   ├── 14_scaffold_external.py                  # SCAFFOLD external BRFSS validation
 │   ├── 15_dp_extended.py                        # Extended DP sweep (ε={10,20,50,100})
 │   ├── 16_pairwise_delong.py                    # Pairwise DeLong tests (Bonferroni α=0.017)
 │   ├── 17_fedavg_calibration.py                 # FedAvg post-hoc calibration (ECE 0.276→0.001)
-│   ├── 18_write_cover_letter.py                 # COBM cover letter generator
-│   ├── 19_numerical_changes_summary.py          # Numerical changes summary
+│   ├── cmpb_experiments.py                      # Bootstrap Brier CIs, NNS, ECE CIs, SCAFFOLD CI
 │   │
-│   ├── ── Outputs ──
+│   ├── ── Figure generation ──
 │   ├── generate_publication_figures.py          # All 8 publication figures (300 dpi)
-│   ├── write_manuscript_v6.py                   # COBM manuscript generator [ACTIVE]
-│   ├── write_supplementary_v2.py                # Supplementary generator, 5 tables [ACTIVE]
-│   ├── write_manuscript_v5.py                   # [ARCHIVED — JBI version]
 │   │
 │   └── results/
 │       ├── auc_confidence_intervals.json        # Bootstrap + DeLong CIs for all models
 │       ├── external_validation.json             # BRFSS AUC + subgroup fairness
-│       ├── calibration_results.json             # FedProx calibration ECE
-│       ├── fedavg_calibration_results.json      # FedAvg calibration ECE (COBM primary)
+│       ├── fedavg_calibration_results.json      # FedAvg calibration ECE (CMPB primary)
 │       ├── federated_convergence.json           # Round-by-round AUC for FedAvg/FedProx
 │       ├── fednova_corrected.json               # FedNova results
 │       ├── scaffold_results.json                # SCAFFOLD internal convergence (50 rounds)
@@ -159,6 +157,10 @@ Federated-Diabetes/
 │       ├── dp_results_extended.json             # Extended DP sweep (ε ∈ {10,20,50,100})
 │       ├── pairwise_delong_all.json             # Pairwise DeLong test statistics
 │       ├── fairness_metrics.json                # Subgroup AUC + fairness gaps
+│       ├── brier_score_cis.json                 # Bootstrap Brier CIs (N=2000, BRFSS)
+│       ├── nns_results.json                     # Number Needed to Screen (elderly subgroup)
+│       ├── ece_cis.json                         # ECE bootstrap CIs (FedAvg calibration methods)
+│       ├── internal_bootstrap_cis.json          # SCAFFOLD internal AUC bootstrap CI
 │       └── figures/                             # 8 × 300 dpi publication figures
 │           ├── fig1_architecture.png
 │           ├── fig2_convergence.png
@@ -169,6 +171,8 @@ Federated-Diabetes/
 │           ├── fig7_generalisation_gap.png
 │           └── fig8_summary_comparison.png
 │
+├── generate_revised_docs.js                     # CMPB manuscript + supplementary generator [ACTIVE]
+├── package.json                                 # Node.js dependencies (docx)
 ├── README.md
 ├── requirements.txt
 ├── LICENSE                                      # MIT
@@ -181,12 +185,13 @@ Federated-Diabetes/
 
 ## Setup
 
-**Prerequisites:** Python 3.10+, CUDA-capable GPU recommended (CPU works but is slower).
+**Prerequisites:** Python 3.10+, Node.js 18+, CUDA-capable GPU recommended (CPU works but is slower).
 
 ```bash
 git clone https://github.com/Rajveer-code/Federated-Diabetes.git
 cd Federated-Diabetes
 pip install -r requirements.txt
+npm install   # for DOCX generation only
 ```
 
 **Data acquisition:**
@@ -211,7 +216,7 @@ $env:BRFSS_PATH = "C:\path\to\brfss_final.csv"
 
 ## Reproducing Results
 
-Run scripts in order from the `federated/` directory. Total expected runtime on an RTX 3060+: **~35 minutes** (including COBM extension scripts).
+Run scripts in order from the `federated/` directory. Total expected runtime on an RTX 3060+: **~40 minutes** (including CMPB extension scripts).
 
 ```bash
 cd federated/
@@ -263,7 +268,7 @@ python 08_scaffold_baseline.py
 python 09_calibration_analysis.py
 # → results/calibration_results.json
 
-# ── COBM Extension Scripts ──────────────────────────────────────
+# ── CMPB Extension Scripts ──────────────────────────────────────
 
 # Step 13 — SCAFFOLD external BRFSS validation (~3 min)
 python 14_scaffold_external.py
@@ -281,19 +286,23 @@ python 16_pairwise_delong.py
 python 17_fedavg_calibration.py
 # → results/fedavg_calibration_results.json
 
+# Step 17 — Bootstrap Brier CIs, NNS, ECE CIs, SCAFFOLD bootstrap CI (~5 min)
+python cmpb_experiments.py
+# → results/brier_score_cis.json, nns_results.json, ece_cis.json, internal_bootstrap_cis.json
+
 # ── Outputs ─────────────────────────────────────────────────────
 
-# Step 17 — Generate all 8 publication figures (300 dpi)
+# Step 18 — Generate all 8 publication figures (300 dpi)
 python generate_publication_figures.py
 # → results/figures/fig{1..8}_*.png
 
-# Step 18 — Generate COBM manuscript (ACTIVE)
-python write_manuscript_v6.py
-# → ../FL_Diabetes_Manuscript_v6_COBM.docx
-
-# Step 19 — Generate supplementary tables (ACTIVE)
-python write_supplementary_v2.py
-# → ../FL_Diabetes_Supplementary_v2.docx
+# Step 19 — Generate CMPB manuscript + supplementary (Node.js)
+cd ..
+node generate_revised_docs.js
+# → FL_Diabetes_CMPB_FINAL_SUBMISSION.docx
+# → FL_Diabetes_CMPB_FINAL_with_figures.docx
+# → Cover_Letter_CMPB_FINAL.docx
+# → FL_Diabetes_Supplementary_CMPB.docx
 ```
 
 All pre-computed results are committed under `federated/results/` for immediate inspection without running the full pipeline.
@@ -318,6 +327,7 @@ All hyperparameters are centralised in `federated/config_paths.py`.
 | `RANDOM_SEED` | 42 | Fixed across all experiments |
 | `DP δ` | 10⁻⁵ | Standard for datasets with n < 10⁶ |
 | `DP clipping C` | 1.0 | Gradient clipping norm for DP-SGD |
+| `DP batch` | 512 | Sampling rate ≈ 5% per node |
 
 </details>
 
@@ -332,21 +342,24 @@ A single `StandardScaler` is fitted **once** on the NHANES training split (`00_f
 Stratified bootstrap on 1.28 million BRFSS records is computationally intractable (kernel matrix ≈ 708 GB). We use the DeLong structural components estimator — an O(n log n) algorithm via `numpy.searchsorted` — which produces mathematically equivalent 95% CIs in seconds.
 
 ### SCAFFOLD with SGD
-SCAFFOLD's convergence guarantee (Karimireddy et al., ICML 2020) requires SGD. Our implementation respects this, which means SCAFFOLD is compared against AdamW-based strategies under an inherent optimizer mismatch. The lower internal AUC (0.642 vs. 0.788) and its reversal on external data (0.665) are reported transparently. A matched AdamW-SCAFFOLD ablation is a natural extension.
+SCAFFOLD's convergence guarantee (Karimireddy et al., ICML 2020) requires SGD. Our implementation respects this, which means SCAFFOLD is compared against AdamW-based strategies under an inherent optimiser mismatch. The lower internal AUC (0.642 vs. 0.788) and the inverted elderly gap (−0.092) are reported transparently. A matched AdamW-SCAFFOLD ablation is a natural extension.
 
 ### Generalisation Gap as Primary Metric
-Raw AUC comparisons across different training sets confound data composition effects with model quality. The generalisation gap (internal − external AUC) isolates the model's population robustness. FedAvg's gap (0.031) is 40% smaller than the matched centralised DiabetesNet (0.052) and 55% smaller than centralised XGBoost (0.069).
+Raw AUC comparisons across different training sets confound data composition effects with model quality. The generalisation gap (internal − external AUC) isolates population robustness. FedAvg's gap (0.031) is 40% smaller than the matched centralised DiabetesNet (0.052); a sample-matched sensitivity analysis (n=11,906) shows a gap of 0.024, indicating that data composition partially explains the advantage. Federation additionally provides privacy preservation, demographic equity, and feasibility under regulatory constraints.
+
+### Number Needed to Screen (NNS)
+In the elderly subgroup (age ≥60, prevalence 20.24%), at the Youden-optimal threshold FedAvg achieves NNS=8.6 (sens=0.577, spec=0.672, threshold=0.656) versus XGBoost NNS=8.0 (sens=0.618, spec=0.517, threshold=0.757). At a sensitivity-prioritising threshold of 0.35, both converge to NNS=5.1.
 
 ---
 
 ## Limitations
 
 - Node partitioning is **simulated** from a single national cohort (NHANES). Real deployments involve genuine between-site batch effects, divergent measurement protocols, and independent patient populations.
-- The BRFSS smoking variable mapping (cigarette-days-per-year → binary) introduces measurement error relative to the clinical NHANES measure.
-- SCAFFOLD was evaluated with SGD (required by theory); performance relative to AdamW-based strategies is not directly comparable on the optimizer dimension.
-- Tight differential privacy (ε≤5) causes model collapse at per-node sample sizes of ~3,000–4,500. Real-world deployment at these scales requires larger cohorts, composition mechanisms, or weaker DP notions (local DP, shuffling).
+- The NHANES composite diabetes outcome (HbA1c ≥6.5% or fasting glucose ≥126 mg/dL or self-report) differs from the BRFSS self-reported-only outcome, attenuating external AUC and introducing measurement error in cross-dataset comparisons.
+- SCAFFOLD was evaluated with SGD (required by theory); performance relative to AdamW-based strategies is not directly comparable on the optimiser dimension.
+- Tight differential privacy (ε≤5) causes model collapse at per-node sample sizes of ~3,000–4,500. Opacus RDP returns ε_actual=∞ at ε_target≥10; formal DP guarantees require substantially larger per-node cohorts (~40,000), composition mechanisms, or weaker DP notions (local DP, shuffling).
 - All nodes share the same DiabetesNet architecture; personalised FL strategies (Ditto, pFedMe) with heterogeneous local models were not evaluated.
-- DP-SGD was integrated as a post-hoc experiment on the base FedAvg training loop; integrating differentially private gradient aggregation directly into the FL rounds is a natural extension.
+- SHAP feature importance analysis is identified as a priority extension; execution requires the NHANES test split arrays (X_test.npy).
 
 ---
 
@@ -356,8 +369,8 @@ Raw AUC comparisons across different training sets confound data composition eff
 @article{pall2026fl_diabetes,
   title   = {Privacy-Preserving Federated Learning for Diabetes Risk Prediction
              Across Demographically Heterogeneous Hospital Nodes},
-  author  = {Pall, Rajveer Singh and Yadav, Sameer},
-  journal = {Computers in Biology and Medicine},
+  author  = {Pall, Rajveer Singh},
+  journal = {Computer Methods and Programs in Biomedicine},
   year    = {2026},
   note    = {Under review}
 }

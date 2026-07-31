@@ -366,13 +366,13 @@ In the elderly subgroup (age ≥60, prevalence 20.24%), at the Youden-optimal th
 ## Citation
 
 ```bibtex
-@article{pall2026fl_diabetes,
+@unpublished{pall2026fl_diabetes,
   title   = {Privacy-Preserving Federated Learning for Diabetes Risk Prediction
              Across Demographically Heterogeneous Hospital Nodes},
   author  = {Pall, Rajveer Singh},
-  journal = {Computer Methods and Programs in Biomedicine},
   year    = {2026},
-  note    = {Under review}
+  note    = {Manuscript under review at Computer Methods and Programs in Biomedicine},
+  url     = {https://github.com/Rajveer-code/Federated-Diabetes}
 }
 ```
 

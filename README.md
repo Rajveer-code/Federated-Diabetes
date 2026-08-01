@@ -7,12 +7,10 @@ What if hospitals could collaborate on a shared diabetes model without sharing a
 [![Flower FL](https://img.shields.io/badge/Flower-1.5%2B-blueviolet.svg)](https://flower.dev)
 [![Opacus DP](https://img.shields.io/badge/Opacus-1.4%2B-ff69b4.svg)](https://opacus.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
-[![Target: CMPB Elsevier](https://img.shields.io/badge/Target-CMPB%20Elsevier-orange.svg)](https://www.journals.elsevier.com/computer-methods-and-programs-in-biomedicine)
-
+[![Under review: CMPB Elsevier](https://img.shields.io/badge/Under_review-CMPB%20Elsevier-orange.svg)](https://www.journals.elsevier.com/computer-methods-and-programs-in-biomedicine)
 **Author:** Rajveer Singh Pall  
 **Affiliation:** Gyan Ganga Institute of Technology and Sciences, Jabalpur, India  
-**Submitted to:** *Computer Methods and Programs in Biomedicine* (CMPB, Elsevier)
-
+**Status:** Under review — With Editor at *Computer Methods and Programs in Biomedicine* (CMPB, Elsevier)
 > All commits are solely authored by Rajveer Singh Pall  
 > (verified via Insights → Contributors graph).  
 > AI coding tools were used locally for development assistance and hold no commit authorship.

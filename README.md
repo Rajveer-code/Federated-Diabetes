@@ -8,6 +8,7 @@ What if hospitals could collaborate on a shared diabetes model without sharing a
 [![Opacus DP](https://img.shields.io/badge/Opacus-1.4%2B-ff69b4.svg)](https://opacus.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
 [![Under review: CMPB Elsevier](https://img.shields.io/badge/Under_review-CMPB%20Elsevier-orange.svg)](https://www.journals.elsevier.com/computer-methods-and-programs-in-biomedicine)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21739555.svg)](https://doi.org/10.5281/zenodo.21739555)
 **Author:** Rajveer Singh Pall  
 **Affiliation:** Gyan Ganga Institute of Technology and Sciences, Jabalpur, India  
 **Status:** Under review — With Editor at *Computer Methods and Programs in Biomedicine* (CMPB, Elsevier)

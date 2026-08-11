@@ -1,0 +1,60 @@
+{
+  "note": "Percentages of each node by NHANES RIDRETH3. The partition is defined on age and urbanicity; the racial separation is a side effect of it.",
+  "nodes": {
+    "Node A \u2014 Young Urban": {
+      "n": 4500,
+      "race_pct": {
+        "Mexican American": 11.49,
+        "Other Hispanic": 18.24,
+        "NH White": 19.24,
+        "NH Black": 38.18,
+        "NH Asian": 8.91,
+        "Other/Multi": 3.93
+      }
+    },
+    "Node B \u2014 Elderly Rural": {
+      "n": 3406,
+      "race_pct": {
+        "Mexican American": 21.93,
+        "Other Hispanic": 0.0,
+        "NH White": 78.07,
+        "NH Black": 0.0,
+        "NH Asian": 0.0,
+        "Other/Multi": 0.0
+      }
+    },
+    "Node C \u2014 Mixed Metro": {
+      "n": 4000,
+      "race_pct": {
+        "Mexican American": 12.17,
+        "Other Hispanic": 12.4,
+        "NH White": 22.43,
+        "NH Black": 27.38,
+        "NH Asian": 19.07,
+        "Other/Multi": 6.55
+      }
+    }
+  },
+  "pooled": {
+    "n": 15650,
+    "race_pct": {
+      "Mexican American": 14.0,
+      "Other Hispanic": 11.42,
+      "NH White": 33.69,
+      "NH Black": 24.35,
+      "NH Asian": 12.09,
+      "Other/Multi": 4.46
+    }
+  },
+  "manuscript_claims": {
+    "elderly_rural_NH_White_pct": 78.07,
+    "elderly_rural_absent_strata": [
+      "Other Hispanic",
+      "NH Black",
+      "NH Asian",
+      "Other/Multi"
+    ],
+    "young_urban_NH_Black_pct": 38.18,
+    "pooled_NH_White_pct": 33.69
+  }
+}

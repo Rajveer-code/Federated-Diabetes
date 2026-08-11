@@ -1,0 +1,59 @@
+{
+  "description": "Sample-matched centralised DiabetesNet (n=11,906), corrected BRFSS pipeline, multi-seed",
+  "n_seeds": 5,
+  "n_brfss": 1282897,
+  "runs": [
+    {
+      "seed": 42,
+      "auc_internal": 0.799,
+      "auc_external": 0.7514,
+      "generalisation_gap": 0.0476
+    },
+    {
+      "seed": 43,
+      "auc_internal": 0.8042,
+      "auc_external": 0.7523,
+      "generalisation_gap": 0.0519
+    },
+    {
+      "seed": 44,
+      "auc_internal": 0.7966,
+      "auc_external": 0.7485,
+      "generalisation_gap": 0.0481
+    },
+    {
+      "seed": 45,
+      "auc_internal": 0.8113,
+      "auc_external": 0.7571,
+      "generalisation_gap": 0.0543
+    },
+    {
+      "seed": 46,
+      "auc_internal": 0.7947,
+      "auc_external": 0.7526,
+      "generalisation_gap": 0.0421
+    }
+  ],
+  "auc_internal": {
+    "mean": 0.8012,
+    "sd": 0.0067
+  },
+  "auc_external": {
+    "mean": 0.7524,
+    "sd": 0.0031
+  },
+  "generalisation_gap": {
+    "mean": 0.0488,
+    "sd": 0.0047,
+    "min": 0.0421,
+    "max": 0.0543
+  },
+  "superseded_buggy_result": {
+    "generalisation_gap": 0.0239,
+    "n_brfss": 720161,
+    "defects": [
+      "complete-case BRFSS deletion (43.9% of rows dropped)",
+      "no BRFSS 0/1 -> NHANES 1/2 sex remap"
+    ]
+  }
+}

@@ -799,3 +799,50 @@ implementation (searchsorted on pre-sorted arrays vs np.quantile + boolean mask)
 | Only a correlation drives the mechanism | controlled sweep, P(X|Y) fixed by construction | prevalence_sweep.json |
 | Simulated sites | stated; driver identified is measurable in real deployments | -- |
 | Multiple comparisons | Bonferroni over 5 strata x 2 metrics; headline p < 1e-30 | -- |
+
+## F11 — label shift FALSIFIED under control; covariate shift implicated
+
+49_prevalence_sweep.py. Six arms, 10 seeds each. Nodes built by drawing positives
+and negatives from their own pooled shuffled pools, so P(X|Y=1) and P(X|Y=0) are
+identical across nodes by construction and only P(Y) varies. Every row used
+exactly once per arm, so cohort size and pooled prevalence are invariant.
+
+  spread   dAUCgap   dSensGap   xAUC(B>W)
+   0.000   -0.0004    -0.0050      0.7474
+   0.070   +0.0003    -0.0028      0.7476
+   0.140   -0.0002    -0.0034      0.7473
+   0.210   -0.0002    -0.0081      0.7482
+   0.280   +0.0010    -0.0070      0.7494
+   0.350   -0.0016    -0.0065      0.7460
+
+  r(spread, dSensGap) = -0.628    r(spread, dAUCgap) = -0.246
+
+FLAT. Real partition gives dSensGap +0.027 and xAUC 0.7294 (ref 0.7475).
+Pure label shift produces nothing. VERDICT: label shift is NOT the driver.
+
+Therefore the r=-0.95 in F8 / 46_partition_mechanism.py was CONFOUNDED. BMI
+tertiles separate nodes on covariates and prevalence at once; covariate shift
+correlated r=-0.80 there. The controlled experiment shows prevalence was the
+passenger and covariate separation the driver.
+
+This is the SECOND mechanism hypothesis rejected by its own dose-response test.
+The first was racial separation (F8, r=+0.29, wrong sign). Both rejections stay
+in the paper -- they are the reason the surviving account is credible.
+
+52_covariate_sweep.py — the complement. Nodes are tertiles of
+(1-alpha)*Uniform + alpha*rank(BMI); every node forced to pooled prevalence by
+subsampling within its own label pools (NOT by moving rows between nodes, which
+would degrade the separation being dosed). Cohort 5,916 (1,972/node), constant
+across arms. Reference is the alpha=0 arm at the same size.
+
+Single-seed probe (seed 42):
+  alpha 0.00  cov sep 0.0121  W-B AUC +0.0069  xAUC(B>W) 0.7445
+  alpha 1.00  cov sep 0.1425  W-B AUC -0.0160  xAUC(B>W) 0.7150   d = -0.0295
+
+-0.0295 exceeds the -0.0181 the real age/urbanicity partition produces.
+Full 5 alphas x 10 seeds running.
+
+CAUTION for writing: the smoke test's SENSITIVITY gap barely moved (+0.0014)
+while xAUC moved a lot. Do not claim the sensitivity reversal is reproduced by
+covariate separation until the 10-seed run says so. xAUC is the mechanism
+quantity; the sensitivity gap is downstream and noisier at half cohort size.

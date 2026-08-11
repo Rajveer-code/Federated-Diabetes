@@ -19,10 +19,12 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score, brier_score_loss
 from sklearn.calibration import calibration_curve
+from sklearn.linear_model import LogisticRegression
+from sklearn.isotonic import IsotonicRegression
 warnings.filterwarnings('ignore')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from config_paths import RESULTS_DIR, RANDOM_SEED
+from config_paths import RESULTS_DIR, RANDOM_SEED, SEED as CAL_SEED
 
 np.random.seed(RANDOM_SEED)
 RESULTS_DIR = str(RESULTS_DIR)
@@ -195,94 +197,92 @@ cal_json_path = os.path.join(RESULTS_DIR, 'fedavg_calibration_results.json')
 with open(cal_json_path) as f:
     cal_data = json.load(f)
 
-def ece_from_preds(y_true, y_score, n_bins=10):
-    bin_edges = np.linspace(0.0, 1.0, n_bins + 1)
-    ece = 0.0
-    n = len(y_true)
-    for lo, hi in zip(bin_edges[:-1], bin_edges[1:]):
-        mask = (y_score > lo) & (y_score <= hi)
-        if i == 0:  # first bin: include 0
-            mask = (y_score >= lo) & (y_score <= hi)
-        nb = mask.sum()
-        if nb == 0:
-            continue
-        acc  = y_true[mask].mean()
-        conf = y_score[mask].mean()
-        ece += (nb / n) * abs(acc - conf)
-    return ece
+# This block adds bootstrap CIs to the calibration results of
+# 17_fedavg_calibration.py, so it has to reproduce that script exactly. Four
+# things previously differed, each of which alone makes the two result files
+# disagree for the same model on the same data:
+#   1. Platt coefficients were applied to logit(p), but 17_fedavg_calibration.py
+#      fits them on raw p — this alone gave ECE=0.1105 against its 0.0072.
+#   2. ECE was evaluated on all 1,282,897 BRFSS rows, including the 20% the
+#      calibrators were fitted on, instead of the held-out 80%.
+#   3. the bin convention was (lo, hi] with the first bin closed; ece_wilson()
+#      uses [lo, hi) with the last bin closed.
+#   4. the isotonic CI was not a bootstrap at all — it was Platt's bootstrap
+#      width recentred on the isotonic point estimate. Isotonic is refitted here
+#      (it is deterministic given the same calibration split) and bootstrapped
+#      like every other method.
 
-def ece_fn(y_true, y_score, n_bins=10):
-    bin_edges = np.linspace(0.0, 1.0, n_bins + 1)
-    ece = 0.0
-    n = len(y_true)
-    for j, (lo, hi) in enumerate(zip(bin_edges[:-1], bin_edges[1:])):
-        if j == 0:
-            mask = (y_score >= lo) & (y_score <= hi)
-        else:
-            mask = (y_score > lo) & (y_score <= hi)
-        nb = mask.sum()
-        if nb == 0:
-            continue
-        acc  = float(y_true[mask].mean())
-        conf = float(y_score[mask].mean())
-        ece += (nb / n) * abs(acc - conf)
-    return ece
+def ece_fast(y_true, y_score, n_bins=10):
+    """
+    Equal-width ECE, vectorised. Bin convention matches ece_wilson() in
+    17_fedavg_calibration.py: [lo, hi), final bin closed at 1.0.
+    Uses sum_b (n_b/N)*|acc_b - conf_b| == sum_b |sum(y)_b - sum(p)_b| / N.
+    """
+    b = np.clip((np.asarray(y_score) * n_bins).astype(np.intp), 0, n_bins - 1)
+    s_acc  = np.bincount(b, weights=y_true,  minlength=n_bins)
+    s_conf = np.bincount(b, weights=y_score, minlength=n_bins)
+    return float(np.abs(s_acc - s_conf).sum() / len(y_true))
 
-# Load uncalibrated FedAvg predictions
+
+assert RANDOM_SEED == CAL_SEED, "split seed must match 17_fedavg_calibration.py"
+idx_split = np.random.default_rng(CAL_SEED).permutation(n_brfss)
+n_cal     = int(0.20 * n_brfss)
+cal_idx, test_idx = idx_split[:n_cal], idx_split[n_cal:]
+
 pred_fa = preds_ext['FedAvg']
+y_cal,  p_cal_raw  = y_brfss[cal_idx],  pred_fa[cal_idx]
+y_test, p_test_raw = y_brfss[test_idx], pred_fa[test_idx]
+n_test = len(test_idx)
+print(f"  Split: {n_cal:,} cal / {n_test:,} test  (as 17_fedavg_calibration.py)")
 
-# For Platt: apply sigmoid(coef * logit(p) + intercept)
-coef      = cal_data['platt']['coef']
-intercept = cal_data['platt']['intercept']
-
-def platt_calibrate(p):
-    logit = np.log(np.clip(p, 1e-7, 1 - 1e-7) / np.clip(1 - p, 1e-7, 1 - 1e-7))
-    return 1.0 / (1.0 + np.exp(-(coef * logit + intercept)))
-
-# For temperature: T=2.41
+platt = LogisticRegression(C=1.0, max_iter=500, random_state=CAL_SEED)
+platt.fit(p_cal_raw.reshape(-1, 1), y_cal)
+iso = IsotonicRegression(out_of_bounds='clip')
+iso.fit(p_cal_raw, y_cal)
 T_opt = cal_data['temperature']['T_optimal']
+
 def temp_calibrate(p):
-    logit = np.log(np.clip(p, 1e-7, 1 - 1e-7) / np.clip(1 - p, 1e-7, 1 - 1e-7))
-    return 1.0 / (1.0 + np.exp(-logit / T_opt))
-
-# Isotonic: load sorted calibration mapping from bin data (approximate via monotone interpolation)
-# Use point ECE from JSON and estimate CI via bootstrap on raw predictions
-# For isotonic we can't easily reconstruct the calibrator, so we use the point ECE from JSON
-# and estimate CI width using bootstrap on Platt-calibrated predictions as a proxy
-
-print("  Computing bootstrap ECE CIs (N=2000)...")
-
-rng2 = np.random.default_rng(RANDOM_SEED)
+    logit_p = np.log(np.clip(p, 1e-7, 1 - 1e-7) / np.clip(1 - p, 1e-7, 1 - 1e-7))
+    return 1.0 / (1.0 + np.exp(-logit_p / T_opt))
 
 calibrations = {
-    'Uncalibrated':     pred_fa,
-    'Platt':            platt_calibrate(pred_fa),
-    'Temperature':      temp_calibrate(pred_fa),
+    'Uncalibrated': p_test_raw,
+    'Platt':        platt.predict_proba(p_test_raw.reshape(-1, 1))[:, 1],
+    'Isotonic':     iso.predict(p_test_raw),
+    'Temperature':  temp_calibrate(p_test_raw),
 }
-# Add isotonic point from JSON (can't bootstrap without the fitted isotonic)
+
+print(f"  Computing bootstrap ECE CIs (N={N_BOOT}) on the {n_test:,}-row test split...")
+rng2 = np.random.default_rng(RANDOM_SEED)
 
 ece_results = {}
 for method, p_cal in calibrations.items():
-    point_ece = ece_fn(y_brfss, p_cal)
+    point_ece = ece_fast(y_test, p_cal)
     boot_ece = np.empty(N_BOOT)
     for i in range(N_BOOT):
-        idx = rng2.integers(0, n_brfss, size=n_brfss)
-        boot_ece[i] = ece_fn(y_brfss[idx], p_cal[idx])
+        bidx = rng2.integers(0, n_test, size=n_test)
+        boot_ece[i] = ece_fast(y_test[bidx], p_cal[bidx])
     lo_e = float(np.percentile(boot_ece, 2.5))
     hi_e = float(np.percentile(boot_ece, 97.5))
-    ece_results[method] = {'ece': round(point_ece, 4), 'ci_lower': round(lo_e, 4), 'ci_upper': round(hi_e, 4)}
-    print(f"  {method:<20}: ECE={point_ece:.4f} [{lo_e:.4f}–{hi_e:.4f}]")
+    ece_results[method] = {'ece': round(point_ece, 4),
+                           'ci_lower': round(lo_e, 4), 'ci_upper': round(hi_e, 4)}
+    # Cross-check against the script this one is meant to agree with.
+    ref = cal_data.get(method.lower(), {}).get('ece')
+    if ref is not None:
+        ece_results[method]['ece_17_fedavg_calibration'] = round(float(ref), 4)
+        ece_results[method]['matches_17'] = bool(abs(point_ece - float(ref)) < 5e-4)
+    tail = '' if ref is None else f"   17_fedavg_calibration={ref:.4f}"
+    print(f"  {method:<14}: ECE={point_ece:.4f} [{lo_e:.4f}-{hi_e:.4f}]{tail}")
 
-# Isotonic: point ECE from JSON; CI width estimated from Platt-calibrated CI width (same scale)
-iso_ece_point = cal_data['isotonic']['ece']
-platt_width = ece_results['Platt']['ci_upper'] - ece_results['Platt']['ci_lower']
-iso_ci_lo = max(0.0, iso_ece_point - platt_width / 2)
-iso_ci_hi = iso_ece_point + platt_width / 2
-ece_results['Isotonic'] = {'ece': round(iso_ece_point, 4), 'ci_lower': round(iso_ci_lo, 4), 'ci_upper': round(iso_ci_hi, 4), 'note': 'CI estimated from bootstrap width of Platt method; isotonic calibrator not stored'}
-print(f"  {'Isotonic':<20}: ECE={iso_ece_point:.4f} [{iso_ci_lo:.4f}–{iso_ci_hi:.4f}] (estimated CI)")
+mismatched = [m for m, v in ece_results.items() if v.get('matches_17') is False]
+if mismatched:
+    print(f"  WARNING: point ECE disagrees with 17_fedavg_calibration.py for {mismatched}")
 
 with open(os.path.join(RESULTS_DIR, 'ece_cis.json'), 'w') as f:
-    json.dump({'n_bootstrap': N_BOOT, 'n_brfss': int(n_brfss), 'model': 'FedAvg', 'calibrations': ece_results}, f, indent=2)
+    json.dump({'n_bootstrap': N_BOOT, 'n_cal': int(n_cal), 'n_test': int(n_test),
+               'n_brfss': int(n_brfss), 'model': 'FedAvg',
+               'evaluated_on': 'held-out 80% test split (matches 17_fedavg_calibration.py)',
+               'calibrations': ece_results}, f, indent=2)
 rows_ece = [{'method': m, 'ece': v['ece'], 'ci_lower': v['ci_lower'], 'ci_upper': v['ci_upper']}
             for m, v in ece_results.items()]
 pd.DataFrame(rows_ece).to_csv(os.path.join(RESULTS_DIR, 'ece_cis.csv'), index=False)

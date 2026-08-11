@@ -1,28 +1,38 @@
 {
   "n_bootstrap": 2000,
+  "n_cal": 256579,
+  "n_test": 1026318,
   "n_brfss": 1282897,
   "model": "FedAvg",
+  "evaluated_on": "held-out 80% test split (matches 17_fedavg_calibration.py)",
   "calibrations": {
     "Uncalibrated": {
       "ece": 0.2762,
-      "ci_lower": 0.2755,
-      "ci_upper": 0.2768
+      "ci_lower": 0.2754,
+      "ci_upper": 0.2769,
+      "ece_17_fedavg_calibration": 0.2762,
+      "matches_17": true
     },
     "Platt": {
-      "ece": 0.1105,
-      "ci_lower": 0.1099,
-      "ci_upper": 0.1111
-    },
-    "Temperature": {
-      "ece": 0.2687,
-      "ci_lower": 0.2681,
-      "ci_upper": 0.2693
+      "ece": 0.0072,
+      "ci_lower": 0.0066,
+      "ci_upper": 0.0079,
+      "ece_17_fedavg_calibration": 0.0072,
+      "matches_17": true
     },
     "Isotonic": {
       "ece": 0.001,
-      "ci_lower": 0.0004,
-      "ci_upper": 0.0016,
-      "note": "CI estimated from bootstrap width of Platt method; isotonic calibrator not stored"
+      "ci_lower": 0.0007,
+      "ci_upper": 0.0018,
+      "ece_17_fedavg_calibration": 0.001,
+      "matches_17": true
+    },
+    "Temperature": {
+      "ece": 0.2687,
+      "ci_lower": 0.268,
+      "ci_upper": 0.2694,
+      "ece_17_fedavg_calibration": 0.2687,
+      "matches_17": true
     }
   }
 }

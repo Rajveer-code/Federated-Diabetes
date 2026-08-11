@@ -1,6 +1,29 @@
 """
-SCRIPT 08 — SCAFFOLD BASELINE
-==============================
+SCRIPT 08 — SCAFFOLD BASELINE  ***SUPERSEDED — DO NOT USE FOR NEW RESULTS***
+============================================================================
+Use `fl_core.run_scaffold()` (driven by 33_multiseed_all_models.py) instead.
+This script is kept only to document how the previously reported SCAFFOLD
+numbers were produced. It has two defects that make those numbers invalid as a
+comparison against the other strategies:
+
+  1. LOCAL BUDGET. Line ~148 runs `while step < K` with K = NN_LOCAL_EPOCHS = 5
+     and increments `step` once per BATCH. So it performs 5 mini-batch steps per
+     round, where FedAvg/FedProx/FedNova perform 5 full EPOCHS (~90 batches) —
+     roughly 1/18th the local training. SCAFFOLD was simply undertrained.
+  2. LEARNING RATE. ETA_LOCAL = NN_LR = 1e-3 is an AdamW learning rate applied
+     to plain SGD. Sweeping it on held-out node validation AUC
+     (37_scaffold_lr_sweep.py) gives 0.7413 at 1e-3 versus 0.7970 at the
+     selected 1.0.
+
+With the budget matched and eta_local selected properly, SCAFFOLD does NOT
+underperform. Any claim that it does — including the "instructive negative
+result" framing — traces to this script, not to the algorithm.
+
+It also predates the BatchNorm-buffer fix (see fl_core.aggregate_buffers), so
+its models are scored with untrained BN running statistics.
+
+Original description follows.
+----------------------------------------------------------------------------
 SCAFFOLD Option II (Karimireddy et al., ICML 2020, arXiv:2003.00295).
 
 Corrects client drift via per-client control variates c_i and global c.

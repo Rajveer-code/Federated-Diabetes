@@ -1,0 +1,22 @@
+{
+  "seed": 42,
+  "n_brfss": 1282897,
+  "strategies": {
+    "FedAvg": {
+      "external_default_bn": 0.74063,
+      "external_refreshed_bn": 0.74573,
+      "external_delta": 0.00509,
+      "internal_default_bn": 0.784,
+      "internal_refreshed_bn": 0.78879,
+      "internal_delta": 0.00479
+    },
+    "FedProx": {
+      "external_default_bn": 0.74426,
+      "external_refreshed_bn": 0.74506,
+      "external_delta": 0.0008,
+      "internal_default_bn": 0.78235,
+      "internal_refreshed_bn": 0.78828,
+      "internal_delta": 0.00593
+    }
+  }
+}

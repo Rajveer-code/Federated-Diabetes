@@ -541,6 +541,49 @@ above rather than buried.
 > generalisation gap, and in the elderly–young gap — do not survive correction of
 > four pipeline defects, and are reported as non-replications.
 
+### Calibration recomputed
+The manuscript's ECE numbers came from pre-fix predictions. Recomputed per seed
+(`40_calibration_norace.py` → `results/calibration_norace.json`), FedAvg, 10 seeds,
+test n=1,026,318: uncalibrated **0.3242 ± 0.0036** (was 0.276), Platt
+0.0133 ± 0.0013, isotonic **0.0010 ± 0.0003**, temperature 0.3305 ± 0.0035.
+Isotonic still fixes it. Temperature scaling now makes calibration slightly
+*worse* than leaving it alone — a cleaner claim than the old "limited benefit".
+
+### Manuscript rewritten
+`main.tex` rebuilt around F6, with F1/F2/F3/F5 reported as explicit
+non-replications and the four defects named as their cause. New title, abstract,
+Table 1, and a new headline figure (`41_figure_race_strata.py` →
+`fig_race_strata.pdf`) replacing `fig_gap.png`, whose numbers were superseded.
+DP was dropped: its sweep was run on the pre-fix pipeline and rerunning it was not
+worth the page budget for a 4-page Findings paper.
+
+Verified: compiles clean, 0 undefined citations, References begin on page 4 so the
+body is inside the 4-page limit, and **82/82 numeric checks** against
+`delong_deltas.json` / `multiseed_all_models.json` / `calibration_norace.json`
+pass. That check also caught a drift the tex had introduced on its own — "34.7%
+missing" alongside "63.9% with recorded race", which do not sum. The Unknown
+stratum is 36.1% (34.7% item-missing plus 1.4% declined); both passages now use
+36.1%.
+
+Also corrected: the manuscript claimed 4,993 model parameters. Actual count is
+3,425 at 8 features and **3,361** at 7.
+
+### Still open
+- `[repository anonymised for review]` in Data and Code Availability is still a
+  placeholder. Needs an anonymous mirror — **not** the public
+  `Rajveer-code/Federated-Diabetes` repo, which is under the author's real name.
+- `data_utils.BRFSS_RACE_GROUPS` code→label mapping should be confirmed against
+  the BRFSS codebook for the exact survey years. Consistent with observed
+  prevalences (Black 19.5%, AI/AN 19.9%, White 12.4%, Asian 9.6%), but unverified.
+  A mislabel renames a stratum; it does not change a prediction.
+- Zenodo DOI 10.5281/zenodo.21739555 (tag v1.0.0) archives the pre-fix results.
+  Consider publishing a corrected version under the same concept DOI.
+- `results/figures/fig1_architecture.png` modified in the working tree by an
+  earlier session; left uncommitted.
+- `P6_FL_Diabetes_CMPB_RESTRUCTURED.md` left uncommitted pending a decision —
+  publishing a manuscript under review to a public repo while a related paper is
+  in double-blind review is a deliberate choice, not a side effect.
+
 ### Next
 - [x] 10-seed race-free run + rerun 35
 - [ ] Re-examine F1/F2/F3/F5 against the corrected numbers

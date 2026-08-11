@@ -22,6 +22,111 @@ FEATURE_COLS = [
 ]
 TARGET_COL = 'DIABETES'
 
+# BRFSS _RACE -> coarse evaluation strata. Used ONLY to group rows when reporting
+# subgroup performance, never as a model input, so a mislabel would rename a
+# stratum rather than corrupt a prediction.
+# Codes follow the BRFSS _RACE codebook (1=White NH, 2=Black NH, 3=AI/AN NH,
+# 4=Asian NH, 5=NHPI NH, 6=Other NH, 7=Multiracial NH, 8=Hispanic, 9=Refused);
+# the observed diabetes prevalences are consistent with it (Black 19.5%,
+# AI/AN 19.9%, White 12.4%, Asian 9.6%). VERIFY against the codebook for the
+# survey years actually used before this reaches the manuscript.
+BRFSS_RACE_GROUPS = {
+    'White':    [1.0],
+    'Black':    [2.0],
+    'Hispanic': [8.0],
+    'Asian':    [4.0],
+    'Other':    [3.0, 5.0, 6.0, 7.0],
+    'Unknown':  [9.0],          # plus NaN, handled at the call site
+}
+
+# BRFSS -> NHANES column mapping. Canonical definition; do not redefine locally.
+BRFSS_COL_MAP = {
+    'Age'                 : 'RIDAGEYR',
+    'Gender'              : 'RIAGENDR',
+    'Race_Ethnicity'      : 'RIDRETH3',
+    'BMI'                 : 'BMXBMI',
+    'Smoking_Status'      : 'SMOKING',
+    'Physical_Activity'   : 'PHYS_ACTIVITY',
+    'History_Heart_Attack': 'HEART_ATTACK',
+    'History_Stroke'      : 'STROKE',
+    'Diabetes_Outcome'    : 'DIABETES',
+}
+
+
+def load_brfss_clean(
+    path: Optional[str] = None,
+    verbose: bool = True,
+    feature_cols: Optional[List[str]] = None,
+) -> Tuple[pd.DataFrame, np.ndarray, np.ndarray]:
+    """
+    Canonical BRFSS load + clean. THE single BRFSS entry point for every script.
+
+    Why this exists: 07_external_validation.py and run_matched_subset_external.py
+    previously implemented this independently and silently diverged on two axes —
+    (a) missing-data policy: 07 imputed and kept 1,282,897 rows, while the matched
+    -subset script used complete-case deletion and kept 720,161 (43.9% dropped,
+    non-randomly); (b) sex encoding: 07 remapped BRFSS 0/1 to NHANES 1/2, the
+    matched-subset script did not, feeding a miscoded feature to a model trained
+    on 1/2. The two scripts' external metrics were therefore not comparable, which
+    invalidated the matched-control comparison the paper's headline claim rests on.
+
+    Behaviour here is a faithful extraction of 07_external_validation.py, so the
+    already-reported main-model numbers are unchanged; this only brings the other
+    callers into line with them.
+
+    Returns: (cleaned_df, X_unscaled, y)  — X is NOT scaled; apply the global
+    NHANES scaler with .transform() at the call site, never fit_transform.
+    """
+    if path is None:
+        from config_paths import BRFSS_PATH as _default_path
+        path = _default_path
+
+    if verbose:
+        print(f"  Loading BRFSS: {path}")
+    df = pd.read_csv(path)
+    raw_n = len(df)
+
+    df = df.rename(columns=BRFSS_COL_MAP)
+
+    # Sex encoding: BRFSS 0=Female,1=Male -> NHANES 1=Male,2=Female.
+    # Guarded so a file already in NHANES coding passes through untouched.
+    if df['RIAGENDR'].max() <= 1.0:
+        df['RIAGENDR'] = df['RIAGENDR'].map({1.0: 1.0, 0.0: 2.0})
+        if verbose:
+            print("  Sex remapped: BRFSS 0/1 -> NHANES 1/2")
+
+    # Rows without the outcome are unusable; features are imputed, not dropped.
+    df = df.dropna(subset=[TARGET_COL])
+    df[TARGET_COL] = df[TARGET_COL].astype(int)
+
+    cols = FEATURE_COLS if feature_cols is None else feature_cols
+
+    # Keep the pre-imputation race codes for evaluation grouping. 34.7% of BRFSS
+    # rows have race missing; when race is not a model input those rows must stay
+    # identifiable as their own stratum instead of being folded into the mode.
+    df['RIDRETH3_RAW'] = df['RIDRETH3']
+
+    # Impute only what the model actually consumes.
+    for col in ['BMXBMI', 'RIDAGEYR']:
+        if col in cols:
+            df[col] = df[col].fillna(df[col].median())
+    for col in ['RIAGENDR', 'RIDRETH3', 'SMOKING',
+                'PHYS_ACTIVITY', 'HEART_ATTACK', 'STROKE']:
+        if col in cols:
+            df[col] = df[col].fillna(df[col].mode()[0])
+
+    df = df.reset_index(drop=True)
+
+    X = df[cols].values.astype(np.float32)
+    y = df[TARGET_COL].values.astype(np.float32)
+
+    if verbose:
+        print(f"  BRFSS raw: {raw_n:,} -> after cleaning: {len(df):,} rows "
+              f"(dropped {raw_n - len(df):,} missing outcome)")
+        print(f"  Diabetes prevalence: {y.mean():.4f}")
+
+    return df, X, y
+
 
 class DiabetesDataset(Dataset):
     """PyTorch Dataset wrapping numpy arrays."""
@@ -43,13 +148,19 @@ def load_node_data(
     scaler: Optional[StandardScaler] = None,
     fit_scaler: bool = True,
     seed: int = 42,
+    feature_cols: Optional[List[str]] = None,
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, StandardScaler]:
     """
     Load a node CSV, split into train/val, scale features.
     Returns: X_train, y_train, X_val, y_val, fitted_scaler
+
+    feature_cols defaults to FEATURE_COLS; the multi-seed pipeline passes
+    FEATURE_COLS_NORACE. The split is taken before scaling and does not depend on
+    the column list, so a run stays comparable across feature sets at a given seed.
     """
+    cols = FEATURE_COLS if feature_cols is None else feature_cols
     df  = pd.read_csv(path)
-    X   = df[FEATURE_COLS].values.astype(np.float32)
+    X   = df[cols].values.astype(np.float32)
     y   = df[TARGET_COL].values.astype(np.float32)
 
     X_tr, X_val, y_tr, y_val = train_test_split(

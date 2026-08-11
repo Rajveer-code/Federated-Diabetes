@@ -50,10 +50,43 @@ for _d in [DATA_DIR, RESULTS_DIR, MODELS_DIR, PLOTS_DIR, ARTEFACTS_DIR]:
 
 # ── DATA PATHS ────────────────────────────────────────────────────────────────
 NHANES_PATH      = DATA_DIR / "centralised_full.csv"      # NHANES processed data
-BRFSS_PATH       = Path(os.environ.get(
-    'BRFSS_PATH',
-    str(PROJECT_ROOT.parent / 'data' / '03_processed' / 'brfss_final.csv')
-))
+
+
+def _resolve_brfss_path() -> Path:
+    """
+    Locate brfss_final.csv. Order: BRFSS_PATH env var, then known locations.
+
+    The env var is the supported override for anyone reproducing this work:
+        $env:BRFSS_PATH = "C:/path/to/brfss_final.csv"   # PowerShell
+        export BRFSS_PATH=/path/to/brfss_final.csv        # bash
+    Scripts must import BRFSS_PATH from here and never hardcode a path — two
+    scripts previously hardcoded an absolute C:\\ path, which made the repo
+    unrunnable for anyone else and let their preprocessing silently diverge.
+    """
+    env = os.environ.get('BRFSS_PATH')
+    if env:
+        p = Path(env)
+        if not p.exists():
+            raise FileNotFoundError(
+                f"BRFSS_PATH is set to '{p}' but that file does not exist."
+            )
+        return p
+
+    candidates = [
+        PROJECT_ROOT.parent / 'data' / '03_processed' / 'brfss_final.csv',
+        DATA_DIR / 'brfss_final.csv',
+        Path(r"C:\diabetes_prediction_project\data\03_processed\brfss_final.csv"),
+    ]
+    for c in candidates:
+        if c.exists():
+            return c
+
+    # Return the preferred location so imports never fail at module load;
+    # scripts that actually read BRFSS will raise a clear error when they do.
+    return candidates[0]
+
+
+BRFSS_PATH       = _resolve_brfss_path()
 CENTRALISED_PATH = DATA_DIR / "centralised_full.csv"
 
 # Global scaler — fitted ONCE on NHANES train split, loaded everywhere
@@ -80,6 +113,27 @@ FEATURE_COLS = [
 TARGET_COL = 'DIABETES'
 LABEL_COL  = TARGET_COL   # alias used by new scripts
 N_FEATURES = len(FEATURE_COLS)
+
+# ── Race-free feature set (canonical for the multi-seed pipeline) ─────────────
+# RIDRETH3 is dropped as a MODEL INPUT and kept only as an evaluation grouping
+# variable. Three independent reasons, all verified against the data:
+#   1. the code sets are semantically incompatible across the internal/external
+#      boundary — NHANES RIDRETH3 is {1,2,3,4,6,7} (1=Mexican American,
+#      3=NH White, 4=NH Black, 6=NH Asian) while BRFSS _RACE is {1..9}
+#      (1=NH White, 2=NH Black, 4=Asian, 8=Hispanic). BRFSS "1" (48% of the
+#      external set) was being read by the model as "Mexican American";
+#   2. 445,133 of 1,282,897 BRFSS rows (34.7%) have race missing and were
+#      mode-imputed, assigning a third of the external set to one category;
+#   3. it was fed as a raw scaled scalar, so nominal categories were treated as
+#      ordered (1 < 2 < 3 < 4 < 6 < 7).
+# This is the same defect class as the sex 0/1-vs-1/2 mismatch already fixed in
+# load_brfss_clean(); race was missed. Stratifying evaluation by race rather than
+# conditioning the model on it also keeps group membership independent of the
+# model's inputs, which is the cleaner fairness audit.
+RACE_COL            = 'RIDRETH3'
+FEATURE_COLS_NORACE = [c for c in FEATURE_COLS if c != RACE_COL]
+N_FEATURES_NORACE   = len(FEATURE_COLS_NORACE)
+GLOBAL_SCALER_NORACE_PATH = ARTEFACTS_DIR / "global_nhanes_scaler_norace.joblib"
 
 # ── PUBLISHED BASELINES ───────────────────────────────────────────────────────
 PUBLISHED_INTERNAL_AUC  = 0.794

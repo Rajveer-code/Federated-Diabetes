@@ -18,12 +18,12 @@ What if hospitals could collaborate on a shared diabetes model without sharing a
 
 ---
 
-> [!WARNING]
-> **Results below are under active revision (August 2026). Do not cite the headline numbers.**
+> [!IMPORTANT]
+> **Results were corrected in August 2026. The tables below are the corrected ones.**
+> Do not cite release `v1.0.0` or its Zenodo archive — that snapshot predates this review.
 >
-> A correctness review of the pipeline found four defects that affect the
-> reported results. Each is documented, with evidence, in
-> [`FINDINGS_LOG.md`](FINDINGS_LOG.md):
+> A correctness review of the pipeline found four defects. Each is documented,
+> with evidence, in [`FINDINGS_LOG.md`](FINDINGS_LOG.md):
 >
 > | | Defect | Effect |
 > |---|---|---|
@@ -33,12 +33,13 @@ What if hospitals could collaborate on a shared diabetes model without sharing a
 > | D12 | NHANES `RIDRETH3` and BRFSS `_RACE` are different coding schemes, so BRFSS "NH White" (48% of the external set) was read as "Mexican American"; 34.7% of rows had race mode-imputed | Contaminates every external number; race has since been dropped as a model input and retained only as an evaluation stratum |
 >
 > Nothing was seeded before this review, so every previously reported federated
-> number came from a single uncontrolled draw. All models are now run across 10
-> seeds with paired DeLong confidence intervals. Specifically superseded:
-> the 0.757 external AUC, the "40% narrower generalisation gap" claim, the 0.024
-> matched-control gap, and all SCAFFOLD rows.
+> number came from a single uncontrolled draw. All models now run across 10 seeds
+> with paired DeLong intervals combining test-sampling and initialisation variance.
 >
-> Corrected results will replace this section once the multi-seed run completes.
+> **Three previously headline findings did not survive** and are now reported as
+> non-replications: the 0.757 external AUC, the "40% narrower generalisation gap",
+> and the 21.7% elderly–young fairness improvement. One new and much better
+> powered finding replaced them — see *Subgroup performance* below.
 
 ---
 
@@ -46,50 +47,85 @@ What if hospitals could collaborate on a shared diabetes model without sharing a
 
 Centralised machine learning for healthcare requires pooling raw patient records across institutions — a practice that conflicts with HIPAA, GDPR, and the practical realities of hospital data governance. This project implements and evaluates a **privacy-preserving federated learning (FL)** framework for type-2 diabetes risk prediction that keeps patient data on-site while enabling multi-institutional collaboration.
 
-Four FL aggregation strategies — **FedAvg**, **FedProx** (μ=0.1), **FedNova** (τ={5,3,4}), and **SCAFFOLD** (Option II) — are trained on demographically partitioned NHANES data and validated externally on **1,282,897 BRFSS respondents**, the largest independent validation reported for this task. Beyond discrimination (AUC), the study evaluates **demographic fairness** (elderly–young AUC gap), **calibration** (Platt, isotonic, temperature scaling on FedAvg and FedProx), and the **differential privacy–utility tradeoff** (DP-SGD, ε ∈ {0.5, 1, 2, 5, 10, 20, 50, 100, ∞}).
+Five FL aggregation strategies — **FedAvg**, **FedProx** (μ=0.1), **FedNova**, **SCAFFOLD** (Option II), and an **equal-client-weight** FedAvg variant — are trained on demographically partitioned NHANES data and validated externally on **1,282,897 BRFSS respondents**, the largest independent validation reported for this task. Every model is run across **10 seeds** and compared against a **composition-matched** centralised control trained on exactly the federated cohort, so federation is separated from training-set composition.
 
-**0.757 AUC · 1.28M external patients · 40% narrower generalisation gap · ECE 0.276→0.001**
+**White–Black AUC gap 0.0075 → 0.0005 · 1.28M external patients · 10 seeds · no cost to overall AUC**
 
-> [!IMPORTANT]
-> The primary finding is not raw AUC gain. FedAvg's generalisation gap (internal→external AUC drop) is **40% smaller** than a matched centralised DiabetesNet (0.031 vs. 0.052), suggesting federation produces a qualitatively more population-robust model — not merely a higher-scoring one. A sample-matched sensitivity analysis (n=11,906) shows a gap of 0.024, indicating that data composition partially contributes; federation additionally provides privacy preservation, improved elderly fairness, and operational feasibility under regulatory constraints.
+> [!NOTE]
+> **The finding is not accuracy, it is who the model serves.** Federation is
+> statistically indistinguishable from the matched centralised control on overall
+> discrimination (FedAvg Δ = −0.0013, *p* = 0.16). What changes is the subgroup
+> distribution: every federated strategy raises AUC for Black (+0.0066,
+> *p* = 7×10⁻¹¹), Hispanic (+0.0039) and Asian (+0.0087) respondents while leaving
+> the White stratum unchanged (−0.0004, *p* = 0.73), in 10 of 10 seeds.
+>
+> Two controls locate the cause. Training centralised on **more** data lifts every
+> stratum roughly equally, so its racial gap stays open — quantity is not the
+> mechanism. Replacing FedAvg's *nₖ/N* weighting with equal client weights
+> reproduces the effect, so client weighting is not the mechanism either. What
+> remains is the optimisation: the age/urbanicity partition separates the cohort
+> racially as a side effect (the elderly-rural node is 78% White and holds **no**
+> Black, Asian or non-Mexican Hispanic respondents), and averaging node-specific
+> optima prevents the pooled majority from dominating the shared representation.
 
 ---
 
 ## Results at a Glance
 
-### Discrimination — Internal (NHANES) and External (BRFSS) Validation
+### Discrimination — External (BRFSS, n=1,282,897), mean ± s.d. over 10 seeds
 
-| Model | Internal AUC [95% CI] | External AUC [95% CI] | Gen. Gap | Elderly Gap [95% CI] | Brier [95% CI] |
-|:---|:---:|:---:|:---:|:---:|:---:|
-| Centralised XGBoost | 0.769 [0.760–0.777] | 0.700 [0.698–0.701] | 0.069 | 0.069 [0.062–0.076] | 0.322 [0.321–0.322] |
-| Centralised DiabetesNet | 0.801 | 0.749 [0.748–0.750] | 0.052 | — | 0.306 [0.305–0.306] |
-| **FedAvg** ⭐ | **0.788 [0.780–0.796]** | **0.757 [0.756–0.758]** | **0.031** | **0.054 [0.047–0.060]** | **0.217 [0.217–0.218]** |
-| FedProx (μ=0.1) | 0.785 [0.777–0.793] | 0.752 [0.751–0.753] | 0.033 | 0.066 [0.059–0.073] | 0.242 [0.241–0.242] |
-| FedNova (τ={5,3,4}) | 0.786 [0.778–0.794] | 0.744 [0.743–0.745] | 0.042 | 0.064 [0.058–0.071] | 0.266 [0.266–0.267] |
-| SCAFFOLD (SGD, 50 rds)† | 0.642 [0.631–0.653] | 0.665 [0.664–0.667] | −0.023‡ | −0.092 [−0.099–−0.085]§ | 0.187 [0.187–0.187] |
+| Model | External AUC | Gen. gap | Age gap | White−Black gap |
+|:---|:---:|:---:|:---:|:---:|
+| Centralised XGBoost | 0.7330 ± 0.0020 | 0.0356 | 0.0636 | −0.0041 |
+| Centralised DiabetesNet (n=15,650) | 0.7576 ± 0.0022 | 0.0286 | 0.0650 | +0.0063 |
+| **Matched centralised** (n=11,906) — *reference* | 0.7543 ± 0.0015 | 0.0344 | 0.0672 | +0.0075 |
+| FedAvg | 0.7530 ± 0.0017 | 0.0298 | 0.0654 | **+0.0005** |
+| FedProx (μ=0.1) | 0.7522 ± 0.0021 | 0.0298 | 0.0717 | −0.0013 |
+| FedNova | 0.7528 ± 0.0017 | 0.0300 | 0.0657 | +0.0004 |
+| FedAvg, equal client weight | 0.7531 ± 0.0018 | 0.0301 | 0.0656 | +0.0012 |
+| SCAFFOLD | 0.7541 ± 0.0024 | 0.0293 | 0.0602 | +0.0019 |
 
-Gen. Gap = Internal AUC − External AUC (lower is better).  
-Internal CIs: stratified bootstrap (N=2,000, n=15,650). External CIs: DeLong structural components estimator (n=1,282,897).  
-All pairwise FL strategy DeLong tests statistically significant at Bonferroni-corrected α=0.017.  
-† SCAFFOLD uses SGD (required by theory); AdamW-based strategies are not directly comparable on the optimiser dimension.  
-‡ SCAFFOLD Gen. Gap is negative (external > internal) due to SGD convergence dynamics, not a genuine generalisation advantage.  
-§ SCAFFOLD elderly–young gap is negative (elderly AUC > young AUC); this reflects near-random performance on young respondents (AUC=0.521), not improved elderly prediction. See Sections 4.6 and 5.2.
+Gen. gap = internal − external AUC. Age gap = young − elderly AUC. Differences use DeLong's estimator; intervals combine test-sampling and seed variance.
+**No federated strategy differs significantly from the matched control on external AUC, generalisation gap, or age gap.** SCAFFOLD is included here at a *matched* local budget — the previously reported figure (external AUC 0.665) came from a run with ~1/18th the local training of every other strategy.
 
-### Calibration — FedAvg on BRFSS External Set (n=1,026,318)
+### Subgroup performance — Δ AUC vs. the matched centralised control
 
-| Method | ECE [95% CI] | AUC | Notes |
-|:---|:---:|:---:|:---|
-| Uncalibrated | 0.276 [0.276–0.277] | 0.757 | Moderate overconfidence (scores biased high) |
-| Platt scaling | 0.007 [0.006–0.008] | 0.757 | Two-parameter sigmoid; robust to small cal sets |
-| **Isotonic regression** ⭐ | **0.001 [0.000–0.002]** | 0.757 | Near-perfect calibration |
-| Temperature scaling (T=2.41) | 0.269 [0.268–0.270] | 0.757 | Limited benefit; non-monotone logit curve |
+| Stratum | n | FedAvg Δ | *p* |
+|:---|---:|:---:|:---:|
+| White | 617,782 | −0.0004 | 0.73 (n.s.) |
+| **Black** | 62,770 | **+0.0066** | 7×10⁻¹¹ |
+| **Hispanic** | 74,496 | **+0.0039** | 2×10⁻⁶ |
+| **Asian** | 21,467 | **+0.0087** | 2×10⁻⁷ |
+| Other | 42,779 | −0.0021 | 0.06 (n.s.) |
 
-FedProx calibration results (uncal ECE=0.319, Platt=0.016, isotonic=0.002) are reported in Supplementary Table S5.
+White−Black gap Δ = **−0.0070** [−0.0092, −0.0048], *p* = 3.5×10⁻¹⁰, in 10/10 seeds, and for all five strategies (FedProx −0.0088, FedNova −0.0071, equal-weight −0.0064, SCAFFOLD −0.0057).
+This is **levelling up** — minority strata rise, the majority stratum does not fall. XGBoost also narrows the same gap (−0.0117) but by degrading *both* strata (White −0.0244, Black −0.0127), which is levelling down and is what a gap metric rewards if read without decomposition.
+
+![Per-stratum AUC change](federated/results/figures/fig_race_strata.png)
+
+### Calibration — FedAvg on BRFSS held-out split (n=1,026,318), 10 seeds
+
+| Method | ECE (mean ± s.d.) | Notes |
+|:---|:---:|:---|
+| Uncalibrated | 0.3242 ± 0.0036 | Severe overconfidence |
+| Platt scaling | 0.0133 ± 0.0013 | Two-parameter sigmoid |
+| **Isotonic regression** ⭐ | **0.0010 ± 0.0003** | Near-perfect calibration |
+| Temperature scaling | 0.3305 ± 0.0035 | Slightly *worse* than no calibration |
+
+Neither Platt nor isotonic costs any discrimination. Temperature scaling's single parameter cannot fit a non-monotone calibration curve.
 
 ### Differential Privacy Tradeoff
 
+> [!WARNING]
+> **Not re-run after the August 2026 correction.** The AUC values below come from
+> the pre-fix pipeline (8 features including miscoded race, unaggregated BatchNorm
+> buffers, single unseeded run) and should not be cited. The structural finding —
+> that Opacus RDP accounting returns ε_actual = ∞ at these per-node sizes, so the
+> recovery point is a utility floor rather than a formal guarantee — does not
+> depend on those numbers.
+
 <details>
-<summary>Extended DP sweep — ε ∈ {0.5, 1, 2, 5, 10, 20, 50, 100, ∞}</summary>
+<summary>Extended DP sweep — ε ∈ {0.5, 1, 2, 5, 10, 20, 50, 100, ∞} (superseded)</summary>
 
 | ε (target) | AUC | Outcome |
 |:---:|:---:|:---|
@@ -113,10 +149,11 @@ Recovery emerges sharply at ε=10 (AUC=0.769). Collapse at ε≤5 reflects the h
 
 | | Question | Finding |
 |:---|:---|:---|
-| **RQ1 · Performance** | Does federated training generalise better than centralised? | ✅ FedAvg generalisation gap 40% smaller than matched centralised DiabetesNet (0.031 vs. 0.052); sample-matched sensitivity gap=0.024 indicates partial data-composition contribution |
-| **RQ2 · Fairness** | Does federated training reduce demographic AUC disparity? | ✅ Elderly gap: 0.069 → 0.054 (21.7% within-study improvement) |
-| **RQ3 · Privacy** | What is the accuracy cost of differential privacy? | ⚠️ Model collapse at ε≤5; recovery at ε≥10 (AUC=0.769); formal DP requires substantially larger per-node cohorts |
-| **RQ4 · Calibration** | Are federated risk scores clinically trustworthy? | ✅ ECE 0.276 → 0.001 after isotonic recalibration; Platt scaling reduces ECE to 0.007 with only two parameters |
+| **RQ1 · Performance** | Does federated training generalise better than centralised? | ❌ **No.** No federated strategy differs significantly from the composition-matched control on external AUC (FedAvg Δ=−0.0013, *p*=0.16) or on the generalisation gap (Δ=−0.0046, *p*=0.25). Federation is discrimination-neutral here, neither better nor worse. |
+| **RQ2 · Age fairness** | Does federated training reduce the elderly–young AUC disparity? | ❌ **Does not replicate.** FedAvg Δ=−0.0019, *p*=0.34; FedProx is significantly *worse* (+0.0045, *p*=0.023). Only SCAFFOLD narrows it (−0.0070, *p*=1.2×10⁻⁵). |
+| **RQ3 · Race fairness** | Does federated training reduce racial AUC disparity? | ✅ **Yes, by levelling up.** White−Black gap 0.0075 → 0.0005 (Δ=−0.0070, *p*=3.5×10⁻¹⁰), driven by gains for Black/Hispanic/Asian strata with the White stratum unchanged. Holds for all five strategies in 10/10 seeds. |
+| **RQ4 · Calibration** | Are federated risk scores clinically trustworthy? | ✅ Only after recalibration. ECE 0.324 → 0.0010 with isotonic regression, at no cost to discrimination; temperature scaling does not help. |
+| **RQ5 · Privacy** | What is the accuracy cost of differential privacy? | ⚠️ **Not re-run.** The DP sweep predates this correction and its numbers are not reported here. The structural conclusion — that Opacus RDP accounting returns no formal guarantee at these per-node sizes — does not depend on the corrected pipeline. |
 
 ---
 
@@ -365,7 +402,9 @@ A single `StandardScaler` is fitted **once** on the NHANES training split (`00_f
 Stratified bootstrap on 1.28 million BRFSS records is computationally intractable (kernel matrix ≈ 708 GB). We use the DeLong structural components estimator — an O(n log n) algorithm via `numpy.searchsorted` — which produces mathematically equivalent 95% CIs in seconds.
 
 ### SCAFFOLD with SGD
-SCAFFOLD's convergence guarantee (Karimireddy et al., ICML 2020) requires SGD. Our implementation respects this, which means SCAFFOLD is compared against AdamW-based strategies under an inherent optimiser mismatch. The lower internal AUC (0.642 vs. 0.788) and the inverted elderly gap (−0.092) are reported transparently. A matched AdamW-SCAFFOLD ablation is a natural extension.
+SCAFFOLD's convergence guarantee (Karimireddy et al., ICML 2020) requires SGD, so it is compared against AdamW-based strategies under an inherent optimiser mismatch — that limitation stands.
+
+The previously reported SCAFFOLD deficit (internal AUC 0.642, inverted elderly gap −0.092) did **not**. It came from `08_scaffold_baseline.py`, which counted its local budget in *batches* rather than epochs and so ran roughly 1/18th the local training of every other strategy, with an AdamW learning rate (1e-3) applied to plain SGD. With the budget matched and `eta_local` selected on held-out node validation (1.0, an interior optimum), SCAFFOLD ties the centralised control on external AUC (Δ=−0.0001, *p*=0.91) and has the best age-fairness gap of any model tested. Use `fl_core.run_scaffold()`; script 08 is retained only as a record of the superseded run.
 
 ### Generalisation Gap as Primary Metric
 Raw AUC comparisons across different training sets confound data composition effects with model quality. The generalisation gap (internal − external AUC) isolates population robustness. FedAvg's gap (0.031) is 40% smaller than the matched centralised DiabetesNet (0.052); a sample-matched sensitivity analysis (n=11,906) shows a gap of 0.024, indicating that data composition partially explains the advantage. Federation additionally provides privacy preservation, demographic equity, and feasibility under regulatory constraints.

@@ -1,0 +1,165 @@
+{
+  "model": "FedAvg",
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "n_brfss": 1282897,
+  "n_cal": 256579,
+  "n_test": 1026318,
+  "note": "race-free 7-feature models with aggregated BN buffers; supersedes fedavg_calibration_results.json",
+  "runs": [
+    {
+      "seed": 42,
+      "T_optimal": 1.5764,
+      "auc": 0.75064,
+      "ece_uncalibrated": 0.32121,
+      "ece_platt": 0.0137,
+      "ece_isotonic": 0.00147,
+      "ece_temperature": 0.32762,
+      "brier_uncalibrated": 0.231,
+      "brier_isotonic": 0.10415
+    },
+    {
+      "seed": 43,
+      "T_optimal": 1.6002,
+      "auc": 0.75168,
+      "ece_uncalibrated": 0.32316,
+      "ece_platt": 0.01175,
+      "ece_isotonic": 0.00107,
+      "ece_temperature": 0.32892,
+      "brier_uncalibrated": 0.23272,
+      "brier_isotonic": 0.10428
+    },
+    {
+      "seed": 44,
+      "T_optimal": 1.646,
+      "auc": 0.7556,
+      "ece_uncalibrated": 0.3262,
+      "ece_platt": 0.01415,
+      "ece_isotonic": 0.00086,
+      "ece_temperature": 0.33209,
+      "brier_uncalibrated": 0.23504,
+      "brier_isotonic": 0.10368
+    },
+    {
+      "seed": 45,
+      "T_optimal": 1.6359,
+      "auc": 0.75443,
+      "ece_uncalibrated": 0.32638,
+      "ece_platt": 0.01235,
+      "ece_isotonic": 0.00121,
+      "ece_temperature": 0.33208,
+      "brier_uncalibrated": 0.2344,
+      "brier_isotonic": 0.104
+    },
+    {
+      "seed": 46,
+      "T_optimal": 1.6315,
+      "auc": 0.75217,
+      "ece_uncalibrated": 0.3285,
+      "ece_platt": 0.01311,
+      "ece_isotonic": 0.00099,
+      "ece_temperature": 0.33466,
+      "brier_uncalibrated": 0.23517,
+      "brier_isotonic": 0.10406
+    },
+    {
+      "seed": 47,
+      "T_optimal": 1.5129,
+      "auc": 0.7527,
+      "ece_uncalibrated": 0.31758,
+      "ece_platt": 0.01268,
+      "ece_isotonic": 0.00072,
+      "ece_temperature": 0.32493,
+      "brier_uncalibrated": 0.22809,
+      "brier_isotonic": 0.10398
+    },
+    {
+      "seed": 48,
+      "T_optimal": 1.6567,
+      "auc": 0.75462,
+      "ece_uncalibrated": 0.32903,
+      "ece_platt": 0.01427,
+      "ece_isotonic": 0.0013,
+      "ece_temperature": 0.33569,
+      "brier_uncalibrated": 0.23498,
+      "brier_isotonic": 0.10367
+    },
+    {
+      "seed": 49,
+      "T_optimal": 1.4217,
+      "auc": 0.75448,
+      "ece_uncalibrated": 0.32101,
+      "ece_platt": 0.01586,
+      "ece_isotonic": 0.001,
+      "ece_temperature": 0.32714,
+      "brier_uncalibrated": 0.22719,
+      "brier_isotonic": 0.10361
+    },
+    {
+      "seed": 50,
+      "T_optimal": 1.5598,
+      "auc": 0.75147,
+      "ece_uncalibrated": 0.32616,
+      "ece_platt": 0.01178,
+      "ece_isotonic": 0.00055,
+      "ece_temperature": 0.33281,
+      "brier_uncalibrated": 0.23223,
+      "brier_isotonic": 0.10416
+    },
+    {
+      "seed": 51,
+      "T_optimal": 1.6102,
+      "auc": 0.75219,
+      "ece_uncalibrated": 0.32325,
+      "ece_platt": 0.01347,
+      "ece_isotonic": 0.00116,
+      "ece_temperature": 0.32942,
+      "brier_uncalibrated": 0.23292,
+      "brier_isotonic": 0.10406
+    }
+  ],
+  "summary": {
+    "T_optimal": {
+      "mean": 1.58513,
+      "sd": 0.07231
+    },
+    "auc": {
+      "mean": 0.753,
+      "sd": 0.00166
+    },
+    "ece_uncalibrated": {
+      "mean": 0.32425,
+      "sd": 0.00364
+    },
+    "ece_platt": {
+      "mean": 0.01331,
+      "sd": 0.00127
+    },
+    "ece_isotonic": {
+      "mean": 0.00103,
+      "sd": 0.00027
+    },
+    "ece_temperature": {
+      "mean": 0.33054,
+      "sd": 0.00348
+    },
+    "brier_uncalibrated": {
+      "mean": 0.23237,
+      "sd": 0.00286
+    },
+    "brier_isotonic": {
+      "mean": 0.10397,
+      "sd": 0.00023
+    }
+  }
+}

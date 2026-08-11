@@ -1,0 +1,5106 @@
+{
+  "definition": "xAUC_{g->h} = P(score(positive from g) > score(negative from h)); Kallus & Zhou, NeurIPS 2019. Diagonal is the ordinary within-stratum AUC.",
+  "identity": "AUC_pooled = sum_g sum_h pi+_g pi-_h xAUC_{g->h}, over the five reported strata; verified numerically below.",
+  "identity_max_abs_error": 2.22e-16,
+  "identity_checks": [
+    {
+      "model": "Centralised-full",
+      "seed": 42,
+      "auc_pooled": 0.76001515,
+      "auc_reconstructed": 0.76001515,
+      "abs_error": 0.0
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 42,
+      "auc_pooled": 0.75839256,
+      "auc_reconstructed": 0.75839256,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedAvg",
+      "seed": 42,
+      "auc_pooled": 0.75200514,
+      "auc_reconstructed": 0.75200514,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 42,
+      "auc_pooled": 0.75203094,
+      "auc_reconstructed": 0.75203094,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedNova",
+      "seed": 42,
+      "auc_pooled": 0.75189887,
+      "auc_reconstructed": 0.75189887,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedProx",
+      "seed": 42,
+      "auc_pooled": 0.74927879,
+      "auc_reconstructed": 0.74927879,
+      "abs_error": 2.22e-16
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 42,
+      "auc_pooled": 0.75465357,
+      "auc_reconstructed": 0.75465357,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "XGBoost",
+      "seed": 42,
+      "auc_pooled": 0.73395614,
+      "auc_reconstructed": 0.73395614,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 43,
+      "auc_pooled": 0.76126591,
+      "auc_reconstructed": 0.76126591,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 43,
+      "auc_pooled": 0.75798664,
+      "auc_reconstructed": 0.75798664,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedAvg",
+      "seed": 43,
+      "auc_pooled": 0.75317228,
+      "auc_reconstructed": 0.75317228,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 43,
+      "auc_pooled": 0.75189407,
+      "auc_reconstructed": 0.75189407,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedNova",
+      "seed": 43,
+      "auc_pooled": 0.75259347,
+      "auc_reconstructed": 0.75259347,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedProx",
+      "seed": 43,
+      "auc_pooled": 0.75287632,
+      "auc_reconstructed": 0.75287632,
+      "abs_error": 0.0
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 43,
+      "auc_pooled": 0.75366459,
+      "auc_reconstructed": 0.75366459,
+      "abs_error": 0.0
+    },
+    {
+      "model": "XGBoost",
+      "seed": 43,
+      "auc_pooled": 0.73115285,
+      "auc_reconstructed": 0.73115285,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 44,
+      "auc_pooled": 0.75798831,
+      "auc_reconstructed": 0.75798831,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 44,
+      "auc_pooled": 0.75408095,
+      "auc_reconstructed": 0.75408095,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedAvg",
+      "seed": 44,
+      "auc_pooled": 0.75702579,
+      "auc_reconstructed": 0.75702579,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 44,
+      "auc_pooled": 0.75730599,
+      "auc_reconstructed": 0.75730599,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedNova",
+      "seed": 44,
+      "auc_pooled": 0.75682799,
+      "auc_reconstructed": 0.75682799,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedProx",
+      "seed": 44,
+      "auc_pooled": 0.75520838,
+      "auc_reconstructed": 0.75520838,
+      "abs_error": 0.0
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 44,
+      "auc_pooled": 0.7568914,
+      "auc_reconstructed": 0.7568914,
+      "abs_error": 0.0
+    },
+    {
+      "model": "XGBoost",
+      "seed": 44,
+      "auc_pooled": 0.73324449,
+      "auc_reconstructed": 0.73324449,
+      "abs_error": 0.0
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 45,
+      "auc_pooled": 0.75450129,
+      "auc_reconstructed": 0.75450129,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 45,
+      "auc_pooled": 0.75632071,
+      "auc_reconstructed": 0.75632071,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedAvg",
+      "seed": 45,
+      "auc_pooled": 0.75598893,
+      "auc_reconstructed": 0.75598893,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 45,
+      "auc_pooled": 0.75623103,
+      "auc_reconstructed": 0.75623103,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedNova",
+      "seed": 45,
+      "auc_pooled": 0.75579802,
+      "auc_reconstructed": 0.75579802,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedProx",
+      "seed": 45,
+      "auc_pooled": 0.75621183,
+      "auc_reconstructed": 0.75621183,
+      "abs_error": 0.0
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 45,
+      "auc_pooled": 0.75902478,
+      "auc_reconstructed": 0.75902478,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "XGBoost",
+      "seed": 45,
+      "auc_pooled": 0.73161782,
+      "auc_reconstructed": 0.73161782,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 46,
+      "auc_pooled": 0.75780519,
+      "auc_reconstructed": 0.75780519,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 46,
+      "auc_pooled": 0.75475841,
+      "auc_reconstructed": 0.75475841,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedAvg",
+      "seed": 46,
+      "auc_pooled": 0.75372444,
+      "auc_reconstructed": 0.75372444,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 46,
+      "auc_pooled": 0.75398408,
+      "auc_reconstructed": 0.75398408,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedNova",
+      "seed": 46,
+      "auc_pooled": 0.75332483,
+      "auc_reconstructed": 0.75332483,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedProx",
+      "seed": 46,
+      "auc_pooled": 0.75330986,
+      "auc_reconstructed": 0.75330986,
+      "abs_error": 0.0
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 46,
+      "auc_pooled": 0.7549017,
+      "auc_reconstructed": 0.7549017,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "XGBoost",
+      "seed": 46,
+      "auc_pooled": 0.7342641,
+      "auc_reconstructed": 0.7342641,
+      "abs_error": 0.0
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 47,
+      "auc_pooled": 0.76007053,
+      "auc_reconstructed": 0.76007053,
+      "abs_error": 0.0
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 47,
+      "auc_pooled": 0.75484415,
+      "auc_reconstructed": 0.75484415,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedAvg",
+      "seed": 47,
+      "auc_pooled": 0.75405098,
+      "auc_reconstructed": 0.75405098,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 47,
+      "auc_pooled": 0.75427638,
+      "auc_reconstructed": 0.75427638,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedNova",
+      "seed": 47,
+      "auc_pooled": 0.75395877,
+      "auc_reconstructed": 0.75395877,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedProx",
+      "seed": 47,
+      "auc_pooled": 0.75305703,
+      "auc_reconstructed": 0.75305703,
+      "abs_error": 0.0
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 47,
+      "auc_pooled": 0.7548108,
+      "auc_reconstructed": 0.7548108,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "XGBoost",
+      "seed": 47,
+      "auc_pooled": 0.73446208,
+      "auc_reconstructed": 0.73446208,
+      "abs_error": 0.0
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 48,
+      "auc_pooled": 0.75713304,
+      "auc_reconstructed": 0.75713304,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 48,
+      "auc_pooled": 0.75506114,
+      "auc_reconstructed": 0.75506114,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedAvg",
+      "seed": 48,
+      "auc_pooled": 0.75602859,
+      "auc_reconstructed": 0.75602859,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 48,
+      "auc_pooled": 0.75564139,
+      "auc_reconstructed": 0.75564139,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedNova",
+      "seed": 48,
+      "auc_pooled": 0.75585074,
+      "auc_reconstructed": 0.75585074,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedProx",
+      "seed": 48,
+      "auc_pooled": 0.75508139,
+      "auc_reconstructed": 0.75508139,
+      "abs_error": 0.0
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 48,
+      "auc_pooled": 0.75518379,
+      "auc_reconstructed": 0.75518379,
+      "abs_error": 0.0
+    },
+    {
+      "model": "XGBoost",
+      "seed": 48,
+      "auc_pooled": 0.73508313,
+      "auc_reconstructed": 0.73508313,
+      "abs_error": 0.0
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 49,
+      "auc_pooled": 0.76181919,
+      "auc_reconstructed": 0.76181919,
+      "abs_error": 0.0
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 49,
+      "auc_pooled": 0.7559372,
+      "auc_reconstructed": 0.7559372,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedAvg",
+      "seed": 49,
+      "auc_pooled": 0.75589014,
+      "auc_reconstructed": 0.75589014,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 49,
+      "auc_pooled": 0.75633094,
+      "auc_reconstructed": 0.75633094,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedNova",
+      "seed": 49,
+      "auc_pooled": 0.75580722,
+      "auc_reconstructed": 0.75580722,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedProx",
+      "seed": 49,
+      "auc_pooled": 0.7561217,
+      "auc_reconstructed": 0.7561217,
+      "abs_error": 0.0
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 49,
+      "auc_pooled": 0.75835243,
+      "auc_reconstructed": 0.75835243,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "XGBoost",
+      "seed": 49,
+      "auc_pooled": 0.73853955,
+      "auc_reconstructed": 0.73853955,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 50,
+      "auc_pooled": 0.75995664,
+      "auc_reconstructed": 0.75995664,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 50,
+      "auc_pooled": 0.75470068,
+      "auc_reconstructed": 0.75470068,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedAvg",
+      "seed": 50,
+      "auc_pooled": 0.75284183,
+      "auc_reconstructed": 0.75284183,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 50,
+      "auc_pooled": 0.75326552,
+      "auc_reconstructed": 0.75326552,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedNova",
+      "seed": 50,
+      "auc_pooled": 0.75278181,
+      "auc_reconstructed": 0.75278181,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedProx",
+      "seed": 50,
+      "auc_pooled": 0.75174525,
+      "auc_reconstructed": 0.75174525,
+      "abs_error": 0.0
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 50,
+      "auc_pooled": 0.75739246,
+      "auc_reconstructed": 0.75739246,
+      "abs_error": 0.0
+    },
+    {
+      "model": "XGBoost",
+      "seed": 50,
+      "auc_pooled": 0.73417704,
+      "auc_reconstructed": 0.73417704,
+      "abs_error": 0.0
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 51,
+      "auc_pooled": 0.75994176,
+      "auc_reconstructed": 0.75994176,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 51,
+      "auc_pooled": 0.75589977,
+      "auc_reconstructed": 0.75589977,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedAvg",
+      "seed": 51,
+      "auc_pooled": 0.75363709,
+      "auc_reconstructed": 0.75363709,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 51,
+      "auc_pooled": 0.75403404,
+      "auc_reconstructed": 0.75403404,
+      "abs_error": 0.0
+    },
+    {
+      "model": "FedNova",
+      "seed": 51,
+      "auc_pooled": 0.75390321,
+      "auc_reconstructed": 0.75390321,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "FedProx",
+      "seed": 51,
+      "auc_pooled": 0.75360589,
+      "auc_reconstructed": 0.75360589,
+      "abs_error": 1.11e-16
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 51,
+      "auc_pooled": 0.75097357,
+      "auc_reconstructed": 0.75097357,
+      "abs_error": 0.0
+    },
+    {
+      "model": "XGBoost",
+      "seed": 51,
+      "auc_pooled": 0.73438065,
+      "auc_reconstructed": 0.73438065,
+      "abs_error": 1.11e-16
+    }
+  ],
+  "reference": "Centralised-matched",
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "pivot": "White",
+  "n_positive": {
+    "White": 76489,
+    "Black": 12240,
+    "Hispanic": 9804,
+    "Asian": 2058,
+    "Other": 6670
+  },
+  "n_negative": {
+    "White": 541293,
+    "Black": 50530,
+    "Hispanic": 64692,
+    "Asian": 19409,
+    "Other": 36109
+  },
+  "share_positive": {
+    "White": 0.713111,
+    "Black": 0.114114,
+    "Hispanic": 0.091403,
+    "Asian": 0.019187,
+    "Other": 0.062185
+  },
+  "share_negative": {
+    "White": 0.760208,
+    "Black": 0.070966,
+    "Hispanic": 0.090855,
+    "Asian": 0.027259,
+    "Other": 0.050713
+  },
+  "xauc_mean": {
+    "Centralised-full": {
+      "White->White": 0.75743,
+      "White->Black": 0.7598,
+      "White->Hispanic": 0.85911,
+      "White->Asian": 0.91112,
+      "White->Other": 0.80567,
+      "Black->White": 0.74781,
+      "Black->Black": 0.75114,
+      "Black->Hispanic": 0.85249,
+      "Black->Asian": 0.90525,
+      "Black->Other": 0.79775,
+      "Hispanic->White": 0.67301,
+      "Hispanic->Black": 0.68228,
+      "Hispanic->Hispanic": 0.79993,
+      "Hispanic->Asian": 0.86001,
+      "Hispanic->Other": 0.73542,
+      "Asian->White": 0.56018,
+      "Asian->Black": 0.58074,
+      "Asian->Hispanic": 0.7261,
+      "Asian->Asian": 0.79776,
+      "Asian->Other": 0.64449,
+      "Other->White": 0.71495,
+      "Other->Black": 0.72134,
+      "Other->Hispanic": 0.82905,
+      "Other->Asian": 0.88435,
+      "Other->Other": 0.7703
+    },
+    "Centralised-matched": {
+      "White->White": 0.75372,
+      "White->Black": 0.75196,
+      "White->Hispanic": 0.85235,
+      "White->Asian": 0.90757,
+      "White->Other": 0.79988,
+      "Black->White": 0.74747,
+      "Black->Black": 0.74618,
+      "Black->Hispanic": 0.84782,
+      "Black->Asian": 0.90362,
+      "Black->Other": 0.79458,
+      "Hispanic->White": 0.67533,
+      "Hispanic->Black": 0.67938,
+      "Hispanic->Hispanic": 0.79641,
+      "Hispanic->Asian": 0.85959,
+      "Hispanic->Other": 0.73425,
+      "Asian->White": 0.55781,
+      "Asian->Black": 0.5728,
+      "Asian->Hispanic": 0.7183,
+      "Asian->Asian": 0.79414,
+      "Asian->Other": 0.63945,
+      "Other->White": 0.71558,
+      "Other->Black": 0.7174,
+      "Other->Hispanic": 0.82475,
+      "Other->Asian": 0.88278,
+      "Other->Other": 0.76793
+    },
+    "FedAvg": {
+      "White->White": 0.75334,
+      "White->Black": 0.77401,
+      "White->Hispanic": 0.87147,
+      "White->Asian": 0.91307,
+      "White->Other": 0.81497,
+      "Black->White": 0.7294,
+      "Black->Black": 0.75283,
+      "Black->Hispanic": 0.85662,
+      "Black->Asian": 0.90079,
+      "Black->Other": 0.79594,
+      "Hispanic->White": 0.6485,
+      "Hispanic->Black": 0.67891,
+      "Hispanic->Hispanic": 0.80034,
+      "Hispanic->Asian": 0.853,
+      "Hispanic->Other": 0.72829,
+      "Asian->White": 0.56097,
+      "Asian->Black": 0.5994,
+      "Asian->Hispanic": 0.74039,
+      "Asian->Asian": 0.80282,
+      "Asian->Other": 0.656,
+      "Other->White": 0.69345,
+      "Other->Black": 0.72021,
+      "Other->Hispanic": 0.83162,
+      "Other->Asian": 0.8792,
+      "Other->Other": 0.76585
+    },
+    "FedAvg-EqualW": {
+      "White->White": 0.75339,
+      "White->Black": 0.77237,
+      "White->Hispanic": 0.87001,
+      "White->Asian": 0.91313,
+      "White->Other": 0.81378,
+      "Black->White": 0.73071,
+      "Black->Black": 0.75223,
+      "Black->Hispanic": 0.8557,
+      "Black->Asian": 0.90137,
+      "Black->Other": 0.79562,
+      "Hispanic->White": 0.65026,
+      "Hispanic->Black": 0.67871,
+      "Hispanic->Hispanic": 0.79964,
+      "Hispanic->Asian": 0.85416,
+      "Hispanic->Other": 0.72836,
+      "Asian->White": 0.55962,
+      "Asian->Black": 0.59607,
+      "Asian->Hispanic": 0.73664,
+      "Asian->Asian": 0.80168,
+      "Asian->Other": 0.65309,
+      "Other->White": 0.69511,
+      "Other->Black": 0.71993,
+      "Other->Hispanic": 0.83083,
+      "Other->Asian": 0.88004,
+      "Other->Other": 0.76581
+    },
+    "FedNova": {
+      "White->White": 0.75316,
+      "White->Black": 0.774,
+      "White->Hispanic": 0.87151,
+      "White->Asian": 0.91303,
+      "White->Other": 0.815,
+      "Black->White": 0.72916,
+      "Black->Black": 0.75276,
+      "Black->Hispanic": 0.85662,
+      "Black->Asian": 0.90073,
+      "Black->Other": 0.79592,
+      "Hispanic->White": 0.64817,
+      "Hispanic->Black": 0.67875,
+      "Hispanic->Hispanic": 0.80029,
+      "Hispanic->Asian": 0.85291,
+      "Hispanic->Other": 0.72818,
+      "Asian->White": 0.56081,
+      "Asian->Black": 0.59938,
+      "Asian->Hispanic": 0.7404,
+      "Asian->Asian": 0.80279,
+      "Asian->Other": 0.65598,
+      "Other->White": 0.69315,
+      "Other->Black": 0.72007,
+      "Other->Hispanic": 0.8316,
+      "Other->Asian": 0.87915,
+      "Other->Other": 0.76578
+    },
+    "FedProx": {
+      "White->White": 0.75211,
+      "White->Black": 0.77489,
+      "White->Hispanic": 0.87208,
+      "White->Asian": 0.91225,
+      "White->Other": 0.81438,
+      "Black->White": 0.72794,
+      "Black->Black": 0.75339,
+      "Black->Hispanic": 0.85731,
+      "Black->Asian": 0.90031,
+      "Black->Other": 0.7953,
+      "Hispanic->White": 0.64752,
+      "Hispanic->Black": 0.67947,
+      "Hispanic->Hispanic": 0.80114,
+      "Hispanic->Asian": 0.85293,
+      "Hispanic->Other": 0.72787,
+      "Asian->White": 0.56197,
+      "Asian->Black": 0.60106,
+      "Asian->Hispanic": 0.74154,
+      "Asian->Asian": 0.80317,
+      "Asian->Other": 0.65659,
+      "Other->White": 0.69309,
+      "Other->Black": 0.72146,
+      "Other->Hispanic": 0.83264,
+      "Other->Asian": 0.8791,
+      "Other->Other": 0.76587
+    },
+    "SCAFFOLD": {
+      "White->White": 0.75474,
+      "White->Black": 0.77234,
+      "White->Hispanic": 0.86971,
+      "White->Asian": 0.9126,
+      "White->Other": 0.8141,
+      "Black->White": 0.73292,
+      "Black->Black": 0.75286,
+      "Black->Hispanic": 0.8558,
+      "Black->Asian": 0.90112,
+      "Black->Other": 0.79661,
+      "Hispanic->White": 0.65159,
+      "Hispanic->Black": 0.67838,
+      "Hispanic->Hispanic": 0.79898,
+      "Hispanic->Asian": 0.85305,
+      "Hispanic->Other": 0.72875,
+      "Asian->White": 0.56008,
+      "Asian->Black": 0.59464,
+      "Asian->Hispanic": 0.73476,
+      "Asian->Asian": 0.79915,
+      "Asian->Other": 0.65256,
+      "Other->White": 0.69697,
+      "Other->Black": 0.72023,
+      "Other->Hispanic": 0.83047,
+      "Other->Asian": 0.87914,
+      "Other->Other": 0.76651
+    },
+    "XGBoost": {
+      "White->White": 0.72934,
+      "White->Black": 0.74129,
+      "White->Hispanic": 0.83947,
+      "White->Asian": 0.88452,
+      "White->Other": 0.78766,
+      "Black->White": 0.72091,
+      "Black->Black": 0.73348,
+      "Black->Hispanic": 0.83278,
+      "Black->Asian": 0.87841,
+      "Black->Other": 0.78021,
+      "Hispanic->White": 0.65259,
+      "Hispanic->Black": 0.66998,
+      "Hispanic->Hispanic": 0.78165,
+      "Hispanic->Asian": 0.83299,
+      "Hispanic->Other": 0.72179,
+      "Asian->White": 0.5573,
+      "Asian->Black": 0.58211,
+      "Asian->Hispanic": 0.71314,
+      "Asian->Asian": 0.77302,
+      "Asian->Other": 0.64191,
+      "Other->White": 0.68712,
+      "Other->Black": 0.70223,
+      "Other->Hispanic": 0.80743,
+      "Other->Asian": 0.85563,
+      "Other->Other": 0.75131
+    }
+  },
+  "across_seeds": {
+    "Centralised-full": {
+      "White->White": {
+        "n_seeds": 10,
+        "mean": 0.00372,
+        "sd": 0.00277,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00014,
+        "se_perseed_component": 0.00088,
+        "combined": {
+          "delta": 0.00372,
+          "se": 0.00089,
+          "ci_low": 0.00198,
+          "ci_high": 0.00546,
+          "p": 2.75e-05,
+          "excludes_zero": true
+        },
+        "t": 4.25,
+        "t_p": 0.00214,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "White->Black": {
+        "n_seeds": 10,
+        "mean": 0.00784,
+        "sd": 0.00285,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00022,
+        "se_perseed_component": 0.0009,
+        "combined": {
+          "delta": 0.00784,
+          "se": 0.00093,
+          "ci_low": 0.00602,
+          "ci_high": 0.00965,
+          "p": 2.86e-17,
+          "excludes_zero": true
+        },
+        "t": 8.701,
+        "t_p": 1.13e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00676,
+        "sd": 0.00234,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00016,
+        "se_perseed_component": 0.00074,
+        "combined": {
+          "delta": 0.00676,
+          "se": 0.00076,
+          "ci_low": 0.00528,
+          "ci_high": 0.00824,
+          "p": 3.95e-19,
+          "excludes_zero": true
+        },
+        "t": 9.147,
+        "t_p": 7.48e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00355,
+        "sd": 0.00256,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00021,
+        "se_perseed_component": 0.00081,
+        "combined": {
+          "delta": 0.00355,
+          "se": 0.00084,
+          "ci_low": 0.00191,
+          "ci_high": 0.00519,
+          "p": 2.19e-05,
+          "excludes_zero": true
+        },
+        "t": 4.389,
+        "t_p": 0.00175,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "White->Other": {
+        "n_seeds": 10,
+        "mean": 0.00579,
+        "sd": 0.00225,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00024,
+        "se_perseed_component": 0.00071,
+        "combined": {
+          "delta": 0.00579,
+          "se": 0.00075,
+          "ci_low": 0.00432,
+          "ci_high": 0.00725,
+          "p": 1.08e-14,
+          "excludes_zero": true
+        },
+        "t": 8.146,
+        "t_p": 1.92e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->White": {
+        "n_seeds": 10,
+        "mean": 0.00034,
+        "sd": 0.00328,
+        "n_negative": 3,
+        "n_positive": 7,
+        "se_shared_component": 0.00035,
+        "se_perseed_component": 0.00104,
+        "combined": {
+          "delta": 0.00034,
+          "se": 0.00109,
+          "ci_low": -0.0018,
+          "ci_high": 0.00248,
+          "p": 0.756,
+          "excludes_zero": false
+        },
+        "t": 0.327,
+        "t_p": 0.751,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Black->Black": {
+        "n_seeds": 10,
+        "mean": 0.00496,
+        "sd": 0.00151,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00036,
+        "se_perseed_component": 0.00048,
+        "combined": {
+          "delta": 0.00496,
+          "se": 0.0006,
+          "ci_low": 0.00379,
+          "ci_high": 0.00613,
+          "p": 8.83e-17,
+          "excludes_zero": true
+        },
+        "t": 10.398,
+        "t_p": 2.58e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00467,
+        "sd": 0.00173,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00026,
+        "se_perseed_component": 0.00055,
+        "combined": {
+          "delta": 0.00467,
+          "se": 0.00061,
+          "ci_low": 0.00348,
+          "ci_high": 0.00586,
+          "p": 1.36e-14,
+          "excludes_zero": true
+        },
+        "t": 8.537,
+        "t_p": 1.31e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00163,
+        "sd": 0.00231,
+        "n_negative": 2,
+        "n_positive": 8,
+        "se_shared_component": 0.00028,
+        "se_perseed_component": 0.00073,
+        "combined": {
+          "delta": 0.00163,
+          "se": 0.00078,
+          "ci_low": 0.0001,
+          "ci_high": 0.00316,
+          "p": 0.037,
+          "excludes_zero": true
+        },
+        "t": 2.234,
+        "t_p": 0.0523,
+        "sign_test_p": 0.1094,
+        "shared_component": "self"
+      },
+      "Black->Other": {
+        "n_seeds": 10,
+        "mean": 0.00317,
+        "sd": 0.00193,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00034,
+        "se_perseed_component": 0.00061,
+        "combined": {
+          "delta": 0.00317,
+          "se": 0.0007,
+          "ci_low": 0.0018,
+          "ci_high": 0.00455,
+          "p": 6.05e-06,
+          "excludes_zero": true
+        },
+        "t": 5.186,
+        "t_p": 0.000575,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Hispanic->White": {
+        "n_seeds": 10,
+        "mean": -0.00232,
+        "sd": 0.00364,
+        "n_negative": 6,
+        "n_positive": 4,
+        "se_shared_component": 0.00043,
+        "se_perseed_component": 0.00115,
+        "combined": {
+          "delta": -0.00232,
+          "se": 0.00123,
+          "ci_low": -0.00473,
+          "ci_high": 9e-05,
+          "p": 0.059,
+          "excludes_zero": false
+        },
+        "t": -2.017,
+        "t_p": 0.0745,
+        "sign_test_p": 0.7539,
+        "shared_component": "self"
+      },
+      "Hispanic->Black": {
+        "n_seeds": 10,
+        "mean": 0.00291,
+        "sd": 0.00232,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00042,
+        "se_perseed_component": 0.00073,
+        "combined": {
+          "delta": 0.00291,
+          "se": 0.00085,
+          "ci_low": 0.00125,
+          "ci_high": 0.00456,
+          "p": 0.000598,
+          "excludes_zero": true
+        },
+        "t": 3.959,
+        "t_p": 0.00331,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Hispanic->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00352,
+        "sd": 0.00135,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00032,
+        "se_perseed_component": 0.00043,
+        "combined": {
+          "delta": 0.00352,
+          "se": 0.00054,
+          "ci_low": 0.00247,
+          "ci_high": 0.00457,
+          "p": 4.78e-11,
+          "excludes_zero": true
+        },
+        "t": 8.268,
+        "t_p": 1.7e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00042,
+        "sd": 0.00231,
+        "n_negative": 4,
+        "n_positive": 6,
+        "se_shared_component": 0.00035,
+        "se_perseed_component": 0.00073,
+        "combined": {
+          "delta": 0.00042,
+          "se": 0.00081,
+          "ci_low": -0.00116,
+          "ci_high": 0.002,
+          "p": 0.602,
+          "excludes_zero": false
+        },
+        "t": 0.578,
+        "t_p": 0.578,
+        "sign_test_p": 0.7539,
+        "shared_component": "self"
+      },
+      "Hispanic->Other": {
+        "n_seeds": 10,
+        "mean": 0.00117,
+        "sd": 0.00148,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.0004,
+        "se_perseed_component": 0.00047,
+        "combined": {
+          "delta": 0.00117,
+          "se": 0.00062,
+          "ci_low": -4e-05,
+          "ci_high": 0.00238,
+          "p": 0.0577,
+          "excludes_zero": false
+        },
+        "t": 2.508,
+        "t_p": 0.0334,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Asian->White": {
+        "n_seeds": 10,
+        "mean": 0.00237,
+        "sd": 0.0029,
+        "n_negative": 3,
+        "n_positive": 7,
+        "se_shared_component": 0.00093,
+        "se_perseed_component": 0.00092,
+        "combined": {
+          "delta": 0.00237,
+          "se": 0.00131,
+          "ci_low": -0.00019,
+          "ci_high": 0.00493,
+          "p": 0.0696,
+          "excludes_zero": false
+        },
+        "t": 2.581,
+        "t_p": 0.0296,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Asian->Black": {
+        "n_seeds": 10,
+        "mean": 0.00793,
+        "sd": 0.00431,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00085,
+        "se_perseed_component": 0.00136,
+        "combined": {
+          "delta": 0.00793,
+          "se": 0.00161,
+          "ci_low": 0.00478,
+          "ci_high": 0.01108,
+          "p": 7.87e-07,
+          "excludes_zero": true
+        },
+        "t": 5.818,
+        "t_p": 0.000254,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.0078,
+        "sd": 0.00453,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00069,
+        "se_perseed_component": 0.00143,
+        "combined": {
+          "delta": 0.0078,
+          "se": 0.00159,
+          "ci_low": 0.00468,
+          "ci_high": 0.01091,
+          "p": 9.16e-07,
+          "excludes_zero": true
+        },
+        "t": 5.448,
+        "t_p": 0.000407,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Asian->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00363,
+        "sd": 0.00218,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00069,
+        "se_perseed_component": 0.00069,
+        "combined": {
+          "delta": 0.00363,
+          "se": 0.00098,
+          "ci_low": 0.00171,
+          "ci_high": 0.00554,
+          "p": 0.000212,
+          "excludes_zero": true
+        },
+        "t": 5.252,
+        "t_p": 0.000526,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Asian->Other": {
+        "n_seeds": 10,
+        "mean": 0.00504,
+        "sd": 0.00264,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00079,
+        "se_perseed_component": 0.00084,
+        "combined": {
+          "delta": 0.00504,
+          "se": 0.00115,
+          "ci_low": 0.00278,
+          "ci_high": 0.0073,
+          "p": 1.23e-05,
+          "excludes_zero": true
+        },
+        "t": 6.033,
+        "t_p": 0.000195,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->White": {
+        "n_seeds": 10,
+        "mean": -0.00063,
+        "sd": 0.00327,
+        "n_negative": 7,
+        "n_positive": 3,
+        "se_shared_component": 0.00051,
+        "se_perseed_component": 0.00103,
+        "combined": {
+          "delta": -0.00063,
+          "se": 0.00115,
+          "ci_low": -0.00288,
+          "ci_high": 0.00163,
+          "p": 0.585,
+          "excludes_zero": false
+        },
+        "t": -0.608,
+        "t_p": 0.558,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Other->Black": {
+        "n_seeds": 10,
+        "mean": 0.00394,
+        "sd": 0.0027,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00049,
+        "se_perseed_component": 0.00085,
+        "combined": {
+          "delta": 0.00394,
+          "se": 0.00098,
+          "ci_low": 0.00201,
+          "ci_high": 0.00587,
+          "p": 6.17e-05,
+          "excludes_zero": true
+        },
+        "t": 4.619,
+        "t_p": 0.00126,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.0043,
+        "sd": 0.00161,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00036,
+        "se_perseed_component": 0.00051,
+        "combined": {
+          "delta": 0.0043,
+          "se": 0.00062,
+          "ci_low": 0.00308,
+          "ci_high": 0.00553,
+          "p": 5.88e-12,
+          "excludes_zero": true
+        },
+        "t": 8.448,
+        "t_p": 1.43e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00157,
+        "sd": 0.00199,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00036,
+        "se_perseed_component": 0.00063,
+        "combined": {
+          "delta": 0.00157,
+          "se": 0.00073,
+          "ci_low": 0.00014,
+          "ci_high": 0.00299,
+          "p": 0.0309,
+          "excludes_zero": true
+        },
+        "t": 2.492,
+        "t_p": 0.0343,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Other->Other": {
+        "n_seeds": 10,
+        "mean": 0.00238,
+        "sd": 0.00109,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00045,
+        "se_perseed_component": 0.00034,
+        "combined": {
+          "delta": 0.00238,
+          "se": 0.00057,
+          "ci_low": 0.00127,
+          "ci_high": 0.00349,
+          "p": 2.7e-05,
+          "excludes_zero": true
+        },
+        "t": 6.899,
+        "t_p": 7.08e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "disparity_Black": {
+        "n_seeds": 10,
+        "mean": -0.0075,
+        "sd": 0.00488,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00057,
+        "se_perseed_component": 0.00154,
+        "combined": {
+          "delta": -0.0075,
+          "se": 0.00164,
+          "ci_low": -0.01072,
+          "ci_high": -0.00428,
+          "p": 5.06e-06,
+          "excludes_zero": true
+        },
+        "t": -4.861,
+        "t_p": 0.000895,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.00908,
+        "sd": 0.00509,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00059,
+        "se_perseed_component": 0.00161,
+        "combined": {
+          "delta": -0.00908,
+          "se": 0.00171,
+          "ci_low": -0.01244,
+          "ci_high": -0.00572,
+          "p": 1.17e-07,
+          "excludes_zero": true
+        },
+        "t": -5.645,
+        "t_p": 0.000316,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Asian": {
+        "n_seeds": 10,
+        "mean": -0.00118,
+        "sd": 0.00431,
+        "n_negative": 6,
+        "n_positive": 4,
+        "se_shared_component": 0.00114,
+        "se_perseed_component": 0.00136,
+        "combined": {
+          "delta": -0.00118,
+          "se": 0.00178,
+          "ci_low": -0.00467,
+          "ci_high": 0.0023,
+          "p": 0.505,
+          "excludes_zero": false
+        },
+        "t": -0.869,
+        "t_p": 0.408,
+        "sign_test_p": 0.7539,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Other": {
+        "n_seeds": 10,
+        "mean": -0.00641,
+        "sd": 0.00428,
+        "n_negative": 9,
+        "n_positive": 1,
+        "se_shared_component": 0.00074,
+        "se_perseed_component": 0.00135,
+        "combined": {
+          "delta": -0.00641,
+          "se": 0.00154,
+          "ci_low": -0.00944,
+          "ci_high": -0.00339,
+          "p": 3.27e-05,
+          "excludes_zero": true
+        },
+        "t": -4.738,
+        "t_p": 0.00106,
+        "sign_test_p": 0.02148,
+        "shared_component": "conservative_sum"
+      }
+    },
+    "FedAvg": {
+      "White->White": {
+        "n_seeds": 10,
+        "mean": -0.00037,
+        "sd": 0.00322,
+        "n_negative": 4,
+        "n_positive": 6,
+        "se_shared_component": 0.00034,
+        "se_perseed_component": 0.00102,
+        "combined": {
+          "delta": -0.00037,
+          "se": 0.00108,
+          "ci_low": -0.00248,
+          "ci_high": 0.00174,
+          "p": 0.73,
+          "excludes_zero": false
+        },
+        "t": -0.364,
+        "t_p": 0.724,
+        "sign_test_p": 0.7539,
+        "shared_component": "self"
+      },
+      "White->Black": {
+        "n_seeds": 10,
+        "mean": 0.02205,
+        "sd": 0.00322,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00048,
+        "se_perseed_component": 0.00102,
+        "combined": {
+          "delta": 0.02205,
+          "se": 0.00113,
+          "ci_low": 0.01985,
+          "ci_high": 0.02426,
+          "p": 2.07e-85,
+          "excludes_zero": true
+        },
+        "t": 21.648,
+        "t_p": 4.51e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.01912,
+        "sd": 0.00307,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00035,
+        "se_perseed_component": 0.00097,
+        "combined": {
+          "delta": 0.01912,
+          "se": 0.00103,
+          "ci_low": 0.01709,
+          "ci_high": 0.02114,
+          "p": 1.11e-76,
+          "excludes_zero": true
+        },
+        "t": 19.694,
+        "t_p": 1.04e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Asian": {
+        "n_seeds": 10,
+        "mean": 0.0055,
+        "sd": 0.00258,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00046,
+        "se_perseed_component": 0.00082,
+        "combined": {
+          "delta": 0.0055,
+          "se": 0.00094,
+          "ci_low": 0.00366,
+          "ci_high": 0.00734,
+          "p": 4.3e-09,
+          "excludes_zero": true
+        },
+        "t": 6.738,
+        "t_p": 8.48e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Other": {
+        "n_seeds": 10,
+        "mean": 0.01509,
+        "sd": 0.00239,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.0005,
+        "se_perseed_component": 0.00075,
+        "combined": {
+          "delta": 0.01509,
+          "se": 0.00091,
+          "ci_low": 0.01331,
+          "ci_high": 0.01687,
+          "p": 3.34e-62,
+          "excludes_zero": true
+        },
+        "t": 19.989,
+        "t_p": 9.12e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->White": {
+        "n_seeds": 10,
+        "mean": -0.01806,
+        "sd": 0.00339,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.0008,
+        "se_perseed_component": 0.00107,
+        "combined": {
+          "delta": -0.01806,
+          "se": 0.00134,
+          "ci_low": -0.02069,
+          "ci_high": -0.01544,
+          "p": 1.72e-41,
+          "excludes_zero": true
+        },
+        "t": -16.837,
+        "t_p": 4.12e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Black": {
+        "n_seeds": 10,
+        "mean": 0.00665,
+        "sd": 0.00206,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00078,
+        "se_perseed_component": 0.00065,
+        "combined": {
+          "delta": 0.00665,
+          "se": 0.00102,
+          "ci_low": 0.00465,
+          "ci_high": 0.00864,
+          "p": 6.58e-11,
+          "excludes_zero": true
+        },
+        "t": 10.182,
+        "t_p": 3.08e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00879,
+        "sd": 0.00244,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00056,
+        "se_perseed_component": 0.00077,
+        "combined": {
+          "delta": 0.00879,
+          "se": 0.00096,
+          "ci_low": 0.00692,
+          "ci_high": 0.01067,
+          "p": 3.89e-20,
+          "excludes_zero": true
+        },
+        "t": 11.377,
+        "t_p": 1.21e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00283,
+        "sd": 0.00238,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00061,
+        "se_perseed_component": 0.00075,
+        "combined": {
+          "delta": -0.00283,
+          "se": 0.00097,
+          "ci_low": -0.00474,
+          "ci_high": -0.00093,
+          "p": 0.00359,
+          "excludes_zero": true
+        },
+        "t": -3.76,
+        "t_p": 0.00449,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Other": {
+        "n_seeds": 10,
+        "mean": 0.00137,
+        "sd": 0.00193,
+        "n_negative": 3,
+        "n_positive": 7,
+        "se_shared_component": 0.00074,
+        "se_perseed_component": 0.00061,
+        "combined": {
+          "delta": 0.00137,
+          "se": 0.00096,
+          "ci_low": -0.00052,
+          "ci_high": 0.00325,
+          "p": 0.156,
+          "excludes_zero": false
+        },
+        "t": 2.234,
+        "t_p": 0.0524,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Hispanic->White": {
+        "n_seeds": 10,
+        "mean": -0.02683,
+        "sd": 0.00464,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00093,
+        "se_perseed_component": 0.00147,
+        "combined": {
+          "delta": -0.02683,
+          "se": 0.00174,
+          "ci_low": -0.03024,
+          "ci_high": -0.02342,
+          "p": 9.38e-54,
+          "excludes_zero": true
+        },
+        "t": -18.301,
+        "t_p": 1.98e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Black": {
+        "n_seeds": 10,
+        "mean": -0.00046,
+        "sd": 0.003,
+        "n_negative": 7,
+        "n_positive": 3,
+        "se_shared_component": 0.00087,
+        "se_perseed_component": 0.00095,
+        "combined": {
+          "delta": -0.00046,
+          "se": 0.00129,
+          "ci_low": -0.00299,
+          "ci_high": 0.00207,
+          "p": 0.72,
+          "excludes_zero": false
+        },
+        "t": -0.488,
+        "t_p": 0.637,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Hispanic->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00392,
+        "sd": 0.00158,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00065,
+        "se_perseed_component": 0.0005,
+        "combined": {
+          "delta": 0.00392,
+          "se": 0.00082,
+          "ci_low": 0.00232,
+          "ci_high": 0.00553,
+          "p": 1.63e-06,
+          "excludes_zero": true
+        },
+        "t": 7.845,
+        "t_p": 2.59e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00659,
+        "sd": 0.00269,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00072,
+        "se_perseed_component": 0.00085,
+        "combined": {
+          "delta": -0.00659,
+          "se": 0.00111,
+          "ci_low": -0.00878,
+          "ci_high": -0.00441,
+          "p": 3.32e-09,
+          "excludes_zero": true
+        },
+        "t": -7.761,
+        "t_p": 2.82e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Other": {
+        "n_seeds": 10,
+        "mean": -0.00596,
+        "sd": 0.00216,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00084,
+        "se_perseed_component": 0.00068,
+        "combined": {
+          "delta": -0.00596,
+          "se": 0.00108,
+          "ci_low": -0.00807,
+          "ci_high": -0.00384,
+          "p": 3.47e-08,
+          "excludes_zero": true
+        },
+        "t": -8.709,
+        "t_p": 1.12e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->White": {
+        "n_seeds": 10,
+        "mean": 0.00316,
+        "sd": 0.00268,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00224,
+        "se_perseed_component": 0.00085,
+        "combined": {
+          "delta": 0.00316,
+          "se": 0.00239,
+          "ci_low": -0.00153,
+          "ci_high": 0.00785,
+          "p": 0.187,
+          "excludes_zero": false
+        },
+        "t": 3.72,
+        "t_p": 0.00477,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Asian->Black": {
+        "n_seeds": 10,
+        "mean": 0.0266,
+        "sd": 0.0043,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00207,
+        "se_perseed_component": 0.00136,
+        "combined": {
+          "delta": 0.0266,
+          "se": 0.00248,
+          "ci_low": 0.02175,
+          "ci_high": 0.03146,
+          "p": 6.75e-27,
+          "excludes_zero": true
+        },
+        "t": 19.562,
+        "t_p": 1.1e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.02209,
+        "sd": 0.00482,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00168,
+        "se_perseed_component": 0.00152,
+        "combined": {
+          "delta": 0.02209,
+          "se": 0.00227,
+          "ci_low": 0.01764,
+          "ci_high": 0.02654,
+          "p": 2.18e-22,
+          "excludes_zero": true
+        },
+        "t": 14.488,
+        "t_p": 1.52e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00868,
+        "sd": 0.00187,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00155,
+        "se_perseed_component": 0.00059,
+        "combined": {
+          "delta": 0.00868,
+          "se": 0.00166,
+          "ci_low": 0.00543,
+          "ci_high": 0.01194,
+          "p": 1.71e-07,
+          "excludes_zero": true
+        },
+        "t": 14.641,
+        "t_p": 1.39e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Other": {
+        "n_seeds": 10,
+        "mean": 0.01656,
+        "sd": 0.00383,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00195,
+        "se_perseed_component": 0.00121,
+        "combined": {
+          "delta": 0.01656,
+          "se": 0.00229,
+          "ci_low": 0.01206,
+          "ci_high": 0.02105,
+          "p": 5.08e-13,
+          "excludes_zero": true
+        },
+        "t": 13.657,
+        "t_p": 2.54e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->White": {
+        "n_seeds": 10,
+        "mean": -0.02213,
+        "sd": 0.00496,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00111,
+        "se_perseed_component": 0.00157,
+        "combined": {
+          "delta": -0.02213,
+          "se": 0.00192,
+          "ci_low": -0.02589,
+          "ci_high": -0.01837,
+          "p": 8.68e-31,
+          "excludes_zero": true
+        },
+        "t": -14.115,
+        "t_p": 1.91e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Black": {
+        "n_seeds": 10,
+        "mean": 0.00281,
+        "sd": 0.00305,
+        "n_negative": 2,
+        "n_positive": 8,
+        "se_shared_component": 0.00101,
+        "se_perseed_component": 0.00096,
+        "combined": {
+          "delta": 0.00281,
+          "se": 0.0014,
+          "ci_low": 7e-05,
+          "ci_high": 0.00555,
+          "p": 0.0445,
+          "excludes_zero": true
+        },
+        "t": 2.912,
+        "t_p": 0.0172,
+        "sign_test_p": 0.1094,
+        "shared_component": "self"
+      },
+      "Other->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00687,
+        "sd": 0.00232,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00074,
+        "se_perseed_component": 0.00074,
+        "combined": {
+          "delta": 0.00687,
+          "se": 0.00104,
+          "ci_low": 0.00483,
+          "ci_high": 0.00892,
+          "p": 4.22e-11,
+          "excludes_zero": true
+        },
+        "t": 9.35,
+        "t_p": 6.24e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00358,
+        "sd": 0.00291,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00077,
+        "se_perseed_component": 0.00092,
+        "combined": {
+          "delta": -0.00358,
+          "se": 0.0012,
+          "ci_low": -0.00592,
+          "ci_high": -0.00123,
+          "p": 0.00282,
+          "excludes_zero": true
+        },
+        "t": -3.883,
+        "t_p": 0.00371,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Other": {
+        "n_seeds": 10,
+        "mean": -0.00207,
+        "sd": 0.0018,
+        "n_negative": 9,
+        "n_positive": 1,
+        "se_shared_component": 0.00094,
+        "se_perseed_component": 0.00057,
+        "combined": {
+          "delta": -0.00207,
+          "se": 0.0011,
+          "ci_low": -0.00423,
+          "ci_high": 8e-05,
+          "p": 0.0593,
+          "excludes_zero": false
+        },
+        "t": -3.646,
+        "t_p": 0.00535,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "disparity_Black": {
+        "n_seeds": 10,
+        "mean": -0.04012,
+        "sd": 0.00447,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00128,
+        "se_perseed_component": 0.00141,
+        "combined": {
+          "delta": -0.04012,
+          "se": 0.00191,
+          "ci_low": -0.04386,
+          "ci_high": -0.03638,
+          "p": 3.49e-98,
+          "excludes_zero": true
+        },
+        "t": -28.371,
+        "t_p": 4.09e-10,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.04595,
+        "sd": 0.00661,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00128,
+        "se_perseed_component": 0.00209,
+        "combined": {
+          "delta": -0.04595,
+          "se": 0.00245,
+          "ci_low": -0.05075,
+          "ci_high": -0.04114,
+          "p": 2.17e-78,
+          "excludes_zero": true
+        },
+        "t": -21.994,
+        "t_p": 3.92e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Asian": {
+        "n_seeds": 10,
+        "mean": -0.00234,
+        "sd": 0.00434,
+        "n_negative": 6,
+        "n_positive": 4,
+        "se_shared_component": 0.0027,
+        "se_perseed_component": 0.00137,
+        "combined": {
+          "delta": -0.00234,
+          "se": 0.00303,
+          "ci_low": -0.00827,
+          "ci_high": 0.00359,
+          "p": 0.439,
+          "excludes_zero": false
+        },
+        "t": -1.705,
+        "t_p": 0.122,
+        "sign_test_p": 0.7539,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Other": {
+        "n_seeds": 10,
+        "mean": -0.03722,
+        "sd": 0.00591,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00161,
+        "se_perseed_component": 0.00187,
+        "combined": {
+          "delta": -0.03722,
+          "se": 0.00247,
+          "ci_low": -0.04205,
+          "ci_high": -0.03238,
+          "p": 1.77e-51,
+          "excludes_zero": true
+        },
+        "t": -19.903,
+        "t_p": 9.48e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      }
+    },
+    "FedAvg-EqualW": {
+      "White->White": {
+        "n_seeds": 10,
+        "mean": -0.00033,
+        "sd": 0.00353,
+        "n_negative": 4,
+        "n_positive": 6,
+        "se_shared_component": 0.00033,
+        "se_perseed_component": 0.00112,
+        "combined": {
+          "delta": -0.00033,
+          "se": 0.00116,
+          "ci_low": -0.00261,
+          "ci_high": 0.00196,
+          "p": 0.78,
+          "excludes_zero": false
+        },
+        "t": -0.292,
+        "t_p": 0.777,
+        "sign_test_p": 0.7539,
+        "shared_component": "self"
+      },
+      "White->Black": {
+        "n_seeds": 10,
+        "mean": 0.02041,
+        "sd": 0.00341,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00046,
+        "se_perseed_component": 0.00108,
+        "combined": {
+          "delta": 0.02041,
+          "se": 0.00117,
+          "ci_low": 0.01811,
+          "ci_high": 0.02271,
+          "p": 7.68e-68,
+          "excludes_zero": true
+        },
+        "t": 18.946,
+        "t_p": 1.46e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.01766,
+        "sd": 0.00304,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00034,
+        "se_perseed_component": 0.00096,
+        "combined": {
+          "delta": 0.01766,
+          "se": 0.00102,
+          "ci_low": 0.01567,
+          "ci_high": 0.01966,
+          "p": 2.29e-67,
+          "excludes_zero": true
+        },
+        "t": 18.387,
+        "t_p": 1.9e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00556,
+        "sd": 0.00271,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00045,
+        "se_perseed_component": 0.00086,
+        "combined": {
+          "delta": 0.00556,
+          "se": 0.00097,
+          "ci_low": 0.00366,
+          "ci_high": 0.00746,
+          "p": 9.13e-09,
+          "excludes_zero": true
+        },
+        "t": 6.478,
+        "t_p": 0.000114,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Other": {
+        "n_seeds": 10,
+        "mean": 0.0139,
+        "sd": 0.00239,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00048,
+        "se_perseed_component": 0.00076,
+        "combined": {
+          "delta": 0.0139,
+          "se": 0.0009,
+          "ci_low": 0.01214,
+          "ci_high": 0.01566,
+          "p": 5.04e-54,
+          "excludes_zero": true
+        },
+        "t": 18.384,
+        "t_p": 1.91e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->White": {
+        "n_seeds": 10,
+        "mean": -0.01675,
+        "sd": 0.00354,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00077,
+        "se_perseed_component": 0.00112,
+        "combined": {
+          "delta": -0.01675,
+          "se": 0.00136,
+          "ci_low": -0.01942,
+          "ci_high": -0.01409,
+          "p": 6.82e-35,
+          "excludes_zero": true
+        },
+        "t": -14.987,
+        "t_p": 1.14e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Black": {
+        "n_seeds": 10,
+        "mean": 0.00605,
+        "sd": 0.00216,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00075,
+        "se_perseed_component": 0.00068,
+        "combined": {
+          "delta": 0.00605,
+          "se": 0.00102,
+          "ci_low": 0.00405,
+          "ci_high": 0.00804,
+          "p": 2.86e-09,
+          "excludes_zero": true
+        },
+        "t": 8.852,
+        "t_p": 9.78e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00788,
+        "sd": 0.00237,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00055,
+        "se_perseed_component": 0.00075,
+        "combined": {
+          "delta": 0.00788,
+          "se": 0.00093,
+          "ci_low": 0.00605,
+          "ci_high": 0.0097,
+          "p": 2.67e-17,
+          "excludes_zero": true
+        },
+        "t": 10.497,
+        "t_p": 2.39e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00225,
+        "sd": 0.00255,
+        "n_negative": 8,
+        "n_positive": 2,
+        "se_shared_component": 0.0006,
+        "se_perseed_component": 0.00081,
+        "combined": {
+          "delta": -0.00225,
+          "se": 0.001,
+          "ci_low": -0.00422,
+          "ci_high": -0.00029,
+          "p": 0.0247,
+          "excludes_zero": true
+        },
+        "t": -2.798,
+        "t_p": 0.0208,
+        "sign_test_p": 0.1094,
+        "shared_component": "self"
+      },
+      "Black->Other": {
+        "n_seeds": 10,
+        "mean": 0.00105,
+        "sd": 0.00195,
+        "n_negative": 3,
+        "n_positive": 7,
+        "se_shared_component": 0.00072,
+        "se_perseed_component": 0.00062,
+        "combined": {
+          "delta": 0.00105,
+          "se": 0.00095,
+          "ci_low": -0.00081,
+          "ci_high": 0.0029,
+          "p": 0.269,
+          "excludes_zero": false
+        },
+        "t": 1.7,
+        "t_p": 0.123,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Hispanic->White": {
+        "n_seeds": 10,
+        "mean": -0.02507,
+        "sd": 0.00469,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00091,
+        "se_perseed_component": 0.00148,
+        "combined": {
+          "delta": -0.02507,
+          "se": 0.00174,
+          "ci_low": -0.02848,
+          "ci_high": -0.02166,
+          "p": 3.96e-47,
+          "excludes_zero": true
+        },
+        "t": -16.893,
+        "t_p": 4e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Black": {
+        "n_seeds": 10,
+        "mean": -0.00066,
+        "sd": 0.00305,
+        "n_negative": 7,
+        "n_positive": 3,
+        "se_shared_component": 0.00085,
+        "se_perseed_component": 0.00096,
+        "combined": {
+          "delta": -0.00066,
+          "se": 0.00128,
+          "ci_low": -0.00318,
+          "ci_high": 0.00185,
+          "p": 0.605,
+          "excludes_zero": false
+        },
+        "t": -0.688,
+        "t_p": 0.509,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Hispanic->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00322,
+        "sd": 0.00166,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00064,
+        "se_perseed_component": 0.00052,
+        "combined": {
+          "delta": 0.00322,
+          "se": 0.00082,
+          "ci_low": 0.00161,
+          "ci_high": 0.00484,
+          "p": 9.12e-05,
+          "excludes_zero": true
+        },
+        "t": 6.156,
+        "t_p": 0.000167,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Hispanic->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00543,
+        "sd": 0.00299,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00071,
+        "se_perseed_component": 0.00095,
+        "combined": {
+          "delta": -0.00543,
+          "se": 0.00118,
+          "ci_low": -0.00774,
+          "ci_high": -0.00311,
+          "p": 4.42e-06,
+          "excludes_zero": true
+        },
+        "t": -5.73,
+        "t_p": 0.000283,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Other": {
+        "n_seeds": 10,
+        "mean": -0.00588,
+        "sd": 0.00222,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00081,
+        "se_perseed_component": 0.0007,
+        "combined": {
+          "delta": -0.00588,
+          "se": 0.00107,
+          "ci_low": -0.00799,
+          "ci_high": -0.00378,
+          "p": 4.34e-08,
+          "excludes_zero": true
+        },
+        "t": -8.367,
+        "t_p": 1.54e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->White": {
+        "n_seeds": 10,
+        "mean": 0.00181,
+        "sd": 0.00275,
+        "n_negative": 4,
+        "n_positive": 6,
+        "se_shared_component": 0.00218,
+        "se_perseed_component": 0.00087,
+        "combined": {
+          "delta": 0.00181,
+          "se": 0.00234,
+          "ci_low": -0.00278,
+          "ci_high": 0.00641,
+          "p": 0.44,
+          "excludes_zero": false
+        },
+        "t": 2.08,
+        "t_p": 0.0673,
+        "sign_test_p": 0.7539,
+        "shared_component": "self"
+      },
+      "Asian->Black": {
+        "n_seeds": 10,
+        "mean": 0.02326,
+        "sd": 0.00461,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00203,
+        "se_perseed_component": 0.00146,
+        "combined": {
+          "delta": 0.02326,
+          "se": 0.0025,
+          "ci_low": 0.01837,
+          "ci_high": 0.02816,
+          "p": 1.15e-20,
+          "excludes_zero": true
+        },
+        "t": 15.963,
+        "t_p": 6.57e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.01834,
+        "sd": 0.00524,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00169,
+        "se_perseed_component": 0.00166,
+        "combined": {
+          "delta": 0.01834,
+          "se": 0.00236,
+          "ci_low": 0.01371,
+          "ci_high": 0.02298,
+          "p": 8.52e-15,
+          "excludes_zero": true
+        },
+        "t": 11.08,
+        "t_p": 1.51e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00754,
+        "sd": 0.00193,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00155,
+        "se_perseed_component": 0.00061,
+        "combined": {
+          "delta": 0.00754,
+          "se": 0.00166,
+          "ci_low": 0.00428,
+          "ci_high": 0.0108,
+          "p": 5.75e-06,
+          "excludes_zero": true
+        },
+        "t": 12.338,
+        "t_p": 6.08e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Other": {
+        "n_seeds": 10,
+        "mean": 0.01364,
+        "sd": 0.00419,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00191,
+        "se_perseed_component": 0.00133,
+        "combined": {
+          "delta": 0.01364,
+          "se": 0.00233,
+          "ci_low": 0.00907,
+          "ci_high": 0.0182,
+          "p": 4.78e-09,
+          "excludes_zero": true
+        },
+        "t": 10.283,
+        "t_p": 2.83e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->White": {
+        "n_seeds": 10,
+        "mean": -0.02047,
+        "sd": 0.00519,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00107,
+        "se_perseed_component": 0.00164,
+        "combined": {
+          "delta": -0.02047,
+          "se": 0.00196,
+          "ci_low": -0.02431,
+          "ci_high": -0.01663,
+          "p": 1.44e-25,
+          "excludes_zero": true
+        },
+        "t": -12.478,
+        "t_p": 5.52e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Black": {
+        "n_seeds": 10,
+        "mean": 0.00253,
+        "sd": 0.00329,
+        "n_negative": 2,
+        "n_positive": 8,
+        "se_shared_component": 0.00098,
+        "se_perseed_component": 0.00104,
+        "combined": {
+          "delta": 0.00253,
+          "se": 0.00143,
+          "ci_low": -0.00027,
+          "ci_high": 0.00533,
+          "p": 0.0768,
+          "excludes_zero": false
+        },
+        "t": 2.434,
+        "t_p": 0.0378,
+        "sign_test_p": 0.1094,
+        "shared_component": "self"
+      },
+      "Other->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00609,
+        "sd": 0.00239,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00073,
+        "se_perseed_component": 0.00076,
+        "combined": {
+          "delta": 0.00609,
+          "se": 0.00105,
+          "ci_low": 0.00403,
+          "ci_high": 0.00814,
+          "p": 6.4e-09,
+          "excludes_zero": true
+        },
+        "t": 8.047,
+        "t_p": 2.11e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00274,
+        "sd": 0.00316,
+        "n_negative": 8,
+        "n_positive": 2,
+        "se_shared_component": 0.00075,
+        "se_perseed_component": 0.001,
+        "combined": {
+          "delta": -0.00274,
+          "se": 0.00125,
+          "ci_low": -0.00519,
+          "ci_high": -0.00028,
+          "p": 0.0287,
+          "excludes_zero": true
+        },
+        "t": -2.734,
+        "t_p": 0.0231,
+        "sign_test_p": 0.1094,
+        "shared_component": "self"
+      },
+      "Other->Other": {
+        "n_seeds": 10,
+        "mean": -0.00212,
+        "sd": 0.00194,
+        "n_negative": 9,
+        "n_positive": 1,
+        "se_shared_component": 0.00091,
+        "se_perseed_component": 0.00061,
+        "combined": {
+          "delta": -0.00212,
+          "se": 0.0011,
+          "ci_low": -0.00427,
+          "ci_high": 4e-05,
+          "p": 0.0541,
+          "excludes_zero": false
+        },
+        "t": -3.456,
+        "t_p": 0.0072,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "disparity_Black": {
+        "n_seeds": 10,
+        "mean": -0.03716,
+        "sd": 0.00449,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00124,
+        "se_perseed_component": 0.00142,
+        "combined": {
+          "delta": -0.03716,
+          "se": 0.00188,
+          "ci_low": -0.04085,
+          "ci_high": -0.03347,
+          "p": 1.14e-86,
+          "excludes_zero": true
+        },
+        "t": -26.17,
+        "t_p": 8.38e-10,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.04273,
+        "sd": 0.00648,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00124,
+        "se_perseed_component": 0.00205,
+        "combined": {
+          "delta": -0.04273,
+          "se": 0.0024,
+          "ci_low": -0.04743,
+          "ci_high": -0.03804,
+          "p": 3.88e-71,
+          "excludes_zero": true
+        },
+        "t": -20.869,
+        "t_p": 6.24e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Asian": {
+        "n_seeds": 10,
+        "mean": -0.00375,
+        "sd": 0.00444,
+        "n_negative": 9,
+        "n_positive": 1,
+        "se_shared_component": 0.00262,
+        "se_perseed_component": 0.00141,
+        "combined": {
+          "delta": -0.00375,
+          "se": 0.00298,
+          "ci_low": -0.00958,
+          "ci_high": 0.00208,
+          "p": 0.208,
+          "excludes_zero": false
+        },
+        "t": -2.668,
+        "t_p": 0.0257,
+        "sign_test_p": 0.02148,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Other": {
+        "n_seeds": 10,
+        "mean": -0.03437,
+        "sd": 0.00586,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00155,
+        "se_perseed_component": 0.00185,
+        "combined": {
+          "delta": -0.03437,
+          "se": 0.00242,
+          "ci_low": -0.03912,
+          "ci_high": -0.02963,
+          "p": 8.65e-46,
+          "excludes_zero": true
+        },
+        "t": -18.535,
+        "t_p": 1.77e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      }
+    },
+    "FedNova": {
+      "White->White": {
+        "n_seeds": 10,
+        "mean": -0.00056,
+        "sd": 0.00328,
+        "n_negative": 4,
+        "n_positive": 6,
+        "se_shared_component": 0.00034,
+        "se_perseed_component": 0.00104,
+        "combined": {
+          "delta": -0.00056,
+          "se": 0.00109,
+          "ci_low": -0.0027,
+          "ci_high": 0.00158,
+          "p": 0.611,
+          "excludes_zero": false
+        },
+        "t": -0.537,
+        "t_p": 0.604,
+        "sign_test_p": 0.7539,
+        "shared_component": "self"
+      },
+      "White->Black": {
+        "n_seeds": 10,
+        "mean": 0.02204,
+        "sd": 0.00332,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00048,
+        "se_perseed_component": 0.00105,
+        "combined": {
+          "delta": 0.02204,
+          "se": 0.00116,
+          "ci_low": 0.01977,
+          "ci_high": 0.0243,
+          "p": 5.83e-81,
+          "excludes_zero": true
+        },
+        "t": 20.962,
+        "t_p": 6e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.01916,
+        "sd": 0.00316,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00035,
+        "se_perseed_component": 0.001,
+        "combined": {
+          "delta": 0.01916,
+          "se": 0.00106,
+          "ci_low": 0.01708,
+          "ci_high": 0.02123,
+          "p": 3.13e-73,
+          "excludes_zero": true
+        },
+        "t": 19.18,
+        "t_p": 1.31e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00546,
+        "sd": 0.00256,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00046,
+        "se_perseed_component": 0.00081,
+        "combined": {
+          "delta": 0.00546,
+          "se": 0.00093,
+          "ci_low": 0.00364,
+          "ci_high": 0.00729,
+          "p": 4.59e-09,
+          "excludes_zero": true
+        },
+        "t": 6.744,
+        "t_p": 8.42e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Other": {
+        "n_seeds": 10,
+        "mean": 0.01512,
+        "sd": 0.00248,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.0005,
+        "se_perseed_component": 0.00078,
+        "combined": {
+          "delta": 0.01512,
+          "se": 0.00093,
+          "ci_low": 0.01329,
+          "ci_high": 0.01694,
+          "p": 4.14e-59,
+          "excludes_zero": true
+        },
+        "t": 19.27,
+        "t_p": 1.26e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->White": {
+        "n_seeds": 10,
+        "mean": -0.0183,
+        "sd": 0.00335,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.0008,
+        "se_perseed_component": 0.00106,
+        "combined": {
+          "delta": -0.0183,
+          "se": 0.00133,
+          "ci_low": -0.02091,
+          "ci_high": -0.01569,
+          "p": 4.58e-43,
+          "excludes_zero": true
+        },
+        "t": -17.268,
+        "t_p": 3.3e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Black": {
+        "n_seeds": 10,
+        "mean": 0.00658,
+        "sd": 0.00215,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00078,
+        "se_perseed_component": 0.00068,
+        "combined": {
+          "delta": 0.00658,
+          "se": 0.00104,
+          "ci_low": 0.00455,
+          "ci_high": 0.00862,
+          "p": 2.24e-10,
+          "excludes_zero": true
+        },
+        "t": 9.689,
+        "t_p": 4.65e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.0088,
+        "sd": 0.00251,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00057,
+        "se_perseed_component": 0.00079,
+        "combined": {
+          "delta": 0.0088,
+          "se": 0.00097,
+          "ci_low": 0.00689,
+          "ci_high": 0.0107,
+          "p": 1.62e-19,
+          "excludes_zero": true
+        },
+        "t": 11.101,
+        "t_p": 1.49e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00289,
+        "sd": 0.0023,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00062,
+        "se_perseed_component": 0.00073,
+        "combined": {
+          "delta": -0.00289,
+          "se": 0.00095,
+          "ci_low": -0.00476,
+          "ci_high": -0.00102,
+          "p": 0.00244,
+          "excludes_zero": true
+        },
+        "t": -3.971,
+        "t_p": 0.00325,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Other": {
+        "n_seeds": 10,
+        "mean": 0.00134,
+        "sd": 0.00195,
+        "n_negative": 3,
+        "n_positive": 7,
+        "se_shared_component": 0.00075,
+        "se_perseed_component": 0.00062,
+        "combined": {
+          "delta": 0.00134,
+          "se": 0.00097,
+          "ci_low": -0.00056,
+          "ci_high": 0.00324,
+          "p": 0.166,
+          "excludes_zero": false
+        },
+        "t": 2.176,
+        "t_p": 0.0576,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Hispanic->White": {
+        "n_seeds": 10,
+        "mean": -0.02716,
+        "sd": 0.00467,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00094,
+        "se_perseed_component": 0.00148,
+        "combined": {
+          "delta": -0.02716,
+          "se": 0.00175,
+          "ci_low": -0.03058,
+          "ci_high": -0.02373,
+          "p": 1.92e-54,
+          "excludes_zero": true
+        },
+        "t": -18.406,
+        "t_p": 1.89e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Black": {
+        "n_seeds": 10,
+        "mean": -0.00062,
+        "sd": 0.00294,
+        "n_negative": 7,
+        "n_positive": 3,
+        "se_shared_component": 0.00088,
+        "se_perseed_component": 0.00093,
+        "combined": {
+          "delta": -0.00062,
+          "se": 0.00128,
+          "ci_low": -0.00313,
+          "ci_high": 0.00188,
+          "p": 0.627,
+          "excludes_zero": false
+        },
+        "t": -0.668,
+        "t_p": 0.521,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Hispanic->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00387,
+        "sd": 0.00159,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00065,
+        "se_perseed_component": 0.0005,
+        "combined": {
+          "delta": 0.00387,
+          "se": 0.00082,
+          "ci_low": 0.00226,
+          "ci_high": 0.00548,
+          "p": 2.43e-06,
+          "excludes_zero": true
+        },
+        "t": 7.698,
+        "t_p": 3e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00668,
+        "sd": 0.00265,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00072,
+        "se_perseed_component": 0.00084,
+        "combined": {
+          "delta": -0.00668,
+          "se": 0.00111,
+          "ci_low": -0.00885,
+          "ci_high": -0.00451,
+          "p": 1.66e-09,
+          "excludes_zero": true
+        },
+        "t": -7.961,
+        "t_p": 2.3e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Other": {
+        "n_seeds": 10,
+        "mean": -0.00606,
+        "sd": 0.00214,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00084,
+        "se_perseed_component": 0.00068,
+        "combined": {
+          "delta": -0.00606,
+          "se": 0.00108,
+          "ci_low": -0.00818,
+          "ci_high": -0.00395,
+          "p": 1.79e-08,
+          "excludes_zero": true
+        },
+        "t": -8.978,
+        "t_p": 8.71e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->White": {
+        "n_seeds": 10,
+        "mean": 0.003,
+        "sd": 0.00266,
+        "n_negative": 2,
+        "n_positive": 8,
+        "se_shared_component": 0.00224,
+        "se_perseed_component": 0.00084,
+        "combined": {
+          "delta": 0.003,
+          "se": 0.0024,
+          "ci_low": -0.00169,
+          "ci_high": 0.0077,
+          "p": 0.21,
+          "excludes_zero": false
+        },
+        "t": 3.566,
+        "t_p": 0.00607,
+        "sign_test_p": 0.1094,
+        "shared_component": "self"
+      },
+      "Asian->Black": {
+        "n_seeds": 10,
+        "mean": 0.02657,
+        "sd": 0.00426,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00208,
+        "se_perseed_component": 0.00135,
+        "combined": {
+          "delta": 0.02657,
+          "se": 0.00248,
+          "ci_low": 0.02172,
+          "ci_high": 0.03142,
+          "p": 7.13e-27,
+          "excludes_zero": true
+        },
+        "t": 19.707,
+        "t_p": 1.03e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.0221,
+        "sd": 0.00497,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00168,
+        "se_perseed_component": 0.00157,
+        "combined": {
+          "delta": 0.0221,
+          "se": 0.0023,
+          "ci_low": 0.01758,
+          "ci_high": 0.02661,
+          "p": 8.35e-22,
+          "excludes_zero": true
+        },
+        "t": 14.063,
+        "t_p": 1.97e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00865,
+        "sd": 0.00189,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00155,
+        "se_perseed_component": 0.0006,
+        "combined": {
+          "delta": 0.00865,
+          "se": 0.00166,
+          "ci_low": 0.00539,
+          "ci_high": 0.01191,
+          "p": 2e-07,
+          "excludes_zero": true
+        },
+        "t": 14.493,
+        "t_p": 1.52e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Other": {
+        "n_seeds": 10,
+        "mean": 0.01654,
+        "sd": 0.00389,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00195,
+        "se_perseed_component": 0.00123,
+        "combined": {
+          "delta": 0.01654,
+          "se": 0.00231,
+          "ci_low": 0.01201,
+          "ci_high": 0.02106,
+          "p": 7.52e-13,
+          "excludes_zero": true
+        },
+        "t": 13.43,
+        "t_p": 2.94e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->White": {
+        "n_seeds": 10,
+        "mean": -0.02243,
+        "sd": 0.00498,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00111,
+        "se_perseed_component": 0.00158,
+        "combined": {
+          "delta": -0.02243,
+          "se": 0.00193,
+          "ci_low": -0.0262,
+          "ci_high": -0.01865,
+          "p": 2.51e-31,
+          "excludes_zero": true
+        },
+        "t": -14.238,
+        "t_p": 1.77e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Black": {
+        "n_seeds": 10,
+        "mean": 0.00267,
+        "sd": 0.00308,
+        "n_negative": 2,
+        "n_positive": 8,
+        "se_shared_component": 0.00102,
+        "se_perseed_component": 0.00097,
+        "combined": {
+          "delta": 0.00267,
+          "se": 0.00141,
+          "ci_low": -9e-05,
+          "ci_high": 0.00543,
+          "p": 0.0576,
+          "excludes_zero": false
+        },
+        "t": 2.745,
+        "t_p": 0.0227,
+        "sign_test_p": 0.1094,
+        "shared_component": "self"
+      },
+      "Other->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00685,
+        "sd": 0.00236,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00074,
+        "se_perseed_component": 0.00075,
+        "combined": {
+          "delta": 0.00685,
+          "se": 0.00105,
+          "ci_low": 0.00479,
+          "ci_high": 0.00891,
+          "p": 6.93e-11,
+          "excludes_zero": true
+        },
+        "t": 9.191,
+        "t_p": 7.19e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00363,
+        "sd": 0.00284,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00077,
+        "se_perseed_component": 0.0009,
+        "combined": {
+          "delta": -0.00363,
+          "se": 0.00118,
+          "ci_low": -0.00595,
+          "ci_high": -0.00132,
+          "p": 0.00212,
+          "excludes_zero": true
+        },
+        "t": -4.039,
+        "t_p": 0.00293,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Other": {
+        "n_seeds": 10,
+        "mean": -0.00214,
+        "sd": 0.00177,
+        "n_negative": 9,
+        "n_positive": 1,
+        "se_shared_component": 0.00094,
+        "se_perseed_component": 0.00056,
+        "combined": {
+          "delta": -0.00214,
+          "se": 0.0011,
+          "ci_low": -0.00429,
+          "ci_high": 1e-05,
+          "p": 0.0506,
+          "excludes_zero": false
+        },
+        "t": -3.831,
+        "t_p": 0.00402,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "disparity_Black": {
+        "n_seeds": 10,
+        "mean": -0.04034,
+        "sd": 0.00445,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00129,
+        "se_perseed_component": 0.00141,
+        "combined": {
+          "delta": -0.04034,
+          "se": 0.00191,
+          "ci_low": -0.04408,
+          "ci_high": -0.0366,
+          "p": 2.25e-99,
+          "excludes_zero": true
+        },
+        "t": -28.657,
+        "t_p": 3.74e-10,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.04631,
+        "sd": 0.00674,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00129,
+        "se_perseed_component": 0.00213,
+        "combined": {
+          "delta": -0.04631,
+          "se": 0.00249,
+          "ci_low": -0.05119,
+          "ci_high": -0.04143,
+          "p": 3.33e-77,
+          "excludes_zero": true
+        },
+        "t": -21.723,
+        "t_p": 4.38e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Asian": {
+        "n_seeds": 10,
+        "mean": -0.00246,
+        "sd": 0.00426,
+        "n_negative": 6,
+        "n_positive": 4,
+        "se_shared_component": 0.0027,
+        "se_perseed_component": 0.00135,
+        "combined": {
+          "delta": -0.00246,
+          "se": 0.00302,
+          "ci_low": -0.00838,
+          "ci_high": 0.00346,
+          "p": 0.415,
+          "excludes_zero": false
+        },
+        "t": -1.828,
+        "t_p": 0.101,
+        "sign_test_p": 0.7539,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Other": {
+        "n_seeds": 10,
+        "mean": -0.03754,
+        "sd": 0.00603,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00161,
+        "se_perseed_component": 0.00191,
+        "combined": {
+          "delta": -0.03754,
+          "se": 0.0025,
+          "ci_low": -0.04244,
+          "ci_high": -0.03265,
+          "p": 4.27e-51,
+          "excludes_zero": true
+        },
+        "t": -19.696,
+        "t_p": 1.04e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      }
+    },
+    "FedProx": {
+      "White->White": {
+        "n_seeds": 10,
+        "mean": -0.0016,
+        "sd": 0.00367,
+        "n_negative": 6,
+        "n_positive": 4,
+        "se_shared_component": 0.00034,
+        "se_perseed_component": 0.00116,
+        "combined": {
+          "delta": -0.0016,
+          "se": 0.00121,
+          "ci_low": -0.00397,
+          "ci_high": 0.00077,
+          "p": 0.185,
+          "excludes_zero": false
+        },
+        "t": -1.38,
+        "t_p": 0.201,
+        "sign_test_p": 0.7539,
+        "shared_component": "self"
+      },
+      "White->Black": {
+        "n_seeds": 10,
+        "mean": 0.02293,
+        "sd": 0.00385,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00048,
+        "se_perseed_component": 0.00122,
+        "combined": {
+          "delta": 0.02293,
+          "se": 0.00131,
+          "ci_low": 0.02037,
+          "ci_high": 0.0255,
+          "p": 8.57e-69,
+          "excludes_zero": true
+        },
+        "t": 18.816,
+        "t_p": 1.55e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.01973,
+        "sd": 0.00337,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00034,
+        "se_perseed_component": 0.00107,
+        "combined": {
+          "delta": 0.01973,
+          "se": 0.00112,
+          "ci_low": 0.01754,
+          "ci_high": 0.02192,
+          "p": 1.51e-69,
+          "excludes_zero": true
+        },
+        "t": 18.523,
+        "t_p": 1.78e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00468,
+        "sd": 0.00286,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00045,
+        "se_perseed_component": 0.00091,
+        "combined": {
+          "delta": 0.00468,
+          "se": 0.00101,
+          "ci_low": 0.00269,
+          "ci_high": 0.00667,
+          "p": 3.87e-06,
+          "excludes_zero": true
+        },
+        "t": 5.168,
+        "t_p": 0.000589,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "White->Other": {
+        "n_seeds": 10,
+        "mean": 0.0145,
+        "sd": 0.00212,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00049,
+        "se_perseed_component": 0.00067,
+        "combined": {
+          "delta": 0.0145,
+          "se": 0.00083,
+          "ci_low": 0.01287,
+          "ci_high": 0.01613,
+          "p": 5.64e-68,
+          "excludes_zero": true
+        },
+        "t": 21.649,
+        "t_p": 4.51e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->White": {
+        "n_seeds": 10,
+        "mean": -0.01953,
+        "sd": 0.00293,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00078,
+        "se_perseed_component": 0.00093,
+        "combined": {
+          "delta": -0.01953,
+          "se": 0.00121,
+          "ci_low": -0.0219,
+          "ci_high": -0.01716,
+          "p": 1.44e-58,
+          "excludes_zero": true
+        },
+        "t": -21.097,
+        "t_p": 5.67e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Black": {
+        "n_seeds": 10,
+        "mean": 0.00721,
+        "sd": 0.0024,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00077,
+        "se_perseed_component": 0.00076,
+        "combined": {
+          "delta": 0.00721,
+          "se": 0.00108,
+          "ci_low": 0.0051,
+          "ci_high": 0.00933,
+          "p": 2.33e-11,
+          "excludes_zero": true
+        },
+        "t": 9.501,
+        "t_p": 5.47e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00949,
+        "sd": 0.00258,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00055,
+        "se_perseed_component": 0.00082,
+        "combined": {
+          "delta": 0.00949,
+          "se": 0.00098,
+          "ci_low": 0.00756,
+          "ci_high": 0.01141,
+          "p": 4.58e-22,
+          "excludes_zero": true
+        },
+        "t": 11.64,
+        "t_p": 9.98e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00331,
+        "sd": 0.00236,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.0006,
+        "se_perseed_component": 0.00075,
+        "combined": {
+          "delta": -0.00331,
+          "se": 0.00096,
+          "ci_low": -0.00519,
+          "ci_high": -0.00143,
+          "p": 0.000565,
+          "excludes_zero": true
+        },
+        "t": -4.431,
+        "t_p": 0.00165,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Other": {
+        "n_seeds": 10,
+        "mean": 0.00073,
+        "sd": 0.00135,
+        "n_negative": 4,
+        "n_positive": 6,
+        "se_shared_component": 0.00073,
+        "se_perseed_component": 0.00043,
+        "combined": {
+          "delta": 0.00073,
+          "se": 0.00084,
+          "ci_low": -0.00092,
+          "ci_high": 0.00238,
+          "p": 0.387,
+          "excludes_zero": false
+        },
+        "t": 1.705,
+        "t_p": 0.122,
+        "sign_test_p": 0.7539,
+        "shared_component": "self"
+      },
+      "Hispanic->White": {
+        "n_seeds": 10,
+        "mean": -0.02781,
+        "sd": 0.00427,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00091,
+        "se_perseed_component": 0.00135,
+        "combined": {
+          "delta": -0.02781,
+          "se": 0.00162,
+          "ci_low": -0.03099,
+          "ci_high": -0.02462,
+          "p": 1.15e-65,
+          "excludes_zero": true
+        },
+        "t": -20.617,
+        "t_p": 6.94e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Black": {
+        "n_seeds": 10,
+        "mean": 0.0001,
+        "sd": 0.00294,
+        "n_negative": 7,
+        "n_positive": 3,
+        "se_shared_component": 0.00085,
+        "se_perseed_component": 0.00093,
+        "combined": {
+          "delta": 0.0001,
+          "se": 0.00126,
+          "ci_low": -0.00237,
+          "ci_high": 0.00257,
+          "p": 0.938,
+          "excludes_zero": false
+        },
+        "t": 0.105,
+        "t_p": 0.918,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Hispanic->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00473,
+        "sd": 0.00191,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00062,
+        "se_perseed_component": 0.0006,
+        "combined": {
+          "delta": 0.00473,
+          "se": 0.00087,
+          "ci_low": 0.00302,
+          "ci_high": 0.00643,
+          "p": 5.36e-08,
+          "excludes_zero": true
+        },
+        "t": 7.812,
+        "t_p": 2.67e-05,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Hispanic->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00666,
+        "sd": 0.00274,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.0007,
+        "se_perseed_component": 0.00087,
+        "combined": {
+          "delta": -0.00666,
+          "se": 0.00111,
+          "ci_low": -0.00885,
+          "ci_high": -0.00447,
+          "p": 2.32e-09,
+          "excludes_zero": true
+        },
+        "t": -7.687,
+        "t_p": 3.04e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Other": {
+        "n_seeds": 10,
+        "mean": -0.00637,
+        "sd": 0.00188,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00081,
+        "se_perseed_component": 0.00059,
+        "combined": {
+          "delta": -0.00637,
+          "se": 0.00101,
+          "ci_low": -0.00834,
+          "ci_high": -0.0044,
+          "p": 2.29e-10,
+          "excludes_zero": true
+        },
+        "t": -10.715,
+        "t_p": 2.01e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->White": {
+        "n_seeds": 10,
+        "mean": 0.00416,
+        "sd": 0.00275,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00216,
+        "se_perseed_component": 0.00087,
+        "combined": {
+          "delta": 0.00416,
+          "se": 0.00233,
+          "ci_low": -0.0004,
+          "ci_high": 0.00873,
+          "p": 0.074,
+          "excludes_zero": false
+        },
+        "t": 4.793,
+        "t_p": 0.000984,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Black": {
+        "n_seeds": 10,
+        "mean": 0.02825,
+        "sd": 0.00441,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00202,
+        "se_perseed_component": 0.0014,
+        "combined": {
+          "delta": 0.02825,
+          "se": 0.00245,
+          "ci_low": 0.02344,
+          "ci_high": 0.03306,
+          "p": 1.11e-30,
+          "excludes_zero": true
+        },
+        "t": 20.248,
+        "t_p": 8.14e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.02324,
+        "sd": 0.00509,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00163,
+        "se_perseed_component": 0.00161,
+        "combined": {
+          "delta": 0.02324,
+          "se": 0.00229,
+          "ci_low": 0.01875,
+          "ci_high": 0.02773,
+          "p": 3.43e-24,
+          "excludes_zero": true
+        },
+        "t": 14.45,
+        "t_p": 1.56e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00903,
+        "sd": 0.00232,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00148,
+        "se_perseed_component": 0.00074,
+        "combined": {
+          "delta": 0.00903,
+          "se": 0.00165,
+          "ci_low": 0.00579,
+          "ci_high": 0.01227,
+          "p": 4.69e-08,
+          "excludes_zero": true
+        },
+        "t": 12.289,
+        "t_p": 6.29e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Other": {
+        "n_seeds": 10,
+        "mean": 0.01714,
+        "sd": 0.00369,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00188,
+        "se_perseed_component": 0.00117,
+        "combined": {
+          "delta": 0.01714,
+          "se": 0.00221,
+          "ci_low": 0.0128,
+          "ci_high": 0.02148,
+          "p": 9.37e-15,
+          "excludes_zero": true
+        },
+        "t": 14.671,
+        "t_p": 1.37e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->White": {
+        "n_seeds": 10,
+        "mean": -0.02249,
+        "sd": 0.00465,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00106,
+        "se_perseed_component": 0.00147,
+        "combined": {
+          "delta": -0.02249,
+          "se": 0.00182,
+          "ci_low": -0.02605,
+          "ci_high": -0.01893,
+          "p": 3.1e-35,
+          "excludes_zero": true
+        },
+        "t": -15.293,
+        "t_p": 9.53e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Black": {
+        "n_seeds": 10,
+        "mean": 0.00406,
+        "sd": 0.00364,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00098,
+        "se_perseed_component": 0.00115,
+        "combined": {
+          "delta": 0.00406,
+          "se": 0.00151,
+          "ci_low": 0.00109,
+          "ci_high": 0.00702,
+          "p": 0.00733,
+          "excludes_zero": true
+        },
+        "t": 3.519,
+        "t_p": 0.00653,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Other->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00789,
+        "sd": 0.00282,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00071,
+        "se_perseed_component": 0.00089,
+        "combined": {
+          "delta": 0.00789,
+          "se": 0.00114,
+          "ci_low": 0.00566,
+          "ci_high": 0.01013,
+          "p": 4.17e-12,
+          "excludes_zero": true
+        },
+        "t": 8.851,
+        "t_p": 9.79e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00368,
+        "sd": 0.00294,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00074,
+        "se_perseed_component": 0.00093,
+        "combined": {
+          "delta": -0.00368,
+          "se": 0.00119,
+          "ci_low": -0.00601,
+          "ci_high": -0.00136,
+          "p": 0.00192,
+          "excludes_zero": true
+        },
+        "t": -3.963,
+        "t_p": 0.00329,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Other": {
+        "n_seeds": 10,
+        "mean": -0.00206,
+        "sd": 0.00176,
+        "n_negative": 9,
+        "n_positive": 1,
+        "se_shared_component": 0.00091,
+        "se_perseed_component": 0.00056,
+        "combined": {
+          "delta": -0.00206,
+          "se": 0.00106,
+          "ci_low": -0.00414,
+          "ci_high": 3e-05,
+          "p": 0.0531,
+          "excludes_zero": false
+        },
+        "t": -3.691,
+        "t_p": 0.00499,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "disparity_Black": {
+        "n_seeds": 10,
+        "mean": -0.04246,
+        "sd": 0.00387,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00126,
+        "se_perseed_component": 0.00122,
+        "combined": {
+          "delta": -0.04246,
+          "se": 0.00175,
+          "ci_low": -0.0459,
+          "ci_high": -0.03903,
+          "p": 1.08e-129,
+          "excludes_zero": true
+        },
+        "t": -34.717,
+        "t_p": 6.74e-11,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.04754,
+        "sd": 0.00614,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00125,
+        "se_perseed_component": 0.00194,
+        "combined": {
+          "delta": -0.04754,
+          "se": 0.00231,
+          "ci_low": -0.05206,
+          "ci_high": -0.04301,
+          "p": 3.29e-94,
+          "excludes_zero": true
+        },
+        "t": -24.488,
+        "t_p": 1.51e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Asian": {
+        "n_seeds": 10,
+        "mean": -0.00052,
+        "sd": 0.00453,
+        "n_negative": 5,
+        "n_positive": 5,
+        "se_shared_component": 0.00262,
+        "se_perseed_component": 0.00143,
+        "combined": {
+          "delta": -0.00052,
+          "se": 0.00298,
+          "ci_low": -0.00636,
+          "ci_high": 0.00533,
+          "p": 0.862,
+          "excludes_zero": false
+        },
+        "t": -0.361,
+        "t_p": 0.726,
+        "sign_test_p": 1.0,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Other": {
+        "n_seeds": 10,
+        "mean": -0.03699,
+        "sd": 0.00481,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00156,
+        "se_perseed_component": 0.00152,
+        "combined": {
+          "delta": -0.03699,
+          "se": 0.00218,
+          "ci_low": -0.04126,
+          "ci_high": -0.03272,
+          "p": 1.22e-64,
+          "excludes_zero": true
+        },
+        "t": -24.3,
+        "t_p": 1.62e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      }
+    },
+    "SCAFFOLD": {
+      "White->White": {
+        "n_seeds": 10,
+        "mean": 0.00102,
+        "sd": 0.00363,
+        "n_negative": 3,
+        "n_positive": 7,
+        "se_shared_component": 0.00033,
+        "se_perseed_component": 0.00115,
+        "combined": {
+          "delta": 0.00102,
+          "se": 0.00119,
+          "ci_low": -0.00131,
+          "ci_high": 0.00336,
+          "p": 0.391,
+          "excludes_zero": false
+        },
+        "t": 0.892,
+        "t_p": 0.395,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "White->Black": {
+        "n_seeds": 10,
+        "mean": 0.02039,
+        "sd": 0.00539,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00045,
+        "se_perseed_component": 0.0017,
+        "combined": {
+          "delta": 0.02039,
+          "se": 0.00176,
+          "ci_low": 0.01693,
+          "ci_high": 0.02384,
+          "p": 6.34e-31,
+          "excludes_zero": true
+        },
+        "t": 11.968,
+        "t_p": 7.88e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.01736,
+        "sd": 0.00474,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00033,
+        "se_perseed_component": 0.0015,
+        "combined": {
+          "delta": 0.01736,
+          "se": 0.00154,
+          "ci_low": 0.01435,
+          "ci_high": 0.02037,
+          "p": 1.27e-29,
+          "excludes_zero": true
+        },
+        "t": 11.578,
+        "t_p": 1.04e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00503,
+        "sd": 0.00318,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00043,
+        "se_perseed_component": 0.00101,
+        "combined": {
+          "delta": 0.00503,
+          "se": 0.0011,
+          "ci_low": 0.00289,
+          "ci_high": 0.00718,
+          "p": 4.35e-06,
+          "excludes_zero": true
+        },
+        "t": 4.999,
+        "t_p": 0.00074,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Other": {
+        "n_seeds": 10,
+        "mean": 0.01422,
+        "sd": 0.00319,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00048,
+        "se_perseed_component": 0.00101,
+        "combined": {
+          "delta": 0.01422,
+          "se": 0.00112,
+          "ci_low": 0.01203,
+          "ci_high": 0.01641,
+          "p": 3.01e-37,
+          "excludes_zero": true
+        },
+        "t": 14.098,
+        "t_p": 1.93e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->White": {
+        "n_seeds": 10,
+        "mean": -0.01455,
+        "sd": 0.00307,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00075,
+        "se_perseed_component": 0.00097,
+        "combined": {
+          "delta": -0.01455,
+          "se": 0.00123,
+          "ci_low": -0.01695,
+          "ci_high": -0.01214,
+          "p": 1.83e-32,
+          "excludes_zero": true
+        },
+        "t": -14.979,
+        "t_p": 1.14e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Black": {
+        "n_seeds": 10,
+        "mean": 0.00668,
+        "sd": 0.00314,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00074,
+        "se_perseed_component": 0.00099,
+        "combined": {
+          "delta": 0.00668,
+          "se": 0.00124,
+          "ci_low": 0.00425,
+          "ci_high": 0.00911,
+          "p": 7.03e-08,
+          "excludes_zero": true
+        },
+        "t": 6.718,
+        "t_p": 8.68e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00797,
+        "sd": 0.00351,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00055,
+        "se_perseed_component": 0.00111,
+        "combined": {
+          "delta": 0.00797,
+          "se": 0.00124,
+          "ci_low": 0.00554,
+          "ci_high": 0.0104,
+          "p": 1.29e-10,
+          "excludes_zero": true
+        },
+        "t": 7.178,
+        "t_p": 5.2e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Asian": {
+        "n_seeds": 10,
+        "mean": -0.0025,
+        "sd": 0.00266,
+        "n_negative": 9,
+        "n_positive": 1,
+        "se_shared_component": 0.00059,
+        "se_perseed_component": 0.00084,
+        "combined": {
+          "delta": -0.0025,
+          "se": 0.00103,
+          "ci_low": -0.00452,
+          "ci_high": -0.00049,
+          "p": 0.015,
+          "excludes_zero": true
+        },
+        "t": -2.973,
+        "t_p": 0.0156,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Black->Other": {
+        "n_seeds": 10,
+        "mean": 0.00204,
+        "sd": 0.00214,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00071,
+        "se_perseed_component": 0.00068,
+        "combined": {
+          "delta": 0.00204,
+          "se": 0.00098,
+          "ci_low": 0.00012,
+          "ci_high": 0.00395,
+          "p": 0.0373,
+          "excludes_zero": true
+        },
+        "t": 3.017,
+        "t_p": 0.0146,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Hispanic->White": {
+        "n_seeds": 10,
+        "mean": -0.02374,
+        "sd": 0.00604,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00088,
+        "se_perseed_component": 0.00191,
+        "combined": {
+          "delta": -0.02374,
+          "se": 0.0021,
+          "ci_low": -0.02787,
+          "ci_high": -0.01962,
+          "p": 1.47e-29,
+          "excludes_zero": true
+        },
+        "t": -12.434,
+        "t_p": 5.69e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Black": {
+        "n_seeds": 10,
+        "mean": -0.001,
+        "sd": 0.00372,
+        "n_negative": 7,
+        "n_positive": 3,
+        "se_shared_component": 0.00084,
+        "se_perseed_component": 0.00118,
+        "combined": {
+          "delta": -0.001,
+          "se": 0.00144,
+          "ci_low": -0.00383,
+          "ci_high": 0.00183,
+          "p": 0.49,
+          "excludes_zero": false
+        },
+        "t": -0.848,
+        "t_p": 0.419,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Hispanic->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00257,
+        "sd": 0.00239,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00065,
+        "se_perseed_component": 0.00076,
+        "combined": {
+          "delta": 0.00257,
+          "se": 0.001,
+          "ci_low": 0.00062,
+          "ci_high": 0.00453,
+          "p": 0.00992,
+          "excludes_zero": true
+        },
+        "t": 3.397,
+        "t_p": 0.0079,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Hispanic->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00654,
+        "sd": 0.00479,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00071,
+        "se_perseed_component": 0.00151,
+        "combined": {
+          "delta": -0.00654,
+          "se": 0.00167,
+          "ci_low": -0.00981,
+          "ci_high": -0.00326,
+          "p": 9.19e-05,
+          "excludes_zero": true
+        },
+        "t": -4.318,
+        "t_p": 0.00194,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Other": {
+        "n_seeds": 10,
+        "mean": -0.0055,
+        "sd": 0.00245,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00081,
+        "se_perseed_component": 0.00077,
+        "combined": {
+          "delta": -0.0055,
+          "se": 0.00112,
+          "ci_low": -0.00769,
+          "ci_high": -0.00331,
+          "p": 8.54e-07,
+          "excludes_zero": true
+        },
+        "t": -7.103,
+        "t_p": 5.65e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->White": {
+        "n_seeds": 10,
+        "mean": 0.00227,
+        "sd": 0.00358,
+        "n_negative": 3,
+        "n_positive": 7,
+        "se_shared_component": 0.00213,
+        "se_perseed_component": 0.00113,
+        "combined": {
+          "delta": 0.00227,
+          "se": 0.00241,
+          "ci_low": -0.00245,
+          "ci_high": 0.00699,
+          "p": 0.347,
+          "excludes_zero": false
+        },
+        "t": 2.004,
+        "t_p": 0.076,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Asian->Black": {
+        "n_seeds": 10,
+        "mean": 0.02183,
+        "sd": 0.00705,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00198,
+        "se_perseed_component": 0.00223,
+        "combined": {
+          "delta": 0.02183,
+          "se": 0.00298,
+          "ci_low": 0.01599,
+          "ci_high": 0.02768,
+          "p": 2.38e-13,
+          "excludes_zero": true
+        },
+        "t": 9.795,
+        "t_p": 4.25e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.01646,
+        "sd": 0.00925,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00172,
+        "se_perseed_component": 0.00292,
+        "combined": {
+          "delta": 0.01646,
+          "se": 0.0034,
+          "ci_low": 0.00981,
+          "ci_high": 0.02312,
+          "p": 1.25e-06,
+          "excludes_zero": true
+        },
+        "t": 5.628,
+        "t_p": 0.000323,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Asian": {
+        "n_seeds": 10,
+        "mean": 0.00501,
+        "sd": 0.00283,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00161,
+        "se_perseed_component": 0.00089,
+        "combined": {
+          "delta": 0.00501,
+          "se": 0.00184,
+          "ci_low": 0.00141,
+          "ci_high": 0.00861,
+          "p": 0.00637,
+          "excludes_zero": true
+        },
+        "t": 5.606,
+        "t_p": 0.000332,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Other": {
+        "n_seeds": 10,
+        "mean": 0.01311,
+        "sd": 0.00638,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00189,
+        "se_perseed_component": 0.00202,
+        "combined": {
+          "delta": 0.01311,
+          "se": 0.00276,
+          "ci_low": 0.0077,
+          "ci_high": 0.01853,
+          "p": 2.09e-06,
+          "excludes_zero": true
+        },
+        "t": 6.5,
+        "t_p": 0.000111,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->White": {
+        "n_seeds": 10,
+        "mean": -0.01861,
+        "sd": 0.00511,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00104,
+        "se_perseed_component": 0.00162,
+        "combined": {
+          "delta": -0.01861,
+          "se": 0.00192,
+          "ci_low": -0.02238,
+          "ci_high": -0.01484,
+          "p": 4.02e-22,
+          "excludes_zero": true
+        },
+        "t": -11.511,
+        "t_p": 1.1e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Black": {
+        "n_seeds": 10,
+        "mean": 0.00283,
+        "sd": 0.00478,
+        "n_negative": 3,
+        "n_positive": 7,
+        "se_shared_component": 0.00097,
+        "se_perseed_component": 0.00151,
+        "combined": {
+          "delta": 0.00283,
+          "se": 0.0018,
+          "ci_low": -0.00069,
+          "ci_high": 0.00635,
+          "p": 0.115,
+          "excludes_zero": false
+        },
+        "t": 1.875,
+        "t_p": 0.0936,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "Other->Hispanic": {
+        "n_seeds": 10,
+        "mean": 0.00572,
+        "sd": 0.00376,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00074,
+        "se_perseed_component": 0.00119,
+        "combined": {
+          "delta": 0.00572,
+          "se": 0.0014,
+          "ci_low": 0.00297,
+          "ci_high": 0.00846,
+          "p": 4.48e-05,
+          "excludes_zero": true
+        },
+        "t": 4.803,
+        "t_p": 0.00097,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Other->Asian": {
+        "n_seeds": 10,
+        "mean": -0.00364,
+        "sd": 0.0041,
+        "n_negative": 9,
+        "n_positive": 1,
+        "se_shared_component": 0.00075,
+        "se_perseed_component": 0.0013,
+        "combined": {
+          "delta": -0.00364,
+          "se": 0.0015,
+          "ci_low": -0.00658,
+          "ci_high": -0.00071,
+          "p": 0.0151,
+          "excludes_zero": true
+        },
+        "t": -2.811,
+        "t_p": 0.0203,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Other->Other": {
+        "n_seeds": 10,
+        "mean": -0.00141,
+        "sd": 0.00205,
+        "n_negative": 7,
+        "n_positive": 3,
+        "se_shared_component": 0.00091,
+        "se_perseed_component": 0.00065,
+        "combined": {
+          "delta": -0.00141,
+          "se": 0.00111,
+          "ci_low": -0.0036,
+          "ci_high": 0.00077,
+          "p": 0.204,
+          "excludes_zero": false
+        },
+        "t": -2.185,
+        "t_p": 0.0567,
+        "sign_test_p": 0.3438,
+        "shared_component": "self"
+      },
+      "disparity_Black": {
+        "n_seeds": 10,
+        "mean": -0.03493,
+        "sd": 0.00628,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.0012,
+        "se_perseed_component": 0.00199,
+        "combined": {
+          "delta": -0.03493,
+          "se": 0.00232,
+          "ci_low": -0.03948,
+          "ci_high": -0.03038,
+          "p": 3.64e-51,
+          "excludes_zero": true
+        },
+        "t": -17.592,
+        "t_p": 2.81e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.04111,
+        "sd": 0.00965,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00121,
+        "se_perseed_component": 0.00305,
+        "combined": {
+          "delta": -0.04111,
+          "se": 0.00329,
+          "ci_low": -0.04754,
+          "ci_high": -0.03467,
+          "p": 6.39e-36,
+          "excludes_zero": true
+        },
+        "t": -13.464,
+        "t_p": 2.87e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Asian": {
+        "n_seeds": 10,
+        "mean": -0.00277,
+        "sd": 0.00556,
+        "n_negative": 6,
+        "n_positive": 4,
+        "se_shared_component": 0.00256,
+        "se_perseed_component": 0.00176,
+        "combined": {
+          "delta": -0.00277,
+          "se": 0.0031,
+          "ci_low": -0.00885,
+          "ci_high": 0.00332,
+          "p": 0.373,
+          "excludes_zero": false
+        },
+        "t": -1.573,
+        "t_p": 0.15,
+        "sign_test_p": 0.7539,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Other": {
+        "n_seeds": 10,
+        "mean": -0.03283,
+        "sd": 0.00639,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00152,
+        "se_perseed_component": 0.00202,
+        "combined": {
+          "delta": -0.03283,
+          "se": 0.00253,
+          "ci_low": -0.03778,
+          "ci_high": -0.02787,
+          "p": 1.53e-38,
+          "excludes_zero": true
+        },
+        "t": -16.239,
+        "t_p": 5.65e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      }
+    },
+    "XGBoost": {
+      "White->White": {
+        "n_seeds": 10,
+        "mean": -0.02437,
+        "sd": 0.00345,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00055,
+        "se_perseed_component": 0.00109,
+        "combined": {
+          "delta": -0.02437,
+          "se": 0.00122,
+          "ci_low": -0.02677,
+          "ci_high": -0.02198,
+          "p": 1.24e-88,
+          "excludes_zero": true
+        },
+        "t": -22.344,
+        "t_p": 3.41e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Black": {
+        "n_seeds": 10,
+        "mean": -0.01067,
+        "sd": 0.0042,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00079,
+        "se_perseed_component": 0.00133,
+        "combined": {
+          "delta": -0.01067,
+          "se": 0.00155,
+          "ci_low": -0.0137,
+          "ci_high": -0.00763,
+          "p": 5.65e-12,
+          "excludes_zero": true
+        },
+        "t": -8.026,
+        "t_p": 2.16e-05,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.01288,
+        "sd": 0.0038,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00058,
+        "se_perseed_component": 0.0012,
+        "combined": {
+          "delta": -0.01288,
+          "se": 0.00133,
+          "ci_low": -0.01549,
+          "ci_high": -0.01028,
+          "p": 3.63e-22,
+          "excludes_zero": true
+        },
+        "t": -10.736,
+        "t_p": 1.98e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Asian": {
+        "n_seeds": 10,
+        "mean": -0.02305,
+        "sd": 0.00363,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00082,
+        "se_perseed_component": 0.00115,
+        "combined": {
+          "delta": -0.02305,
+          "se": 0.00141,
+          "ci_low": -0.02582,
+          "ci_high": -0.02029,
+          "p": 6.37e-60,
+          "excludes_zero": true
+        },
+        "t": -20.081,
+        "t_p": 8.76e-09,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "White->Other": {
+        "n_seeds": 10,
+        "mean": -0.01222,
+        "sd": 0.00398,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00084,
+        "se_perseed_component": 0.00126,
+        "combined": {
+          "delta": -0.01222,
+          "se": 0.00151,
+          "ci_low": -0.01519,
+          "ci_high": -0.00925,
+          "p": 7.07e-16,
+          "excludes_zero": true
+        },
+        "t": -9.709,
+        "t_p": 4.57e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->White": {
+        "n_seeds": 10,
+        "mean": -0.02655,
+        "sd": 0.00233,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00127,
+        "se_perseed_component": 0.00074,
+        "combined": {
+          "delta": -0.02655,
+          "se": 0.00146,
+          "ci_low": -0.02942,
+          "ci_high": -0.02368,
+          "p": 1.49e-73,
+          "excludes_zero": true
+        },
+        "t": -36.081,
+        "t_p": 4.78e-11,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Black": {
+        "n_seeds": 10,
+        "mean": -0.0127,
+        "sd": 0.00285,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.0013,
+        "se_perseed_component": 0.0009,
+        "combined": {
+          "delta": -0.0127,
+          "se": 0.00159,
+          "ci_low": -0.01581,
+          "ci_high": -0.00959,
+          "p": 1.13e-15,
+          "excludes_zero": true
+        },
+        "t": -14.099,
+        "t_p": 1.93e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.01505,
+        "sd": 0.00315,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00096,
+        "se_perseed_component": 0.001,
+        "combined": {
+          "delta": -0.01505,
+          "se": 0.00138,
+          "ci_low": -0.01776,
+          "ci_high": -0.01233,
+          "p": 1.6e-27,
+          "excludes_zero": true
+        },
+        "t": -15.114,
+        "t_p": 1.06e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Asian": {
+        "n_seeds": 10,
+        "mean": -0.02522,
+        "sd": 0.00289,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00107,
+        "se_perseed_component": 0.00091,
+        "combined": {
+          "delta": -0.02522,
+          "se": 0.00141,
+          "ci_low": -0.02797,
+          "ci_high": -0.02246,
+          "p": 6.25e-72,
+          "excludes_zero": true
+        },
+        "t": -27.582,
+        "t_p": 5.25e-10,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Black->Other": {
+        "n_seeds": 10,
+        "mean": -0.01436,
+        "sd": 0.0028,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00124,
+        "se_perseed_component": 0.00089,
+        "combined": {
+          "delta": -0.01436,
+          "se": 0.00153,
+          "ci_low": -0.01735,
+          "ci_high": -0.01137,
+          "p": 5.02e-21,
+          "excludes_zero": true
+        },
+        "t": -16.213,
+        "t_p": 5.73e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->White": {
+        "n_seeds": 10,
+        "mean": -0.02274,
+        "sd": 0.00237,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00149,
+        "se_perseed_component": 0.00075,
+        "combined": {
+          "delta": -0.02274,
+          "se": 0.00167,
+          "ci_low": -0.02601,
+          "ci_high": -0.01947,
+          "p": 2.63e-42,
+          "excludes_zero": true
+        },
+        "t": -30.355,
+        "t_p": 2.24e-10,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Black": {
+        "n_seeds": 10,
+        "mean": -0.0094,
+        "sd": 0.00271,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00149,
+        "se_perseed_component": 0.00086,
+        "combined": {
+          "delta": -0.0094,
+          "se": 0.00172,
+          "ci_low": -0.01276,
+          "ci_high": -0.00603,
+          "p": 4.37e-08,
+          "excludes_zero": true
+        },
+        "t": -10.964,
+        "t_p": 1.65e-06,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.01476,
+        "sd": 0.00249,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00116,
+        "se_perseed_component": 0.00079,
+        "combined": {
+          "delta": -0.01476,
+          "se": 0.0014,
+          "ci_low": -0.01751,
+          "ci_high": -0.01201,
+          "p": 7.63e-26,
+          "excludes_zero": true
+        },
+        "t": -18.743,
+        "t_p": 1.61e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Asian": {
+        "n_seeds": 10,
+        "mean": -0.0266,
+        "sd": 0.00303,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00126,
+        "se_perseed_component": 0.00096,
+        "combined": {
+          "delta": -0.0266,
+          "se": 0.00158,
+          "ci_low": -0.0297,
+          "ci_high": -0.02349,
+          "p": 2.77e-63,
+          "excludes_zero": true
+        },
+        "t": -27.779,
+        "t_p": 4.93e-10,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Hispanic->Other": {
+        "n_seeds": 10,
+        "mean": -0.01246,
+        "sd": 0.00219,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00142,
+        "se_perseed_component": 0.00069,
+        "combined": {
+          "delta": -0.01246,
+          "se": 0.00158,
+          "ci_low": -0.01556,
+          "ci_high": -0.00935,
+          "p": 3.71e-15,
+          "excludes_zero": true
+        },
+        "t": -17.985,
+        "t_p": 2.31e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->White": {
+        "n_seeds": 10,
+        "mean": -0.00051,
+        "sd": 0.00393,
+        "n_negative": 6,
+        "n_positive": 4,
+        "se_shared_component": 0.00339,
+        "se_perseed_component": 0.00124,
+        "combined": {
+          "delta": -0.00051,
+          "se": 0.00361,
+          "ci_low": -0.00759,
+          "ci_high": 0.00657,
+          "p": 0.888,
+          "excludes_zero": false
+        },
+        "t": -0.409,
+        "t_p": 0.692,
+        "sign_test_p": 0.7539,
+        "shared_component": "self"
+      },
+      "Asian->Black": {
+        "n_seeds": 10,
+        "mean": 0.00931,
+        "sd": 0.00521,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00315,
+        "se_perseed_component": 0.00165,
+        "combined": {
+          "delta": 0.00931,
+          "se": 0.00356,
+          "ci_low": 0.00233,
+          "ci_high": 0.01628,
+          "p": 0.0089,
+          "excludes_zero": true
+        },
+        "t": 5.653,
+        "t_p": 0.000312,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.00517,
+        "sd": 0.00565,
+        "n_negative": 8,
+        "n_positive": 2,
+        "se_shared_component": 0.00264,
+        "se_perseed_component": 0.00179,
+        "combined": {
+          "delta": -0.00517,
+          "se": 0.00319,
+          "ci_low": -0.01141,
+          "ci_high": 0.00108,
+          "p": 0.105,
+          "excludes_zero": false
+        },
+        "t": -2.893,
+        "t_p": 0.0178,
+        "sign_test_p": 0.1094,
+        "shared_component": "self"
+      },
+      "Asian->Asian": {
+        "n_seeds": 10,
+        "mean": -0.02112,
+        "sd": 0.00403,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00259,
+        "se_perseed_component": 0.00127,
+        "combined": {
+          "delta": -0.02112,
+          "se": 0.00289,
+          "ci_low": -0.02678,
+          "ci_high": -0.01546,
+          "p": 2.69e-13,
+          "excludes_zero": true
+        },
+        "t": -16.566,
+        "t_p": 4.75e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Asian->Other": {
+        "n_seeds": 10,
+        "mean": 0.00246,
+        "sd": 0.0046,
+        "n_negative": 1,
+        "n_positive": 9,
+        "se_shared_component": 0.00299,
+        "se_perseed_component": 0.00145,
+        "combined": {
+          "delta": 0.00246,
+          "se": 0.00332,
+          "ci_low": -0.00405,
+          "ci_high": 0.00897,
+          "p": 0.459,
+          "excludes_zero": false
+        },
+        "t": 1.692,
+        "t_p": 0.125,
+        "sign_test_p": 0.02148,
+        "shared_component": "self"
+      },
+      "Other->White": {
+        "n_seeds": 10,
+        "mean": -0.02846,
+        "sd": 0.00169,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.0018,
+        "se_perseed_component": 0.00053,
+        "combined": {
+          "delta": -0.02846,
+          "se": 0.00188,
+          "ci_low": -0.03214,
+          "ci_high": -0.02478,
+          "p": 6.96e-52,
+          "excludes_zero": true
+        },
+        "t": -53.333,
+        "t_p": 1.44e-12,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Black": {
+        "n_seeds": 10,
+        "mean": -0.01517,
+        "sd": 0.00253,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00174,
+        "se_perseed_component": 0.0008,
+        "combined": {
+          "delta": -0.01517,
+          "se": 0.00192,
+          "ci_low": -0.01893,
+          "ci_high": -0.01141,
+          "p": 2.57e-15,
+          "excludes_zero": true
+        },
+        "t": -18.959,
+        "t_p": 1.45e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.01732,
+        "sd": 0.00286,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00133,
+        "se_perseed_component": 0.00091,
+        "combined": {
+          "delta": -0.01732,
+          "se": 0.00161,
+          "ci_low": -0.02047,
+          "ci_high": -0.01417,
+          "p": 3.88e-27,
+          "excludes_zero": true
+        },
+        "t": -19.126,
+        "t_p": 1.35e-08,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Asian": {
+        "n_seeds": 10,
+        "mean": -0.02715,
+        "sd": 0.00281,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00136,
+        "se_perseed_component": 0.00089,
+        "combined": {
+          "delta": -0.02715,
+          "se": 0.00163,
+          "ci_low": -0.03034,
+          "ci_high": -0.02397,
+          "p": 1.28e-62,
+          "excludes_zero": true
+        },
+        "t": -30.506,
+        "t_p": 2.14e-10,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "Other->Other": {
+        "n_seeds": 10,
+        "mean": -0.01662,
+        "sd": 0.00203,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00162,
+        "se_perseed_component": 0.00064,
+        "combined": {
+          "delta": -0.01662,
+          "se": 0.00175,
+          "ci_low": -0.02004,
+          "ci_high": -0.0132,
+          "p": 1.8e-21,
+          "excludes_zero": true
+        },
+        "t": -25.896,
+        "t_p": 9.21e-10,
+        "sign_test_p": 0.001953,
+        "shared_component": "self"
+      },
+      "disparity_Black": {
+        "n_seeds": 10,
+        "mean": -0.01589,
+        "sd": 0.00368,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00206,
+        "se_perseed_component": 0.00116,
+        "combined": {
+          "delta": -0.01589,
+          "se": 0.00237,
+          "ci_low": -0.02052,
+          "ci_high": -0.01125,
+          "p": 1.87e-11,
+          "excludes_zero": true
+        },
+        "t": -13.655,
+        "t_p": 2.54e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Hispanic": {
+        "n_seeds": 10,
+        "mean": -0.00986,
+        "sd": 0.00517,
+        "n_negative": 9,
+        "n_positive": 1,
+        "se_shared_component": 0.00207,
+        "se_perseed_component": 0.00163,
+        "combined": {
+          "delta": -0.00986,
+          "se": 0.00263,
+          "ci_low": -0.01502,
+          "ci_high": -0.00469,
+          "p": 0.000182,
+          "excludes_zero": true
+        },
+        "t": -6.034,
+        "t_p": 0.000194,
+        "sign_test_p": 0.02148,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Asian": {
+        "n_seeds": 10,
+        "mean": 0.02255,
+        "sd": 0.00586,
+        "n_negative": 0,
+        "n_positive": 10,
+        "se_shared_component": 0.00422,
+        "se_perseed_component": 0.00185,
+        "combined": {
+          "delta": 0.02255,
+          "se": 0.0046,
+          "ci_low": 0.01352,
+          "ci_high": 0.03157,
+          "p": 9.75e-07,
+          "excludes_zero": true
+        },
+        "t": 12.173,
+        "t_p": 6.81e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      },
+      "disparity_Other": {
+        "n_seeds": 10,
+        "mean": -0.01624,
+        "sd": 0.00403,
+        "n_negative": 10,
+        "n_positive": 0,
+        "se_shared_component": 0.00264,
+        "se_perseed_component": 0.00127,
+        "combined": {
+          "delta": -0.01624,
+          "se": 0.00293,
+          "ci_low": -0.02199,
+          "ci_high": -0.01049,
+          "p": 3.09e-08,
+          "excludes_zero": true
+        },
+        "t": -12.741,
+        "t_p": 4.61e-07,
+        "sign_test_p": 0.001953,
+        "shared_component": "conservative_sum"
+      }
+    }
+  }
+}

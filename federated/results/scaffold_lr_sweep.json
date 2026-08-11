@@ -1,0 +1,52 @@
+{
+  "seed": 42,
+  "grid": [
+    0.001,
+    0.01,
+    0.03,
+    0.1,
+    0.3,
+    1.0,
+    3.0
+  ],
+  "selected_on": "held-out node validation AUC (BRFSS untouched)",
+  "n_val": 2382,
+  "runs": [
+    {
+      "eta_local": 0.001,
+      "internal_val_auc": 0.74131,
+      "final_pool_auc": 0.72799
+    },
+    {
+      "eta_local": 0.01,
+      "internal_val_auc": 0.78054,
+      "final_pool_auc": 0.77235
+    },
+    {
+      "eta_local": 0.03,
+      "internal_val_auc": 0.78715,
+      "final_pool_auc": 0.77861
+    },
+    {
+      "eta_local": 0.1,
+      "internal_val_auc": 0.78794,
+      "final_pool_auc": 0.78213
+    },
+    {
+      "eta_local": 0.3,
+      "internal_val_auc": 0.7913,
+      "final_pool_auc": 0.78593
+    },
+    {
+      "eta_local": 1.0,
+      "internal_val_auc": 0.79704,
+      "final_pool_auc": 0.79081
+    },
+    {
+      "eta_local": 3.0,
+      "internal_val_auc": 0.5,
+      "final_pool_auc": 0.5
+    }
+  ],
+  "selected_eta_local": 1.0
+}

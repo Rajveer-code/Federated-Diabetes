@@ -568,6 +568,107 @@ stratum is 36.1% (34.7% item-missing plus 1.4% declined); both passages now use
 Also corrected: the manuscript claimed 4,993 model parameters. Actual count is
 3,425 at 8 features and **3,361** at 7.
 
+---
+
+## 2026-08-11 (later) — F7: the fairness result REVERSES at the decision threshold
+
+Hostile-review pass on the F6 write-up found two things. The first weakens F6; the
+second replaces it and is a much better paper.
+
+### F6a — the AUC "gap closure" does not reduce overall disparity
+Federation closes the **White−Black** AUC gap (0.0075 → 0.0005) but leaves the
+**max−min spread across strata unchanged** (0.0502 → 0.0500; per-seed the change
+is negative in only 5/10 — noise). Hispanic (0.7964) and Asian (0.7941) are
+already the best-served strata and gain too, so the distribution shifts up rather
+than compressing. Any reviewer computing max−min finds this in two minutes and
+concludes the fairness metric was cherry-picked. Now stated explicitly in the
+manuscript rather than defended.
+
+### F7 — [HEADLINE] AUC says fairness improves; detection at fixed capacity says the opposite
+
+`44_clinical_translation.py` → `results/clinical_translation.json`. One global
+threshold flagging a fixed fraction of the cohort (10/20/30%), per-stratum
+sensitivity, 10 seeds.
+
+At 20% screening capacity, FedAvg vs the composition-matched control:
+
+| stratum | Δ AUC | Δ sensitivity | Δ cases per 100k |
+|---|---|---|---|
+| White | −0.0004 | −0.0033 | −40 |
+| **Black** | **+0.0066** | **−0.0278** | **−542** |
+| Hispanic | +0.0039 | −0.0355 | −467 |
+| Asian | +0.0087 | −0.0040 | −39 |
+| Other | −0.0021 | −0.0413 | −644 |
+
+**White−Black sensitivity gap widens 0.0093 → 0.0339** while the AUC gap closes
+0.0075 → 0.0005. Every federated strategy, **10/10 seeds**: FedProx +0.0298,
+SCAFFOLD +0.0248, FedNova +0.0245, EqualW +0.0205. Direction unchanged at 10% and
+30% capacity.
+
+**Federation-specific.** Centralised-full (more data, not federated) shows
++0.0029, 7/10 seeds — within noise. So it is not "any better model".
+
+### Mechanism — a global rank shift, not miscalibration
+AUC is computed *within* a stratum; the threshold is applied *across* strata.
+Federation improves the ordering of Black respondents among themselves while
+lowering their scores relative to everyone else. Seed 42: mean predicted risk for
+Black falls 0.4772 → 0.4583, so the share of that stratum clearing the 20%
+threshold drops 24.0% → 22.5%, while the White share *rises* 21.0% → 21.4%.
+Screening capacity moves from the minority stratum to the majority one even as
+within-group ranking improves.
+
+**Recalibration cannot fix this.** Platt, isotonic and temperature scaling are all
+monotone in the score, and a monotone map leaves the global ordering — hence the
+flagged set at any fixed capacity — bit-identical. Post-hoc calibration fixes
+probability estimates, not who gets screened.
+
+### F8 — the racial-separation mechanism is FALSIFIED; label shift is the driver
+
+`43_partition_sweep.py` repartitioned the same 11,906 cohort four ways and reran
+FedAvg on each (`results/partition_sweep.json`). The hypothesis was that
+cross-node **racial** separation drives the subgroup effect. It does not.
+
+| partition | race TVD | label shift | Δ W−B gap |
+|---|---|---|---|
+| bmi | 0.0652 | **0.1912** | **−0.0161** |
+| age_urb | 0.2913 | 0.1469 | −0.0077 |
+| by_race | **0.6667** | 0.0249 | **−0.0024** |
+| random | 0.0104 | 0.0156 | +0.0001 |
+
+r(race TVD, Δgap) = **+0.29** — wrong sign. The explicitly race-partitioned arm,
+with maximum racial separation, produces almost no effect.
+
+r(**label shift**, Δgap) = **−0.95**; r(covariate shift, Δgap) = −0.80
+(`46_partition_mechanism.py` → `results/partition_mechanism.json`).
+
+Node outcome prevalences explain it: BMI tertiles span 0.097–0.288 → largest
+effect; random spans 0.183–0.199 → none. Partitioning **by race barely moves
+prevalence at all** (0.176–0.201), which is consistent — race is not a model
+input, so splitting on it need not separate the nodes in the space the model
+sees. That was the flaw in the original hypothesis.
+
+Revised mechanism: the reversal follows from averaging models fitted under
+**differing label priors**. Any deployment whose sites differ in prevalence is
+exposed, which is most of them — a broader claim than the racial one, and one
+that does not depend on this particular cohort's racial structure.
+
+**Caveat, stated in the manuscript:** four partitions only, so these correlations
+locate the driver but do not estimate it.
+
+This is why the test was worth running. The mechanism I proposed and had already
+written into the manuscript was wrong; the sweep caught it before submission.
+
+### Manuscript rewritten again (third time, and justified)
+New title: *"Higher AUC, Fewer Cases Found: Subgroup Fairness Metrics Reverse at
+the Decision Threshold in Federated Diabetes Screening"*. New headline figure
+(`45_figure_auc_vs_tpr.py`) showing the two panels side by side — minority strata
+blue/up on AUC, orange/down on sensitivity. Compiles clean: 4 pages, 0 overfull,
+0 undefined citations, **37/37 numeric checks pass**.
+
+This is a stronger paper than F6. It is a concrete warning with a mechanism, it
+contains its own strongest counter-analysis, and the non-replications make the
+self-correction credible rather than damaging.
+
 ### Still open
 - `[repository anonymised for review]` in Data and Code Availability is still a
   placeholder. Needs an anonymous mirror — **not** the public

@@ -1,0 +1,57 @@
+{
+  "n_partitions": 4,
+  "caveat": "Four partitions only; correlations are descriptive, not inferential.",
+  "hypothesis_tested": "cross-node RACIAL separation drives the subgroup effect",
+  "verdict": "rejected (r=+0.29, wrong sign); node label shift tracks the effect instead (r=-0.95)",
+  "partitions": {
+    "age_urb": {
+      "race_tvd": 0.2913,
+      "label_shift": 0.1469,
+      "covariate_shift": 0.1529,
+      "node_prevalence": [
+        0.1384,
+        0.2854,
+        0.1668
+      ],
+      "delta_white_black_gap": -0.00768
+    },
+    "random": {
+      "race_tvd": 0.0104,
+      "label_shift": 0.0156,
+      "covariate_shift": 0.0086,
+      "node_prevalence": [
+        0.1875,
+        0.199,
+        0.1835
+      ],
+      "delta_white_black_gap": 6e-05
+    },
+    "bmi": {
+      "race_tvd": 0.0652,
+      "label_shift": 0.1912,
+      "covariate_shift": 0.1491,
+      "node_prevalence": [
+        0.0969,
+        0.1868,
+        0.2881
+      ],
+      "delta_white_black_gap": -0.01611
+    },
+    "by_race": {
+      "race_tvd": 0.6667,
+      "label_shift": 0.0249,
+      "covariate_shift": 0.093,
+      "node_prevalence": [
+        0.1759,
+        0.195,
+        0.2009
+      ],
+      "delta_white_black_gap": -0.00238
+    }
+  },
+  "correlations": {
+    "race_tvd": 0.293,
+    "label_shift": -0.951,
+    "covariate_shift": -0.804
+  }
+}

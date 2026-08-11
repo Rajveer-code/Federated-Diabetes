@@ -445,8 +445,104 @@ must be withdrawn along with F1. **Do not write anything until the 10-seed run
 lands.** Also note external AUCs rose for every model once the corrupted column
 was removed (Centralised-matched 0.7524 → 0.7569).
 
+---
+
+## 2026-08-11 (final) — corrected 10-seed results. Three claims die, one strong new one appears.
+
+Pipeline: race-free 7-feature models, BN buffers aggregated, SCAFFOLD at matched
+local budget, seeds 42–51, scored on 1,282,897 BRFSS rows.
+`results/multiseed_all_models.json`, `results/delong_deltas.json`.
+
+### Absolute values (10-seed means)
+
+| model | ext AUC | gen gap | age gap | White | Black | White−Black |
+|---|---|---|---|---|---|---|
+| XGBoost | 0.7330 | 0.0356 | 0.0636 | 0.7293 | 0.7335 | −0.0041 |
+| Centralised-full | 0.7576 | 0.0286 | 0.0650 | 0.7574 | 0.7511 | +0.0063 |
+| Centralised-matched | 0.7543 | 0.0344 | 0.0672 | 0.7537 | 0.7462 | +0.0075 |
+| FedAvg | 0.7530 | 0.0298 | 0.0654 | 0.7533 | 0.7528 | **+0.0005** |
+| FedProx | 0.7522 | 0.0298 | 0.0717 | 0.7521 | 0.7534 | −0.0013 |
+| FedNova | 0.7528 | 0.0300 | 0.0657 | 0.7532 | 0.7528 | +0.0004 |
+| FedAvg-EqualW | 0.7531 | 0.0301 | 0.0656 | 0.7534 | 0.7522 | +0.0012 |
+| SCAFFOLD | 0.7541 | 0.0293 | 0.0602 | 0.7547 | 0.7529 | +0.0019 |
+
+### Verdicts on every prior finding
+
+**F1 — "FedAvg attains the best external AUC": FALSE, but the corrected reading
+is favourable.** FedAvg −0.0013 [−0.0030, +0.0005] p=0.16 vs the matched control;
+SCAFFOLD −0.0001 p=0.91. Federation is statistically indistinguishable from a
+composition-matched centralised model. Centralised-full is genuinely best
+(+0.0033, p=3.8e−6). The manuscript's 0.757 is dead; "federation costs nothing
+in discrimination" is supportable and is the honest replacement.
+
+**F2 — the generalisation-gap advantage: DEAD.** No model differs significantly
+from the matched control (FedAvg −0.0046, p=0.25; sign 6−/4+). The earlier
+p=7e−4 for FedProx was an artefact of the BN bug and the miscoded race column.
+The manuscript's "40% smaller gap" claim must be removed entirely.
+
+**F3 — the age-fairness advantage: DEAD.** FedAvg −0.0019, p=0.34. FedProx is
+significantly **worse** (+0.0045, p=0.023). Only SCAFFOLD narrows it (−0.0070,
+p=1.2e−5). The "21.7% reduction in the elderly–young gap" is not reproducible.
+
+**F4 — client weighting is not the mechanism: CONFIRMED.** FedAvg-EqualW tracks
+FedAvg within 0.001 on every metric, at 10 seeds.
+
+**F5 — "SCAFFOLD: an instructive negative result": FALSE.** Given a matched local
+budget and a properly selected eta_local, SCAFFOLD ties the centralised control
+on external AUC (−0.0001, p=0.91), has the smallest federated generalisation gap
+(0.0293), and the best age-fairness gap of any model (0.0602). The manuscript's
+paragraph and table row are artefacts of D11 and must be deleted.
+
+### F6 — NEW, and the strongest result in the study: federation levels UP by race
+
+Δ vs Centralised-matched, all five federated strategies, 10/10 seeds:
+
+| stratum | n | FedAvg Δ | p |
+|---|---|---|---|
+| White | 617,782 | −0.0004 | 0.73 (ns) |
+| **Black** | 62,770 | **+0.0066** | **6.6e−11** |
+| **Hispanic** | 74,496 | **+0.0039** | **1.7e−6** |
+| **Asian** | 21,467 | **+0.0087** | **1.7e−7** |
+| Other | 42,779 | −0.0021 | 0.059 (ns) |
+
+White−Black gap: **0.0075 → 0.0005**, Δ = −0.0070 [−0.0092, −0.0048],
+p=3.5e−10. Every federated strategy: FedProx −0.0088 (p=2.7e−15), FedNova
+−0.0071, EqualW −0.0064, SCAFFOLD −0.0057. All 10/10 seeds.
+
+This is levelling **up**, not down: minority-stratum AUC rises while the majority
+stratum is statistically unchanged. Contrast XGBoost, which also narrows the gap
+(−0.0117) but by degrading everyone (White −0.0244, Black −0.0127) — the
+levelling-down pattern the age analysis previously showed.
+
+Two controls rule out the obvious confounds:
+- **Not data quantity.** Centralised-full improves every stratum roughly
+  uniformly (White +0.0037, Black +0.0050) so its race gap does not close
+  (−0.0012, p=0.11). More data helps everyone; federation helps the minority.
+- **Not client weighting.** EqualW ≈ FedAvg (−0.0064 vs −0.0070), and FedAvg's
+  effective per-sample weight is already 1/N, identical to pooled training.
+
+Remaining mechanism: the local-epoch + periodic-averaging dynamics. Each node
+trains to its own local optimum before averaging, so the majority stratum does
+not dominate the shared representation the way it does under pooled SGD.
+
+Note this was a pre-planned analysis (T2.1, from D4 — race was a model input but
+never audited), specified before any of these results were seen. It is not a
+post-hoc substitute for the age finding, and the age finding's death is reported
+above rather than buried.
+
+### Revised paper story (supported by the corrected numbers)
+> Auditing five federated strategies against a composition-matched centralised
+> control on 1.28M external respondents, federation costs nothing in overall
+> discrimination and closes the White–Black AUC gap from 0.0075 to 0.0005 by
+> raising minority-subgroup performance, not by degrading the majority. The
+> effect holds for every strategy across 10 seeds and is attributable to neither
+> training-set composition nor client weighting. Three claims from the prior
+> version of this work — a federated advantage in overall AUC, in the
+> generalisation gap, and in the elderly–young gap — do not survive correction of
+> four pipeline defects, and are reported as non-replications.
+
 ### Next
-- [ ] 10-seed race-free run + rerun 35 — SUPERSEDES every Δ reported so far
+- [x] 10-seed race-free run + rerun 35
 - [ ] Re-examine F1/F2/F3/F5 against the corrected numbers
 - [ ] Rewrite manuscript: family framing + FedProx headline (user decision), only
       if the corrected results still support it

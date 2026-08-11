@@ -56,7 +56,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config_paths import RESULTS_DIR
 
 PRED_DIR = os.path.join(RESULTS_DIR, 'preds_multiseed')
-FL_MODELS = {'FedAvg', 'FedProx', 'FedNova', 'FedAvg-EqualW'}
+# Every federated strategy shares one held-out node-validation set per seed
+# (33_multiseed_all_models.py caches it once as _y_internal_fl_seed<n>), so all
+# of them must be listed here — including SCAFFOLD, which runs in the same loop.
+FL_MODELS = {'FedAvg', 'FedProx', 'FedNova', 'FedAvg-EqualW', 'SCAFFOLD'}
 Z95 = 1.959963984540054
 
 # Age bands must match fairness_gap() in 33_multiseed_all_models.py.

@@ -17,21 +17,15 @@ from config_paths import (
     FL_NUM_ROUNDS, SEED,
 )
 from nn_model   import DiabetesNet, train_one_epoch, get_device
-from data_utils import DiabetesDataset, compute_class_weight
+from data_utils import DiabetesDataset, compute_class_weight, load_brfss_clean
 
 DEVICE = get_device()
-BRFSS_PATH = r"C:\diabetes_prediction_project\data\03_processed\brfss_final.csv"
-BRFSS_COL_MAP = {
-    'Age'                 : 'RIDAGEYR',
-    'Gender'              : 'RIAGENDR',
-    'Race_Ethnicity'      : 'RIDRETH3',
-    'BMI'                 : 'BMXBMI',
-    'Smoking_Status'      : 'SMOKING',
-    'Physical_Activity'   : 'PHYS_ACTIVITY',
-    'History_Heart_Attack': 'HEART_ATTACK',
-    'History_Stroke'      : 'STROKE',
-    'Diabetes_Outcome'    : 'DIABETES',
-}
+
+# Reproducibility: this control feeds the paper's headline matched comparison.
+torch.manual_seed(SEED)
+np.random.seed(SEED)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed_all(SEED)
 
 scaler = joblib.load(GLOBAL_SCALER_PATH)
 
@@ -64,20 +58,12 @@ auc_int = float(roc_auc_score(y_te, probs_int))
 print(f"Internal AUC: {auc_int:.4f}")
 
 # ── External BRFSS ────────────────────────────────────────────────────────────
-print(f"Loading BRFSS from {BRFSS_PATH} ...")
-df_b = pd.read_csv(BRFSS_PATH)
-print(f"BRFSS raw n={len(df_b):,}")
-
-# Rename columns to NHANES names
-df_b = df_b.rename(columns=BRFSS_COL_MAP)
-# Keep only needed cols
-needed = FEATURE_COLS + [TARGET_COL]
-available = [c for c in needed if c in df_b.columns]
-df_b = df_b[available].dropna()
-print(f"BRFSS after QC: n={len(df_b):,}")
-
-X_brfss = scaler.transform(df_b[FEATURE_COLS].values.astype(np.float32))
-y_brfss = df_b[TARGET_COL].values.astype(np.float32)
+# Canonical loader — identical population and preprocessing to every other model
+# (07_external_validation.py). Previously this script rolled its own load and
+# diverged: complete-case deletion (720,161 rows vs 1,282,897) and no BRFSS->NHANES
+# sex remap. Both made this control non-comparable to the models it anchors.
+df_b, X_brfss_raw, y_brfss = load_brfss_clean()
+X_brfss = scaler.transform(X_brfss_raw)
 
 BS = 65536
 all_probs = []

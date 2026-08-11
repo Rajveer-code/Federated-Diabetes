@@ -2,8 +2,8 @@
   "description": "Centralised DiabetesNet on federated subset (n=11906)",
   "n_train": 9524,
   "n_test_internal": 2382,
-  "n_brfss": 720161,
-  "auc_internal": 0.7951,
-  "auc_external": 0.7712,
-  "generalisation_gap": 0.0239
+  "n_brfss": 1282897,
+  "auc_internal": 0.799,
+  "auc_external": 0.7514,
+  "generalisation_gap": 0.0476
 }

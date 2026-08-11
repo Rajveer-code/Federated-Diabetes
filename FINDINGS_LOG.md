@@ -697,3 +697,105 @@ self-correction credible rather than damaging.
 - [ ] T2.6 — AUPRC (young prevalence 2.4% vs elderly 20.2%; AUC alone is thin)
 - [ ] T2.5 — NOT POSSIBLE on BRFSS: the processed CSV has no survey-weight/PSU/strata
       columns. NHANES-only, or drop the item.
+
+---
+
+## F9 — the reversal is a decomposition, not two unrelated metrics  (47_xauc.py)
+
+Kallus & Zhou (NeurIPS 2019) define the cross-group ranking quantity this
+project had only been describing in prose:
+
+    xAUC_{g->h} = P( score(positive from g) > score(negative from h) )
+
+with xAUC_{g->g} the ordinary within-group AUC. Pooled AUC is an exact convex
+combination of the whole matrix,
+
+    AUC_pooled = sum_g sum_h  pi+_g pi-_h  xAUC_{g->h}
+
+over the five reported strata. Verified numerically: max |pooled - reconstructed|
+= 2.22e-16 across 80 model-seed pairs (8 models x 10 seeds).
+
+So the "two fairness readings" are the DIAGONAL and the OFF-DIAGONAL of one
+object. FedAvg minus composition-matched centralised, mean over 10 seeds:
+
+  pos \ neg      White     Black  Hispanic     Asian     Other
+  White        -0.0004   +0.0221   +0.0191   +0.0055   +0.0151
+  Black        -0.0181   +0.0066   +0.0088   -0.0028   +0.0014
+  Hispanic     -0.0268   -0.0005   +0.0039   -0.0066   -0.0060
+  Asian        +0.0032   +0.0266   +0.0221   +0.0087   +0.0166
+  Other        -0.0221   +0.0028   +0.0069   -0.0036   -0.0021
+
+Diagonal up for every minority stratum (what the audit reports); first COLUMN
+down (what one global threshold acts on); first ROW up symmetrically. Screening
+capacity moves toward White because White cases rise above minority non-cases
+and minority cases fall below White non-cases.
+
+Significance of the first column, all 10/10 seeds, all five FL strategies:
+  FedAvg    Black->White  -0.0181  p=1.7e-41
+            Hispanic      -0.0268  p=9.4e-54
+            Other         -0.0221  p=8.7e-31
+            Asian         +0.0032  p=0.19      NOT significant
+  Centralised-full: none of the four significant, signs mixed (3-/7+, 6-/4+,
+  7-/3+, 3-/7+). Federation-specific relative to the same architecture.
+
+FALSIFIABLE PREDICTION THAT HELD: Asian is the only stratum whose cases are not
+pushed down (+0.0032, n.s., 1-/9+), and it is the only stratum whose sensitivity
+barely moves (-0.0040 vs Black -0.0278, Hispanic -0.0355, Other -0.0413).
+
+HONEST CAVEAT: XGBoost also shows the first-column drop (Black -0.0266,
+p=1.5e-73). It is a different learner, not the matched control, so it does not
+undercut the federation claim -- but the paper must NOT say "only federated
+models do this". The defensible claim is: relative to its own composition-
+matched control, federated training induces it; giving the same architecture
+more data does not.
+
+## F10 — the operating point is not a choice  (48_capacity_curve.py)
+
+Swept screening capacity 1%..50% in 50 steps. The White-Black SENSITIVITY gap
+widens at 50/50 capacities, 10/10 seeds, for FedAvg, FedAvg-EqualW and FedNova;
+48/50 for FedProx, 44/50 for SCAFFOLD. Centralised-full: 11/50. XGBoost: 10/50.
+
+20% is conservative, not the peak. Peak is near 33% (delta +0.0450).
+  1%  +0.0075   17% +0.0200   33% +0.0450
+  5%  +0.0145   21% +0.0270   41% +0.0420
+  13% +0.0156   25% +0.0347   49% +0.0306
+
+Full allocation picture at 20%, FedAvg vs matched control:
+
+  stratum   prev   d selection   d sensitivity   d PPV
+  White    0.124      +0.0052        -0.0033   -0.0088
+  Black    0.195      -0.0188        -0.0278   +0.0075
+  Hispanic 0.132      -0.0153        -0.0355   +0.0101
+  Asian    0.096      -0.0007        -0.0040   -0.0027
+  Other    0.156      -0.0175        -0.0413   -0.0001
+
+Selection rate is the cleanest statement of the harm: the Black flagged share
+FALLS 0.2451 -> 0.2263 while the White share RISES 0.2088 -> 0.2140. Slots move
+from the minority stratum to the majority one.
+
+Black PPV RISES (+0.0075). Report this, do not bury it: it corroborates the
+mechanism (better within-group ranking gives a smaller, higher-yield flagged
+set) and it is the honest trade-off. Fewer people found, each flag worth more.
+
+Reconciliation check: capacity_curve.json at rate 0.20 reproduces
+clinical_translation.json exactly on all five strata, from an independent
+implementation (searchsorted on pre-sorted arrays vs np.quantile + boolean mask).
+
+## Reviewer attack table (keep current)
+
+| attack | answer | artefact |
+|---|---|---|
+| AUC difference is seed noise | 10 seeds, shared-component variance model | delong_deltas.json |
+| 20% capacity cherry-picked | 50/50 capacities 1-50%, 10/10 seeds | capacity_curve.json |
+| Sensitivity chosen because it looked bad | selection rate + PPV reported too | capacity_curve.json |
+| It is just more data | Centralised-full does not reproduce it | delong_deltas.json |
+| It is client weighting | FedAvg-EqualW reproduces it | delong_deltas.json |
+| It is racial partitioning between sites | tested and FALSIFIED (r=+0.29) | partition_sweep.json |
+| It is calibration | monotone maps fix the flagged set | (analytic) |
+| White-Black gap cherry-picked | max-min spread limitation stated; xAUC is theory-driven | xauc.json |
+| Small external cohort | BRFSS n=1,282,897 | delong_deltas.json |
+| Implementation artefact | 4 defects found, documented, corrected | D1-D12 above |
+| xAUC/top-k divergence already known | true; novelty is that FL INDUCES it vs matched control | Kallus & Zhou 2019 |
+| Only a correlation drives the mechanism | controlled sweep, P(X|Y) fixed by construction | prevalence_sweep.json |
+| Simulated sites | stated; driver identified is measurable in real deployments | -- |
+| Multiple comparisons | Bonferroni over 5 strata x 2 metrics; headline p < 1e-30 | -- |

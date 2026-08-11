@@ -18,6 +18,30 @@ What if hospitals could collaborate on a shared diabetes model without sharing a
 
 ---
 
+> [!WARNING]
+> **Results below are under active revision (August 2026). Do not cite the headline numbers.**
+>
+> A correctness review of the pipeline found four defects that affect the
+> reported results. Each is documented, with evidence, in
+> [`FINDINGS_LOG.md`](FINDINGS_LOG.md):
+>
+> | | Defect | Effect |
+> |---|---|---|
+> | D1 | The sample-matched control used complete-case BRFSS deletion (720,161 of 1,282,897 rows) and skipped the sex remap | Its generalisation gap is 0.049, not the 0.024 quoted below |
+> | D10 | BatchNorm `running_mean`/`running_var` are buffers, not parameters, so they were never aggregated — federated models were scored with untrained BN statistics | Worth ~0.005 external AUC to FedAvg, the same magnitude as the federated-vs-centralised difference being tested |
+> | D11 | SCAFFOLD's local budget was counted in batches, not epochs (~1/18th the local training of every other strategy), with an AdamW learning rate applied to SGD | Its reported underperformance is a training-budget artefact, not a property of the algorithm |
+> | D12 | NHANES `RIDRETH3` and BRFSS `_RACE` are different coding schemes, so BRFSS "NH White" (48% of the external set) was read as "Mexican American"; 34.7% of rows had race mode-imputed | Contaminates every external number; race has since been dropped as a model input and retained only as an evaluation stratum |
+>
+> Nothing was seeded before this review, so every previously reported federated
+> number came from a single uncontrolled draw. All models are now run across 10
+> seeds with paired DeLong confidence intervals. Specifically superseded:
+> the 0.757 external AUC, the "40% narrower generalisation gap" claim, the 0.024
+> matched-control gap, and all SCAFFOLD rows.
+>
+> Corrected results will replace this section once the multi-seed run completes.
+
+---
+
 ## Overview
 
 Centralised machine learning for healthcare requires pooling raw patient records across institutions — a practice that conflicts with HIPAA, GDPR, and the practical realities of hospital data governance. This project implements and evaluates a **privacy-preserving federated learning (FL)** framework for type-2 diabetes risk prediction that keeps patient data on-site while enabling multi-institutional collaboration.

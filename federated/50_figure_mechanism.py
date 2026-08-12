@@ -104,7 +104,10 @@ def main():
         se = np.asarray([summary[k][sd_key] for k in ks]) / np.sqrt(n)
         return d / d.max(), v, 1.96 * se
 
-    xc, yc, ec = series(cs['summary'], 'cov_separation',
+    # The size-control arm (the real partition) is not a point on the covariate
+    # dose scale, so it is excluded from the curve; it is reported in the text.
+    cs_dose = {k: v for k, v in cs['summary'].items() if not v.get('is_size_control')}
+    xc, yc, ec = series(cs_dose, 'cov_separation',
                         'delta_xauc_vs_alpha0', 'xauc_black_white_sd')
     base = ps['summary'][sorted(ps['summary'],
                                 key=lambda k: ps['summary'][k]['spread_achieved'])[0]]

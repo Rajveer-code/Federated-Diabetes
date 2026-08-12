@@ -91,9 +91,48 @@ def covariate_partition(cov, y, alpha, per_node, rng, n_nodes=3):
     return idx
 
 
+def real_partition(node_id, y, per_node, rng, n_nodes=3):
+    """
+    The actual age/urbanicity partition, subsampled to `per_node` rows per node
+    while preserving each node's OWN prevalence.
+
+    This is the size control. The covariate sweep runs on a cohort roughly half
+    the size of the main experiment, because forcing equal prevalence costs rows.
+    If the detection reversal also disappears for the real partition at this size,
+    the sweep's null on detection is a power artefact rather than evidence that
+    covariate heterogeneity fails to propagate to the threshold. Run as its own
+    arm so the comparison is against the same alpha=0 reference at the same size.
+    """
+    idx = []
+    for k in range(n_nodes):
+        rows = np.flatnonzero(node_id == k)
+        p_k = float(y[rows].mean())
+        n_p = int(round(per_node * p_k))
+        pos = rng.permutation(rows[y[rows] == 1])
+        neg = rng.permutation(rows[y[rows] == 0])
+        if len(pos) < n_p or len(neg) < per_node - n_p:
+            return None
+        idx.append(rng.permutation(np.concatenate([pos[:n_p], neg[:per_node - n_p]])))
+    return idx
+
+
 def cov_separation(Xz, idx_list):
     """Mean |node mean - pooled mean| over standardised features: the achieved dose."""
     return float(np.mean([np.abs(Xz[i].mean(0)).mean() for i in idx_list]))
+
+
+def allocation(p, y_b, masks, rate):
+    """Selection rate, sensitivity and PPV per stratum at one global threshold."""
+    thr = np.quantile(p, 1 - rate)
+    flag = p >= thr
+    out = {}
+    for k, m in masks.items():
+        yk, fk = y_b[m], flag[m]
+        n_flag = int(fk.sum())
+        out[k] = {'sel': float(fk.mean()),
+                  'sens': float(fk[yk == 1].mean()),
+                  'ppv': float(yk[fk].mean()) if n_flag else float('nan')}
+    return out
 
 
 def main():
@@ -103,7 +142,17 @@ def main():
                     default=[0.0, 0.25, 0.5, 0.75, 1.0])
     ap.add_argument('--per-node', type=int, default=0,
                     help='rows per node; 0 = pick the largest feasible value')
+    ap.add_argument('--no-size-control', action='store_true',
+                    help='skip the real-partition arm (alpha=-1), the size control')
+    ap.add_argument('--covariate', default='BMXBMI',
+                    help='feature whose rank defines the separation direction. '
+                         'The real partition is defined on age and urbanicity, so '
+                         'RIDAGEYR tests whether the direction of separation matters '
+                         'and not only its magnitude.')
+    ap.add_argument('--out', default='covariate_sweep.json')
     args = ap.parse_args()
+    REAL = -1.0
+    arms = list(args.alphas) + ([] if args.no_size_control else [REAL])
 
     scaler = joblib.load(SCALER_PATH)
     frames = []
@@ -112,7 +161,8 @@ def main():
     df = pd.concat(frames, ignore_index=True)
     X = scaler.transform(df[FEATURE_COLS].values.astype(np.float32))
     y = df[TARGET_COL].values.astype(np.float32)
-    cov = df['BMXBMI'].values.astype(float)
+    cov = df[args.covariate].values.astype(float)
+    node_id = df['_node'].values
     Xraw = df[FEATURE_COLS].values.astype(float)
     Xz = (Xraw - Xraw.mean(0)) / Xraw.std(0)
     print(f"Federated cohort: n={len(df):,}  pooled prevalence={y.mean():.4f}")
@@ -127,8 +177,13 @@ def main():
         lo, best = 200, 200
         while lo <= hi:
             mid = (lo + hi) // 2
-            ok = all(covariate_partition(cov, y, a, mid, np.random.default_rng(SEED))
-                     is not None for a in args.alphas)
+            # Every arm must fit, including the real-partition size control --
+            # its smallest node (elderly-rural, n=3,406) binds before the dose
+            # arms do at large sizes.
+            ok = all((real_partition(node_id, y, mid, np.random.default_rng(SEED))
+                      if a == REAL
+                      else covariate_partition(cov, y, a, mid, np.random.default_rng(SEED)))
+                     is not None for a in arms)
             if ok:
                 best, lo = mid, mid + 1
             else:
@@ -146,12 +201,13 @@ def main():
                              np.zeros(int((masks['White'] & (y_b == 0)).sum()))])
 
     records = []
-    for alpha in args.alphas:
+    for alpha in arms:
         for i in range(args.seeds):
             seed = SEED + i
             seed_everything(seed)
             rng = np.random.default_rng(seed)
-            idx_list = covariate_partition(cov, y, alpha, per, rng)
+            idx_list = (real_partition(node_id, y, per, rng) if alpha == REAL
+                        else covariate_partition(cov, y, alpha, per, rng))
             if idx_list is None:
                 print(f"  alpha {alpha} seed {seed}: INFEASIBLE, skipped")
                 continue
@@ -178,11 +234,13 @@ def main():
             p = score(m, X_b)
 
             aucs = {k: float(roc_auc_score(y_b[mk], p[mk])) for k, mk in masks.items()}
-            thr = np.quantile(p, 1 - FLAG_RATE)
-            flag = p >= thr
-            sens = {k: float(flag[mk & (y_b == 1)].mean()) for k, mk in masks.items()}
+            alloc = allocation(p, y_b, masks, FLAG_RATE)
+            sens = {k: v['sens'] for k, v in alloc.items()}
 
             rec = {'alpha': alpha, 'seed': seed,
+                   **{f'sel_{k}': round(v['sel'], 5) for k, v in alloc.items()},
+                   **{f'ppv_{k}': round(v['ppv'], 5) for k, v in alloc.items()},
+                   'sel_gap': round(alloc['White']['sel'] - alloc['Black']['sel'], 5),
                    'cov_separation': round(sep, 4),
                    'node_prevalence': [round(v, 4) for v in prevs],
                    'auc_external': round(float(roc_auc_score(y_b, p)), 5),
@@ -203,27 +261,36 @@ def main():
     b_sens = float(np.mean([r['sens_gap'] for r in base]))
     b_xauc = float(np.mean([r['xauc_black_white'] for r in base]))
 
+    b_sel = float(np.mean([r['sel_gap'] for r in base]))
+
     summary = {}
-    for alpha in args.alphas:
+    for alpha in arms:
         rs = [r for r in records if r['alpha'] == alpha]
         if not rs:
             continue
         def m(key):
             v = [r[key] for r in rs]
             return float(np.mean(v)), (float(np.std(v, ddof=1)) if len(v) > 1 else 0.0)
-        g, g_sd = m('race_gap'); s, s_sd = m('sens_gap'); x, x_sd = m('xauc_black_white')
-        summary[f'{alpha:.2f}'] = {
+        g, g_sd = m('race_gap'); s, s_sd = m('sens_gap')
+        x, x_sd = m('xauc_black_white'); q, q_sd = m('sel_gap')
+        key = 'real' if alpha == REAL else f'{alpha:.2f}'
+        summary[key] = {
             'alpha': alpha, 'n_seeds': len(rs),
+            'is_size_control': alpha == REAL,
             'cov_separation': round(float(np.mean([r['cov_separation'] for r in rs])), 4),
             'race_gap_mean': round(g, 5), 'race_gap_sd': round(g_sd, 5),
             'sens_gap_mean': round(s, 5), 'sens_gap_sd': round(s_sd, 5),
+            'sel_gap_mean': round(q, 5), 'sel_gap_sd': round(q_sd, 5),
             'xauc_black_white_mean': round(x, 5), 'xauc_black_white_sd': round(x_sd, 5),
             'delta_race_gap_vs_alpha0': round(g - b_gap, 5),
             'delta_sens_gap_vs_alpha0': round(s - b_sens, 5),
+            'delta_sel_gap_vs_alpha0': round(q - b_sel, 5),
             'delta_xauc_vs_alpha0': round(x - b_xauc, 5),
         }
 
-    ks = list(summary)
+    # Correlations are over the DOSE arms only; the real-partition arm is a
+    # separate control and is not a point on the covariate-separation scale.
+    ks = [k for k in summary if not summary[k]['is_size_control']]
     xs = [summary[k]['cov_separation'] for k in ks]
     def corr(field):
         return round(float(np.corrcoef(xs, [summary[k][field] for k in ks])[0, 1]), 4)
@@ -233,20 +300,33 @@ def main():
 
     print(f"\n{'='*96}\n  Covariate separation at FIXED prevalence "
           f"(reference = alpha 0 arm)\n{'='*96}")
-    print(f"  {'alpha':>6}{'cov sep':>10}{'W-B AUC':>10}{'d vs a0':>10}"
-          f"{'W-B sens':>10}{'d vs a0':>10}{'xAUC B>W':>11}{'d vs a0':>10}")
-    for k in ks:
+    print(f"  {'arm':>6}{'cov sep':>10}{'W-B AUC':>10}{'d vs a0':>10}"
+          f"{'W-B sens':>10}{'d vs a0':>10}{'W-B sel':>10}{'d vs a0':>10}"
+          f"{'xAUC B>W':>11}{'d vs a0':>10}")
+    for k in list(summary):
         s = summary[k]
-        print(f"  {s['alpha']:>6.2f}{s['cov_separation']:>10.4f}"
+        lab = 'real' if s['is_size_control'] else f"{s['alpha']:.2f}"
+        print(f"  {lab:>6}{s['cov_separation']:>10.4f}"
               f"{s['race_gap_mean']:>+10.4f}{s['delta_race_gap_vs_alpha0']:>+10.4f}"
               f"{s['sens_gap_mean']:>+10.4f}{s['delta_sens_gap_vs_alpha0']:>+10.4f}"
+              f"{s['sel_gap_mean']:>+10.4f}{s['delta_sel_gap_vs_alpha0']:>+10.4f}"
               f"{s['xauc_black_white_mean']:>11.4f}{s['delta_xauc_vs_alpha0']:>+10.4f}")
-    print(f"\n  Pearson r vs achieved covariate separation ({len(ks)} arms):")
+    print(f"\n  Pearson r vs achieved covariate separation ({len(ks)} dose arms):")
     print(f"    delta W-B sensitivity gap  r = {r_sens:+.3f}  (positive = gap widens)")
     print(f"    delta W-B AUC gap          r = {r_auc:+.3f}  (negative = AUC gap closes)")
     print(f"    delta xAUC(Black+>White-)  r = {r_x:+.3f}  (negative = cases pushed down)")
+    if 'real' in summary:
+        rr = summary['real']
+        print(f"\n  SIZE CONTROL — the real age/urbanicity partition at this same "
+              f"cohort size ({3 * per:,}):")
+        print(f"    d W-B sensitivity gap vs alpha0 = "
+              f"{rr['delta_sens_gap_vs_alpha0']:+.4f}   "
+              f"(full cohort, main experiment: +0.0246)")
+        print("    If this is also near zero, the dose sweep's null on DETECTION is a")
+        print("    power artefact of the reduced cohort, not a failure of the mechanism")
+        print("    to propagate to the threshold.")
 
-    out = os.path.join(RESULTS_DIR, 'covariate_sweep.json')
+    out = os.path.join(RESULTS_DIR, args.out)
     with open(out, 'w') as f:
         json.dump({
             'design': 'Nodes are tertiles of (1-alpha)*Uniform + alpha*rank(BMI), '
@@ -259,6 +339,7 @@ def main():
             'controls_held_fixed': ['P(Y) per node', 'cohort size', 'n_clients=3',
                                     'equal node sizes', 'model', 'optimiser',
                                     'rounds', 'local epochs', 'external test set'],
+            'covariate': args.covariate,
             'flag_rate': FLAG_RATE, 'n_seeds': args.seeds, 'per_node': per,
             'cohort_n': int(3 * per),
             'pooled_prevalence': round(float(y.mean()), 5),

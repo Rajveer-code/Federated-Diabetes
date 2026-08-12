@@ -99,9 +99,42 @@ Gen. gap = internal − external AUC. Age gap = young − elderly AUC. Differenc
 | Other | 42,779 | −0.0021 | 0.06 (n.s.) |
 
 White−Black gap Δ = **−0.0070** [−0.0092, −0.0048], *p* = 3.5×10⁻¹⁰, in 10/10 seeds, and for all five strategies (FedProx −0.0088, FedNova −0.0071, equal-weight −0.0064, SCAFFOLD −0.0057).
-This is **levelling up** — minority strata rise, the majority stratum does not fall. XGBoost also narrows the same gap (−0.0117) but by degrading *both* strata (White −0.0244, Black −0.0127), which is levelling down and is what a gap metric rewards if read without decomposition.
+By AUC this is **levelling up** — minority strata rise, the majority stratum does not fall. XGBoost also narrows the same gap (−0.0117) but by degrading *both* strata (White −0.0244, Black −0.0127), which is levelling down and is what a gap metric rewards if read without decomposition.
 
-![Per-stratum AUC change](federated/results/figures/fig_race_strata.png)
+> **Read the next section before quoting the numbers above.** At a fixed screening
+> capacity the same models detect *fewer* minority cases, and the White−Black
+> sensitivity gap **widens** 0.0093 → 0.0339. The AUC gain and the detection loss
+> are both real; they are the diagonal and the off-diagonal of one decomposition.
+
+### The reversal — AUC says one thing, the decision threshold says the opposite
+
+Applying one global threshold that flags 20% of the cohort (`44_clinical_translation.py`, `48_capacity_curve.py`):
+
+| Stratum | Δ AUC | Δ xAUC<sub>g→White</sub> | Δ selected | Δ sensitivity | Δ PPV | cases/100k |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| White | −0.0004 | — | **+0.0052** | −0.0033 | −0.0088 | −40 |
+| **Black** | **+0.0066** | **−0.0181** | **−0.0188** | **−0.0278** | +0.0075 | **−542** |
+| Hispanic | +0.0039 | −0.0268 | −0.0153 | −0.0355 | +0.0101 | −467 |
+| Asian | +0.0087 | +0.0032 | −0.0007 | −0.0040 | −0.0027 | −39 |
+| Other | −0.0021 | −0.0221 | −0.0175 | −0.0413 | −0.0001 | −644 |
+
+The Black share flagged **falls** while the White share **rises**: screening capacity moves from the minority stratum to the majority one. This holds at **all 50 capacities from 1% to 50%**, 10/10 seeds, for every federated strategy. Centralised-full reaches 10/10 seeds at only 11 of 50. It cannot be fixed by recalibration — every monotone map leaves the flagged set bit-identical.
+
+![AUC gain vs detection loss](federated/results/figures/fig_auc_vs_tpr.png)
+
+**Mechanism** (`47_xauc.py`). Pooled AUC decomposes exactly into within- and cross-group ranking terms, AUC = Σ<sub>g</sub>Σ<sub>h</sub> π⁺<sub>g</sub>π⁻<sub>h</sub>·xAUC<sub>g→h</sub>, verified to 2.2×10⁻¹⁶ over 80 model-seed pairs. A subgroup audit reads only the diagonal; the threshold acts on the whole matrix. Federation raises the diagonal for minority strata and lowers the White column. Asian is the one stratum whose cases are *not* pushed down — and the one whose sensitivity barely moves.
+
+**Driver** (`49_prevalence_sweep.py`, `52_covariate_sweep.py`). Three hypotheses tested by dose-response; two rejected:
+
+| Hypothesis | Test | Verdict |
+|:---|:---|:---|
+| Racial separation between sites | 4 partitions, race TVD spans 64× | ❌ *r* = +0.29, wrong sign |
+| Site label shift (prevalence) | 6 arms, *P(X\|Y)* identical by construction | ❌ flat; xAUC never leaves 0.746–0.749 |
+| Site covariate separation | 5 arms, *P(Y)* identical by construction | ✅ *r* = −0.96 (AUC gap), −0.91 (xAUC), monotone |
+
+The observational *r* = −0.95 for label shift was confounded — BMI tertiles separate nodes on covariates and prevalence at once. The controlled sweep shows prevalence was the passenger. The covariate sweep reproduces the *ranking* divergence but not the fixed-capacity detection loss at half cohort size; that link rests on the main experiment.
+
+![Mechanism](federated/results/figures/fig_mechanism.png)
 
 ### Calibration — FedAvg on BRFSS held-out split (n=1,026,318), 10 seeds
 
@@ -151,7 +184,8 @@ Recovery emerges sharply at ε=10 (AUC=0.769). Collapse at ε≤5 reflects the h
 |:---|:---|:---|
 | **RQ1 · Performance** | Does federated training generalise better than centralised? | ❌ **No.** No federated strategy differs significantly from the composition-matched control on external AUC (FedAvg Δ=−0.0013, *p*=0.16) or on the generalisation gap (Δ=−0.0046, *p*=0.25). Federation is discrimination-neutral here, neither better nor worse. |
 | **RQ2 · Age fairness** | Does federated training reduce the elderly–young AUC disparity? | ❌ **Does not replicate.** FedAvg Δ=−0.0019, *p*=0.34; FedProx is significantly *worse* (+0.0045, *p*=0.023). Only SCAFFOLD narrows it (−0.0070, *p*=1.2×10⁻⁵). |
-| **RQ3 · Race fairness** | Does federated training reduce racial AUC disparity? | ✅ **Yes, by levelling up.** White−Black gap 0.0075 → 0.0005 (Δ=−0.0070, *p*=3.5×10⁻¹⁰), driven by gains for Black/Hispanic/Asian strata with the White stratum unchanged. Holds for all five strategies in 10/10 seeds. |
+| **RQ3 · Race fairness** | Does federated training reduce racial AUC disparity? | ⚠️ **By AUC yes; at the decision threshold it reverses.** The White−Black *AUC* gap closes 0.0075 → 0.0005 (Δ=−0.0070, *p*=3.5×10⁻¹⁰) in 10/10 seeds for all five strategies. At a fixed 20% screening capacity the same models flag *fewer* Black respondents (0.245 → 0.226) and the White−Black *sensitivity* gap **widens** 0.0093 → 0.0339, at every capacity from 1% to 50%. Subgroup AUC alone would certify this model as fair. |
+| **RQ6 · Mechanism** | What creates the divergence? | ✅ **Cross-site covariate separation**, dose-response *r*=−0.96 with *P(Y)* held identical across nodes. Racial separation (*r*=+0.29, wrong sign) and site label shift (flat under control) were both tested and rejected. |
 | **RQ4 · Calibration** | Are federated risk scores clinically trustworthy? | ✅ Only after recalibration. ECE 0.324 → 0.0010 with isotonic regression, at no cost to discrimination; temperature scaling does not help. |
 | **RQ5 · Privacy** | What is the accuracy cost of differential privacy? | ⚠️ **Not re-run.** The DP sweep predates this correction and its numbers are not reported here. The structural conclusion — that Opacus RDP accounting returns no formal guarantee at these per-node sizes — does not depend on the corrected pipeline. |
 

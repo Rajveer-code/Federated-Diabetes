@@ -99,9 +99,27 @@ def main():
         chk(f'sel {who} ref', f"{cc['by_model'][REF][g]['sel'][j]:.3f}", 'capacity_curve')
         chk(f'sel {who} fed', f"{cc['by_model'][MODEL][g]['sel'][j]:.3f}", 'capacity_curve')
 
-    # ── controlled prevalence sweep ───────────────────────────────────────────
-    chk('sweep r (sens gap)', f"{ps['pearson_r_spread_vs_delta_sens_gap']:+.2f}"
-        .replace('+', '$+$').replace('-', '$-$'), 'prevalence_sweep')
+    # ── mechanism: the label-shift null and the covariate dose-response ───────
+    # The paper quotes the prevalence sweep as a NULL, via the range xAUC stays
+    # inside, so the check is on that range rather than on a point estimate.
+    xs = [v['xauc_black_white_mean'] for v in ps['summary'].values()]
+    chk('label-shift null, xAUC range',
+        f"${min(xs):.3f}$--${max(xs):.3f}$", 'prevalence_sweep')
+
+    cs = load('covariate_sweep.json')
+    chk('covariate r (AUC gap)',
+        f"$r{{=}}{cs['pearson_r_sep_vs_delta_auc_gap']:.2f}$".replace('-', '-'),
+        'covariate_sweep')
+    chk('covariate r (xAUC)',
+        f"$r{{=}}{cs['pearson_r_sep_vs_delta_xauc']:.2f}$", 'covariate_sweep')
+    chk('covariate r (sens gap, null)',
+        f"$r{{=}}{cs['pearson_r_sep_vs_delta_sens_gap']:.2f}$", 'covariate_sweep')
+    full = max(cs['summary'].values(), key=lambda v: v['cov_separation'])
+    chk('covariate dxAUC at full separation',
+        f"${abs(full['delta_xauc_vs_alpha0']):.3f}$", 'covariate_sweep')
+
+    mc = load('mechanism_chain.json')
+    chk('ranking-detection correspondence', f"$r{{=}}{mc['r']:.2f}$", 'mechanism_chain')
 
     # ── run ───────────────────────────────────────────────────────────────────
     ok, bad = 0, []

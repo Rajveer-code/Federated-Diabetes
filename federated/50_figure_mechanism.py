@@ -88,20 +88,41 @@ def main():
 
     fig, axes = plt.subplots(1, 2, figsize=(7.1, 2.7))
 
-    # ── (a) dose-response ────────────────────────────────────────────────────
+    # ── (a) two manipulations, one effect ────────────────────────────────────
+    # Both sweeps dose a different kind of node heterogeneity and are read out on
+    # the same quantity, so they belong on one axis. Their doses are in different
+    # units (a prevalence difference vs a mean standardised-feature distance), so
+    # each is normalised to its own maximum; only the shapes are being compared.
     ax = axes[0]
-    keys = sorted(ps['summary'], key=lambda k: ps['summary'][k]['spread_achieved'])
-    x = [ps['summary'][k]['spread_achieved'] for k in keys]
-    y = [ps['summary'][k]['delta_sens_gap_vs_matched'] for k in keys]
-    sd = [ps['summary'][k]['sens_gap_sd'] for k in keys]
-    n = ps['summary'][keys[0]]['n_seeds']
-    se = [s / np.sqrt(n) for s in sd]
-    ax.errorbar(x, y, yerr=[1.96 * s for s in se], fmt='o-', color=LOSS,
-                ms=4.5, lw=1.5, capsize=2.5, mec='white', mew=0.7, zorder=3)
+    cs = load('covariate_sweep.json')
+
+    def series(summary, dose_key, val_key, sd_key):
+        ks = sorted(summary, key=lambda k: summary[k][dose_key])
+        d = np.asarray([summary[k][dose_key] for k in ks], dtype=float)
+        v = np.asarray([summary[k][val_key] for k in ks], dtype=float)
+        n = summary[ks[0]]['n_seeds']
+        se = np.asarray([summary[k][sd_key] for k in ks]) / np.sqrt(n)
+        return d / d.max(), v, 1.96 * se
+
+    xc, yc, ec = series(cs['summary'], 'cov_separation',
+                        'delta_xauc_vs_alpha0', 'xauc_black_white_sd')
+    base = ps['summary'][sorted(ps['summary'],
+                                key=lambda k: ps['summary'][k]['spread_achieved'])[0]]
+    xp, yp, ep = series(ps['summary'], 'spread_achieved',
+                        'xauc_black_white_mean', 'xauc_black_white_sd')
+    yp = yp - base['xauc_black_white_mean']          # express as a change, like (a)
+
+    ax.errorbar(xc, yc, yerr=ec, fmt='o-', color=LOSS, ms=4.5, lw=1.6,
+                capsize=2.5, mec='white', mew=0.7, zorder=4,
+                label='covariate shift, $P(Y)$ fixed')
+    ax.errorbar(xp, yp, yerr=ep, fmt='s--', color=REF, ms=4, lw=1.4,
+                capsize=2.5, mec='white', mew=0.7, zorder=3,
+                label='label shift, $P(X{\\mid}Y)$ fixed')
     ax.axhline(0, color='black', lw=0.8, ls=(0, (3, 3)), zorder=1)
-    ax.set_xlabel('inter-node prevalence spread $\\pi_{\\max}-\\pi_{\\min}$')
-    ax.set_ylabel('$\\Delta$ White$-$Black\nsensitivity gap')
-    ax.set_title('(a) Only $P(Y)$ varies across nodes', pad=5)
+    ax.set_xlabel('cross-site heterogeneity (normalised)')
+    ax.set_ylabel('$\\Delta$ xAUC$_{\\mathrm{Black}\\to\\mathrm{White}}$')
+    ax.set_title('(a) Which heterogeneity moves ranking', pad=5)
+    ax.legend(frameon=False, loc='lower left')
     ax.margins(x=0.08)
 
     # ── (b) capacity curve ───────────────────────────────────────────────────

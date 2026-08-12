@@ -1,0 +1,27 @@
+{
+  "link_metric": "Pearson r across the five strata between the change in xAUC_{g->White} and the change in sensitivity at 20% capacity, both FedAvg minus the composition-matched control.",
+  "note": "For White the diagonal cell White->White is used, since there is no cross-group cell against itself.",
+  "r": 0.9642,
+  "per_stratum": {
+    "White": {
+      "delta_xauc_vs_white": -0.00037,
+      "delta_sensitivity": -0.00326
+    },
+    "Black": {
+      "delta_xauc_vs_white": -0.01806,
+      "delta_sensitivity": -0.02781
+    },
+    "Hispanic": {
+      "delta_xauc_vs_white": -0.02683,
+      "delta_sensitivity": -0.03548
+    },
+    "Asian": {
+      "delta_xauc_vs_white": 0.00316,
+      "delta_sensitivity": -0.00403
+    },
+    "Other": {
+      "delta_xauc_vs_white": -0.02213,
+      "delta_sensitivity": -0.04132
+    }
+  }
+}

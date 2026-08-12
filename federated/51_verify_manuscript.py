@@ -107,16 +107,34 @@ def main():
         f"${min(xs):.3f}$--${max(xs):.3f}$", 'prevalence_sweep')
 
     cs = load('covariate_sweep.json')
-    chk('covariate r (AUC gap)',
-        f"$r{{=}}{cs['pearson_r_sep_vs_delta_auc_gap']:.2f}$".replace('-', '-'),
-        'covariate_sweep')
-    chk('covariate r (xAUC)',
+    chk('BMI-separation r (AUC gap)',
+        f"$r{{=}}{cs['pearson_r_sep_vs_delta_auc_gap']:.2f}$", 'covariate_sweep')
+    chk('BMI-separation r (xAUC)',
         f"$r{{=}}{cs['pearson_r_sep_vs_delta_xauc']:.2f}$", 'covariate_sweep')
-    chk('covariate r (sens gap, null)',
-        f"$r{{=}}{cs['pearson_r_sep_vs_delta_sens_gap']:.2f}$", 'covariate_sweep')
-    full = max(cs['summary'].values(), key=lambda v: v['cov_separation'])
-    chk('covariate dxAUC at full separation',
+    # The size-control arm carries the largest separation of all, so it has to be
+    # excluded before taking the full-dose cell -- it is not a point on the scale.
+    dose = [v for v in cs['summary'].values() if not v.get('is_size_control')]
+    full = max(dose, key=lambda v: v['cov_separation'])
+    chk('BMI dxAUC at full separation',
         f"${abs(full['delta_xauc_vs_alpha0']):.3f}$", 'covariate_sweep')
+    chk('BMI selection-gap widening',
+        f"${abs(full['delta_sel_gap_vs_alpha0']):.3f}$", 'covariate_sweep')
+    real = cs['summary'].get('real')
+    if real:
+        chk('size control, real partition at reduced n',
+            f"${abs(real['delta_sens_gap_vs_alpha0']):+.3f}$".replace('$+', '$+'),
+            'covariate_sweep')
+
+    ag = load('covariate_sweep_age.json')
+    chk('age-separation r (sens gap)',
+        f"$r{{=}}{ag['pearson_r_sep_vs_delta_sens_gap']:+.2f}$", 'covariate_sweep_age')
+
+    fa = load('factorial.json')
+    e = fa['effects']['sens_gap']
+    lo = e['interaction'] - 1.96 * e['se_interaction']
+    hi = e['interaction'] + 1.96 * e['se_interaction']
+    chk('factorial interaction (null)',
+        f"$+{e['interaction']:.3f}$ $[{lo:+.3f},{hi:+.3f}]$", 'factorial')
 
     mc = load('mechanism_chain.json')
     chk('ranking-detection correspondence', f"$r{{=}}{mc['r']:.2f}$", 'mechanism_chain')

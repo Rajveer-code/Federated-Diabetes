@@ -107,24 +107,32 @@ def main():
     # The size-control arm (the real partition) is not a point on the covariate
     # dose scale, so it is excluded from the curve; it is reported in the text.
     cs_dose = {k: v for k, v in cs['summary'].items() if not v.get('is_size_control')}
-    xc, yc, ec = series(cs_dose, 'cov_separation',
-                        'delta_xauc_vs_alpha0', 'xauc_black_white_sd')
-    base = ps['summary'][sorted(ps['summary'],
-                                key=lambda k: ps['summary'][k]['spread_achieved'])[0]]
-    xp, yp, ep = series(ps['summary'], 'spread_achieved',
-                        'xauc_black_white_mean', 'xauc_black_white_sd')
-    yp = yp - base['xauc_black_white_mean']          # express as a change, like (a)
+    ag = load('covariate_sweep_age.json')
+    ag_dose = {k: v for k, v in ag['summary'].items() if not v.get('is_size_control')}
 
-    ax.errorbar(xc, yc, yerr=ec, fmt='o-', color=LOSS, ms=4.5, lw=1.6,
+    # Read out on DETECTION -- the paper's headline quantity. Separation along
+    # age moves it; separation along BMI and pure label shift do not.
+    xa, ya, ea = series(ag_dose, 'cov_separation',
+                        'delta_sens_gap_vs_alpha0', 'sens_gap_sd')
+    xc, yc, ec = series(cs_dose, 'cov_separation',
+                        'delta_sens_gap_vs_alpha0', 'sens_gap_sd')
+    xp, yp, ep = series(ps['summary'], 'spread_achieved',
+                        'delta_sens_gap_vs_matched', 'sens_gap_sd')
+    yp = yp - yp[0]                   # against this sweep's own zero-spread arm
+
+    ax.errorbar(xa, ya, yerr=ea, fmt='o-', color=LOSS, ms=4.5, lw=1.6,
+                capsize=2.5, mec='white', mew=0.7, zorder=5,
+                label='separation on age')
+    ax.errorbar(xc, yc, yerr=ec, fmt='^-', color=GAIN, ms=4.5, lw=1.5,
                 capsize=2.5, mec='white', mew=0.7, zorder=4,
-                label='covariate shift, $P(Y)$ fixed')
+                label='separation on BMI')
     ax.errorbar(xp, yp, yerr=ep, fmt='s--', color=REF, ms=4, lw=1.4,
                 capsize=2.5, mec='white', mew=0.7, zorder=3,
-                label='label shift, $P(X{\\mid}Y)$ fixed')
+                label='label shift')
     ax.axhline(0, color='black', lw=0.8, ls=(0, (3, 3)), zorder=1)
     ax.set_xlabel('cross-site heterogeneity (normalised)')
-    ax.set_ylabel('$\\Delta$ xAUC$_{\\mathrm{Black}\\to\\mathrm{White}}$')
-    ax.set_title('(a) Which heterogeneity moves ranking', pad=5)
+    ax.set_ylabel('$\\Delta$ White$-$Black\nsensitivity gap')
+    ax.set_title('(a) Which heterogeneity moves detection', pad=5)
     ax.legend(frameon=False, loc='lower left')
     ax.margins(x=0.08)
 

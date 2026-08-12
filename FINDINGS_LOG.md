@@ -846,3 +846,54 @@ CAUTION for writing: the smoke test's SENSITIVITY gap barely moved (+0.0014)
 while xAUC moved a lot. Do not claim the sensitivity reversal is reproduced by
 covariate separation until the 10-seed run says so. xAUC is the mechanism
 quantity; the sensitivity gap is downstream and noisier at half cohort size.
+
+## F12 — size control REFUTES the power explanation; detection needs both factors
+
+52_covariate_sweep.py, rerun with a size-control arm and allocation metrics.
+Reference is the alpha=0 arm at the same cohort size (5,916; 1,972/node).
+
+   arm   cov sep   d AUC gap   d sens gap   d sel gap   d xAUC
+  0.00    0.0171     +0.0000      +0.0000     +0.0000   +0.0000
+  0.25    0.0381     -0.0033      +0.0060     +0.0042   -0.0042
+  0.50    0.0870     -0.0061      -0.0029     +0.0038   -0.0059
+  0.75    0.1367     -0.0135      -0.0073     +0.0095   -0.0146
+  1.00    0.1410     -0.0188      +0.0020     +0.0194   -0.0244
+  real    0.1544     -0.0081      +0.0340     +0.0338   -0.0195
+
+  r vs separation (5 dose arms): AUC gap -0.958, xAUC -0.908, sens gap -0.489
+
+THE SIZE CONTROL: the real age/urbanicity partition subsampled to the SAME 5,916
+rows gives d sens gap = +0.0340, LARGER than the +0.0246 it gives at full size.
+
+=> The reduced cohort has ample power. The covariate sweep's null on DETECTION is
+   NOT a power artefact. The limitation sentence written earlier ("at half the
+   cohort size") was WRONG and must be removed from the manuscript.
+
+What covariate separation alone DOES reproduce:
+  * AUC gap closure          -0.0188  (monotone, r=-0.96)
+  * cross-group push-down    -0.0244  (monotone, r=-0.91), LARGER than real
+  * SELECTION gap widening   +0.0194  (monotone-ish)
+What it does NOT reproduce:
+  * SENSITIVITY gap widening +0.0020  vs real +0.0340
+
+Coherent reading: covariate separation shifts allocation away from the minority
+stratum (selection gap widens) but ALSO closes the within-group AUC gap so much
+(-0.0188 vs real -0.0081) that the better within-group ordering compensates in
+sensitivity terms. The real partition closes the AUC gap far less, so there is
+less compensation and sensitivity falls.
+
+=> Neither single factor reproduces the detection reversal. Points at an
+   INTERACTION between covariate separation and label shift.
+
+MY ERROR, recorded: I declined ChatGPT's 2x2 factorial suggestion on the
+reasoning "label main effect is ~0, so the interaction is near-certainly
+uninteresting." That inference is invalid -- a null main effect places no
+constraint on an interaction. 53_factorial.py runs it properly.
+
+53_factorial.py: 2x2 fully crossed, covariate separation (alpha 0/1) x label
+spread (0 / 0.15), node prevalences ordered with the covariate, all four cells
+through the same code path, 10 seeds each.
+
+Single-seed probe (seed 42), W-B sensitivity gap vs the neither cell:
+  covariate alone +0.0014   label alone +0.0077   both +0.0136   interaction +0.0045
+Full 10-seed run in progress.

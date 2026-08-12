@@ -897,3 +897,43 @@ through the same code path, 10 seeds each.
 Single-seed probe (seed 42), W-B sensitivity gap vs the neither cell:
   covariate alone +0.0014   label alone +0.0077   both +0.0136   interaction +0.0045
 Full 10-seed run in progress.
+
+## F13 — 2x2 factorial is NULL; interaction does not explain detection either
+
+53_factorial.py. Covariate separation (alpha 0/1, BMI rank) x label spread
+(0 / 0.15), node prevalences ordered with the covariate, 10 seeds per cell,
+5,916 rows in every cell, all four cells through one code path.
+
+  outcome          neither    label    covar     both   main_cov  main_lab   inter
+  race_gap         +0.0080  +0.0080  -0.0108  -0.0092    -0.0180   +0.0008  +0.0016
+  sens_gap         +0.0047  +0.0059  +0.0068  +0.0096    +0.0029   +0.0020  +0.0017
+  sel_gap          -0.0384  -0.0379  -0.0189  -0.0191    +0.0191   +0.0001  -0.0007
+  xauc(B>W)        +0.7461  +0.7457  +0.7217  +0.7230    -0.0235   +0.0004  +0.0017
+
+  interaction on the sensitivity gap: +0.0017, 95% CI +/- 0.0127 -> NULL.
+
+The "both" cell reaches +0.0049 on the sensitivity gap against the neither cell.
+The real partition at the same cohort size reaches +0.0340. Covariate and label
+heterogeneity together, under control, still do not reproduce the detection
+reversal.
+
+THIRD hypothesis rejected. Running list:
+  1. racial separation between sites      REJECTED (r=+0.29, wrong sign)
+  2. label shift alone                    REJECTED (flat)
+  3. covariate x label interaction        REJECTED (+0.0017 +/- 0.0127)
+Surviving partial account: covariate separation reproduces the RANKING divergence
+(AUC gap -0.0188, xAUC -0.0235) and the ALLOCATION shift (selection gap +0.0191)
+but not the SENSITIVITY reversal.
+
+NEXT CANDIDATE — direction, not magnitude. The dose above separates nodes on BMI
+rank. The real partition is defined on AGE and urbanicity. Age is the dominant
+predictor of diabetes risk and of where a score falls in the global ordering, so
+separating on BMI and separating on age are different directions in feature space
+even at matched separation magnitude (BMI alpha=1 gives 0.1410; real gives 0.1544).
+
+52_covariate_sweep.py now takes --covariate; running RIDAGEYR at alphas 0/0.5/1.
+If age-separation reproduces the sensitivity reversal, the mechanism is separation
+along the risk-dominant axis rather than heterogeneity in general. If it does not,
+the honest report is that the reversal is not reducible to marginal heterogeneity
+in any single measured axis -- which still leaves the paper's empirical claim and
+the xAUC decomposition untouched, since both rest on the main experiment.

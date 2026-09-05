@@ -108,9 +108,9 @@ def main():
 
     cs = load('covariate_sweep.json')
     chk('BMI-separation r (AUC gap)',
-        f"$r{{=}}{cs['pearson_r_sep_vs_delta_auc_gap']:.2f}$", 'covariate_sweep')
+        f"$r{{=}}{{{'-' if cs['pearson_r_sep_vs_delta_auc_gap']<0 else '+'}}}{abs(cs['pearson_r_sep_vs_delta_auc_gap']):.2f}$", 'covariate_sweep')
     chk('BMI-separation r (xAUC)',
-        f"$r{{=}}{cs['pearson_r_sep_vs_delta_xauc']:.2f}$", 'covariate_sweep')
+        f"$r{{=}}{{{'-' if cs['pearson_r_sep_vs_delta_xauc']<0 else '+'}}}{abs(cs['pearson_r_sep_vs_delta_xauc']):.2f}$", 'covariate_sweep')
     # The size-control arm carries the largest separation of all, so it has to be
     # excluded before taking the full-dose cell -- it is not a point on the scale.
     dose = [v for v in cs['summary'].values() if not v.get('is_size_control')]
@@ -127,7 +127,7 @@ def main():
 
     ag = load('covariate_sweep_age.json')
     chk('age-separation r (sens gap)',
-        f"$r{{=}}{ag['pearson_r_sep_vs_delta_sens_gap']:+.2f}$", 'covariate_sweep_age')
+        f"$r{{=}}{{{'-' if ag['pearson_r_sep_vs_delta_sens_gap']<0 else '+'}}}{abs(ag['pearson_r_sep_vs_delta_sens_gap']):.2f}$", 'covariate_sweep_age')
 
     fa = load('factorial.json')
     e = fa['effects']['sens_gap']

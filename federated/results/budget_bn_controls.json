@@ -1,0 +1,291 @@
+{
+  "n_seeds": 10,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "matched_epochs": 250,
+  "n_brfss": 1282897,
+  "runs": [
+    {
+      "model": "Centralised-matched-250ep",
+      "seed": 42,
+      "epochs": 250,
+      "batchnorm": true,
+      "internal_val": 0.7906520323584376,
+      "external": 0.7540025362290294
+    },
+    {
+      "model": "Centralised-matched-noBN",
+      "seed": 42,
+      "epochs": 50,
+      "batchnorm": false,
+      "internal_val": 0.7891998164417392,
+      "external": 0.7541296746466782
+    },
+    {
+      "model": "FedAvg-noBN",
+      "seed": 42,
+      "epochs": 250,
+      "batchnorm": false,
+      "internal_val": 0.7916339088411226,
+      "external": 0.7529566842976603
+    },
+    {
+      "model": "Centralised-matched-250ep",
+      "seed": 43,
+      "epochs": 250,
+      "batchnorm": true,
+      "internal_val": 0.7925499835781731,
+      "external": 0.7500687862519114
+    },
+    {
+      "model": "Centralised-matched-noBN",
+      "seed": 43,
+      "epochs": 50,
+      "batchnorm": false,
+      "internal_val": 0.7957405099578069,
+      "external": 0.7569206388683775
+    },
+    {
+      "model": "FedAvg-noBN",
+      "seed": 43,
+      "epochs": 250,
+      "batchnorm": false,
+      "internal_val": 0.789203249576294,
+      "external": 0.7526394800862845
+    },
+    {
+      "model": "Centralised-matched-250ep",
+      "seed": 44,
+      "epochs": 250,
+      "batchnorm": true,
+      "internal_val": 0.7899293575346431,
+      "external": 0.7529224968330633
+    },
+    {
+      "model": "Centralised-matched-noBN",
+      "seed": 44,
+      "epochs": 50,
+      "batchnorm": false,
+      "internal_val": 0.7911366765197629,
+      "external": 0.7500881872817473
+    },
+    {
+      "model": "FedAvg-noBN",
+      "seed": 44,
+      "epochs": 250,
+      "batchnorm": false,
+      "internal_val": 0.7770779905176823,
+      "external": 0.757418161353184
+    },
+    {
+      "model": "Centralised-matched-250ep",
+      "seed": 45,
+      "epochs": 250,
+      "batchnorm": true,
+      "internal_val": 0.8050340051977657,
+      "external": 0.74867307190481
+    },
+    {
+      "model": "Centralised-matched-noBN",
+      "seed": 45,
+      "epochs": 50,
+      "batchnorm": false,
+      "internal_val": 0.8069170795010968,
+      "external": 0.7531011848727118
+    },
+    {
+      "model": "FedAvg-noBN",
+      "seed": 45,
+      "epochs": 250,
+      "batchnorm": false,
+      "internal_val": 0.775791137248709,
+      "external": 0.7540907197530832
+    },
+    {
+      "model": "Centralised-matched-250ep",
+      "seed": 46,
+      "epochs": 250,
+      "batchnorm": true,
+      "internal_val": 0.7851401348306377,
+      "external": 0.7537378574584678
+    },
+    {
+      "model": "Centralised-matched-noBN",
+      "seed": 46,
+      "epochs": 50,
+      "batchnorm": false,
+      "internal_val": 0.779724937259466,
+      "external": 0.7527841747746288
+    },
+    {
+      "model": "FedAvg-noBN",
+      "seed": 46,
+      "epochs": 250,
+      "batchnorm": false,
+      "internal_val": 0.7748756347007508,
+      "external": 0.7522609485079149
+    },
+    {
+      "model": "Centralised-matched-250ep",
+      "seed": 47,
+      "epochs": 250,
+      "batchnorm": true,
+      "internal_val": 0.7754146368258612,
+      "external": 0.7509956029950037
+    },
+    {
+      "model": "Centralised-matched-noBN",
+      "seed": 47,
+      "epochs": 50,
+      "batchnorm": false,
+      "internal_val": 0.7773623684966419,
+      "external": 0.755191800148988
+    },
+    {
+      "model": "FedAvg-noBN",
+      "seed": 47,
+      "epochs": 250,
+      "batchnorm": false,
+      "internal_val": 0.7757625277940852,
+      "external": 0.7511649321909174
+    },
+    {
+      "model": "Centralised-matched-250ep",
+      "seed": 48,
+      "epochs": 250,
+      "batchnorm": true,
+      "internal_val": 0.7888736686590292,
+      "external": 0.7517055970109444
+    },
+    {
+      "model": "Centralised-matched-noBN",
+      "seed": 48,
+      "epochs": 50,
+      "batchnorm": false,
+      "internal_val": 0.7899676942038388,
+      "external": 0.7519358772861009
+    },
+    {
+      "model": "FedAvg-noBN",
+      "seed": 48,
+      "epochs": 250,
+      "batchnorm": false,
+      "internal_val": 0.790075265753224,
+      "external": 0.7575968733126046
+    },
+    {
+      "model": "Centralised-matched-250ep",
+      "seed": 49,
+      "epochs": 250,
+      "batchnorm": true,
+      "internal_val": 0.7934860849334602,
+      "external": 0.7516661368759749
+    },
+    {
+      "model": "Centralised-matched-noBN",
+      "seed": 49,
+      "epochs": 50,
+      "batchnorm": false,
+      "internal_val": 0.7923188191848136,
+      "external": 0.7485969842148151
+    },
+    {
+      "model": "FedAvg-noBN",
+      "seed": 49,
+      "epochs": 250,
+      "batchnorm": false,
+      "internal_val": 0.8057480971851729,
+      "external": 0.7521598184558684
+    },
+    {
+      "model": "Centralised-matched-250ep",
+      "seed": 50,
+      "epochs": 250,
+      "batchnorm": true,
+      "internal_val": 0.7763822085812343,
+      "external": 0.7494740491212466
+    },
+    {
+      "model": "Centralised-matched-noBN",
+      "seed": 50,
+      "epochs": 50,
+      "batchnorm": false,
+      "internal_val": 0.7788306057079295,
+      "external": 0.7494483786454509
+    },
+    {
+      "model": "FedAvg-noBN",
+      "seed": 50,
+      "epochs": 250,
+      "batchnorm": false,
+      "internal_val": 0.7817584972941178,
+      "external": 0.7564987452086563
+    },
+    {
+      "model": "Centralised-matched-250ep",
+      "seed": 51,
+      "epochs": 250,
+      "batchnorm": true,
+      "internal_val": 0.7765504321744215,
+      "external": 0.7519239751206217
+    },
+    {
+      "model": "Centralised-matched-noBN",
+      "seed": 51,
+      "epochs": 50,
+      "batchnorm": false,
+      "internal_val": 0.7759393342236596,
+      "external": 0.7522622873072983
+    },
+    {
+      "model": "FedAvg-noBN",
+      "seed": 51,
+      "epochs": 250,
+      "batchnorm": false,
+      "internal_val": 0.7821664681170515,
+      "external": 0.7567140426227246
+    }
+  ],
+  "summary": {
+    "Centralised-matched-250ep": {
+      "internal_val": {
+        "mean": 0.7874,
+        "sd": 0.0093
+      },
+      "external": {
+        "mean": 0.7515,
+        "sd": 0.0018
+      }
+    },
+    "Centralised-matched-noBN": {
+      "internal_val": {
+        "mean": 0.7877,
+        "sd": 0.0098
+      },
+      "external": {
+        "mean": 0.7524,
+        "sd": 0.0026
+      }
+    },
+    "FedAvg-noBN": {
+      "internal_val": {
+        "mean": 0.7844,
+        "sd": 0.0098
+      },
+      "external": {
+        "mean": 0.7544,
+        "sd": 0.0025
+      }
+    }
+  }
+}

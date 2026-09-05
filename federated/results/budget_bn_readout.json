@@ -1,0 +1,650 @@
+{
+  "capacity": 0.2,
+  "comparisons": {
+    "headline": {
+      "treatment": "FedAvg",
+      "reference": "Centralised-matched",
+      "n_seeds": 10,
+      "seeds": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "delta_auc": {
+        "White": {
+          "mean": -0.000371,
+          "se": 0.00102,
+          "ci_low": -0.00237,
+          "ci_high": 0.001628,
+          "n_seeds_same_sign": 6,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": 0.006647,
+          "se": 0.000653,
+          "ci_low": 0.005368,
+          "ci_high": 0.007927,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": 0.003923,
+          "se": 0.0005,
+          "ci_low": 0.002943,
+          "ci_high": 0.004903,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": 0.008681,
+          "se": 0.000593,
+          "ci_low": 0.007519,
+          "ci_high": 0.009843,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": -0.002072,
+          "se": 0.000568,
+          "ci_low": -0.003186,
+          "ci_high": -0.000958,
+          "n_seeds_same_sign": 9,
+          "n_seeds": 10
+        }
+      },
+      "delta_xauc_to_white": {
+        "White": {
+          "mean": -0.000371,
+          "se": 0.00102,
+          "ci_low": -0.00237,
+          "ci_high": 0.001628,
+          "n_seeds_same_sign": 6,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": -0.018064,
+          "se": 0.001073,
+          "ci_low": -0.020167,
+          "ci_high": -0.015962,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": -0.02683,
+          "se": 0.001466,
+          "ci_low": -0.029704,
+          "ci_high": -0.023957,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": 0.003158,
+          "se": 0.000849,
+          "ci_low": 0.001494,
+          "ci_high": 0.004822,
+          "n_seeds_same_sign": 9,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": -0.022128,
+          "se": 0.001568,
+          "ci_low": -0.0252,
+          "ci_high": -0.019055,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        }
+      },
+      "delta_selection": {
+        "White": {
+          "mean": 0.005153,
+          "se": 0.000393,
+          "ci_low": 0.004383,
+          "ci_high": 0.005923,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": -0.018757,
+          "se": 0.001487,
+          "ci_low": -0.021671,
+          "ci_high": -0.015844,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": -0.01533,
+          "se": 0.001362,
+          "ci_low": -0.018,
+          "ci_high": -0.012659,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": -0.000736,
+          "se": 0.000791,
+          "ci_low": -0.002287,
+          "ci_high": 0.000815,
+          "n_seeds_same_sign": 7,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": -0.017452,
+          "se": 0.001484,
+          "ci_low": -0.020361,
+          "ci_high": -0.014544,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        }
+      },
+      "delta_sensitivity": {
+        "White": {
+          "mean": -0.003259,
+          "se": 0.002855,
+          "ci_low": -0.008855,
+          "ci_high": 0.002336,
+          "n_seeds_same_sign": 7,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": -0.027819,
+          "se": 0.003302,
+          "ci_low": -0.034291,
+          "ci_high": -0.021346,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": -0.035475,
+          "se": 0.003246,
+          "ci_low": -0.041837,
+          "ci_high": -0.029113,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": -0.004033,
+          "se": 0.002015,
+          "ci_low": -0.007983,
+          "ci_high": -8.3e-05,
+          "n_seeds_same_sign": 6,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": -0.041319,
+          "se": 0.004412,
+          "ci_low": -0.049967,
+          "ci_high": -0.032672,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        }
+      },
+      "delta_wb_auc_gap": {
+        "mean": -0.007018,
+        "se": 0.000722,
+        "ci_low": -0.008434,
+        "ci_high": -0.005603,
+        "n_seeds_same_sign": 10,
+        "n_seeds": 10
+      },
+      "delta_wb_sens_gap": {
+        "mean": 0.024559,
+        "se": 0.002026,
+        "ci_low": 0.020588,
+        "ci_high": 0.028531,
+        "n_seeds_same_sign": 10,
+        "n_seeds": 10
+      },
+      "absolute": {
+        "FedAvg": {
+          "sens_b": 0.4504,
+          "sens_w": 0.4842,
+          "sel_b": 0.2263,
+          "sel_w": 0.214
+        },
+        "Centralised-matched": {
+          "sens_b": 0.4782,
+          "sens_w": 0.4875,
+          "sel_b": 0.2451,
+          "sel_w": 0.2088
+        }
+      }
+    },
+    "budget": {
+      "treatment": "FedAvg",
+      "reference": "Centralised-matched-250ep",
+      "n_seeds": 10,
+      "seeds": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "delta_auc": {
+        "White": {
+          "mean": 0.002389,
+          "se": 0.000912,
+          "ci_low": 0.000601,
+          "ci_high": 0.004177,
+          "n_seeds_same_sign": 8,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": 0.00731,
+          "se": 0.000855,
+          "ci_low": 0.005634,
+          "ci_high": 0.008985,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": 0.007023,
+          "se": 0.00073,
+          "ci_low": 0.005593,
+          "ci_high": 0.008453,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": 0.015864,
+          "se": 0.00058,
+          "ci_low": 0.014728,
+          "ci_high": 0.017001,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": -0.000147,
+          "se": 0.000604,
+          "ci_low": -0.00133,
+          "ci_high": 0.001036,
+          "n_seeds_same_sign": 5,
+          "n_seeds": 10
+        }
+      },
+      "delta_xauc_to_white": {
+        "White": {
+          "mean": 0.002389,
+          "se": 0.000912,
+          "ci_low": 0.000601,
+          "ci_high": 0.004177,
+          "n_seeds_same_sign": 8,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": -0.015005,
+          "se": 0.001042,
+          "ci_low": -0.017048,
+          "ci_high": -0.012962,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": -0.021949,
+          "se": 0.001361,
+          "ci_low": -0.024617,
+          "ci_high": -0.01928,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": 0.007832,
+          "se": 0.00122,
+          "ci_low": 0.005441,
+          "ci_high": 0.010224,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": -0.017662,
+          "se": 0.001256,
+          "ci_low": -0.020123,
+          "ci_high": -0.015201,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        }
+      },
+      "delta_selection": {
+        "White": {
+          "mean": 0.00562,
+          "se": 0.000495,
+          "ci_low": 0.00465,
+          "ci_high": 0.006589,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": -0.021846,
+          "se": 0.001931,
+          "ci_low": -0.025631,
+          "ci_high": -0.018062,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": -0.016684,
+          "se": 0.001723,
+          "ci_low": -0.020061,
+          "ci_high": -0.013308,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": 0.000689,
+          "se": 0.000784,
+          "ci_low": -0.000847,
+          "ci_high": 0.002226,
+          "n_seeds_same_sign": 6,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": -0.017219,
+          "se": 0.001358,
+          "ci_low": -0.019881,
+          "ci_high": -0.014556,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        }
+      },
+      "delta_sensitivity": {
+        "White": {
+          "mean": -0.00677,
+          "se": 0.003325,
+          "ci_low": -0.013287,
+          "ci_high": -0.000253,
+          "n_seeds_same_sign": 8,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": -0.035915,
+          "se": 0.00304,
+          "ci_low": -0.041872,
+          "ci_high": -0.029958,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": -0.037138,
+          "se": 0.003439,
+          "ci_low": -0.043878,
+          "ci_high": -0.030398,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": -0.00068,
+          "se": 0.002503,
+          "ci_low": -0.005586,
+          "ci_high": 0.004226,
+          "n_seeds_same_sign": 6,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": -0.044993,
+          "se": 0.0042,
+          "ci_low": -0.053225,
+          "ci_high": -0.03676,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        }
+      },
+      "delta_wb_auc_gap": {
+        "mean": -0.004921,
+        "se": 0.000795,
+        "ci_low": -0.00648,
+        "ci_high": -0.003362,
+        "n_seeds_same_sign": 9,
+        "n_seeds": 10
+      },
+      "delta_wb_sens_gap": {
+        "mean": 0.029145,
+        "se": 0.003263,
+        "ci_low": 0.02275,
+        "ci_high": 0.03554,
+        "n_seeds_same_sign": 10,
+        "n_seeds": 10
+      },
+      "absolute": {
+        "FedAvg": {
+          "sens_b": 0.4504,
+          "sens_w": 0.4842,
+          "sel_b": 0.2263,
+          "sel_w": 0.214
+        },
+        "Centralised-matched-250ep": {
+          "sens_b": 0.4863,
+          "sens_w": 0.491,
+          "sel_b": 0.2482,
+          "sel_w": 0.2084
+        }
+      }
+    },
+    "batchnorm": {
+      "treatment": "FedAvg-noBN",
+      "reference": "Centralised-matched-noBN",
+      "n_seeds": 10,
+      "seeds": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "delta_auc": {
+        "White": {
+          "mean": 0.002586,
+          "se": 0.001634,
+          "ci_low": -0.000616,
+          "ci_high": 0.005789,
+          "n_seeds_same_sign": 6,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": 0.003754,
+          "se": 0.001029,
+          "ci_low": 0.001738,
+          "ci_high": 0.00577,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": 0.003254,
+          "se": 0.000811,
+          "ci_low": 0.001665,
+          "ci_high": 0.004843,
+          "n_seeds_same_sign": 9,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": 0.007328,
+          "se": 0.000963,
+          "ci_low": 0.00544,
+          "ci_high": 0.009215,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": 0.000916,
+          "se": 0.000784,
+          "ci_low": -0.000621,
+          "ci_high": 0.002453,
+          "n_seeds_same_sign": 5,
+          "n_seeds": 10
+        }
+      },
+      "delta_xauc_to_white": {
+        "White": {
+          "mean": 0.002586,
+          "se": 0.001634,
+          "ci_low": -0.000616,
+          "ci_high": 0.005789,
+          "n_seeds_same_sign": 6,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": -0.005613,
+          "se": 0.001394,
+          "ci_low": -0.008345,
+          "ci_high": -0.002881,
+          "n_seeds_same_sign": 9,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": -0.008479,
+          "se": 0.002002,
+          "ci_low": -0.012403,
+          "ci_high": -0.004555,
+          "n_seeds_same_sign": 9,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": 0.002422,
+          "se": 0.001285,
+          "ci_low": -9.6e-05,
+          "ci_high": 0.00494,
+          "n_seeds_same_sign": 8,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": -0.005847,
+          "se": 0.001956,
+          "ci_low": -0.009681,
+          "ci_high": -0.002013,
+          "n_seeds_same_sign": 10,
+          "n_seeds": 10
+        }
+      },
+      "delta_selection": {
+        "White": {
+          "mean": 0.001658,
+          "se": 0.000407,
+          "ci_low": 0.000861,
+          "ci_high": 0.002456,
+          "n_seeds_same_sign": 8,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": -0.00672,
+          "se": 0.002069,
+          "ci_low": -0.010774,
+          "ci_high": -0.002665,
+          "n_seeds_same_sign": 9,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": -0.006263,
+          "se": 0.001657,
+          "ci_low": -0.009512,
+          "ci_high": -0.003015,
+          "n_seeds_same_sign": 9,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": 0.001002,
+          "se": 0.000877,
+          "ci_low": -0.000718,
+          "ci_high": 0.002721,
+          "n_seeds_same_sign": 7,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": -0.006527,
+          "se": 0.001729,
+          "ci_low": -0.009914,
+          "ci_high": -0.003139,
+          "n_seeds_same_sign": 9,
+          "n_seeds": 10
+        }
+      },
+      "delta_sensitivity": {
+        "White": {
+          "mean": -0.004761,
+          "se": 0.003643,
+          "ci_low": -0.011902,
+          "ci_high": 0.002379,
+          "n_seeds_same_sign": 6,
+          "n_seeds": 10
+        },
+        "Black": {
+          "mean": -0.012557,
+          "se": 0.004031,
+          "ci_low": -0.020458,
+          "ci_high": -0.004656,
+          "n_seeds_same_sign": 8,
+          "n_seeds": 10
+        },
+        "Hispanic": {
+          "mean": -0.015208,
+          "se": 0.004528,
+          "ci_low": -0.024082,
+          "ci_high": -0.006334,
+          "n_seeds_same_sign": 9,
+          "n_seeds": 10
+        },
+        "Asian": {
+          "mean": 0.001701,
+          "se": 0.003084,
+          "ci_low": -0.004345,
+          "ci_high": 0.007746,
+          "n_seeds_same_sign": 6,
+          "n_seeds": 10
+        },
+        "Other": {
+          "mean": -0.015247,
+          "se": 0.004762,
+          "ci_low": -0.024581,
+          "ci_high": -0.005914,
+          "n_seeds_same_sign": 9,
+          "n_seeds": 10
+        }
+      },
+      "delta_wb_auc_gap": {
+        "mean": -0.001168,
+        "se": 0.001126,
+        "ci_low": -0.003375,
+        "ci_high": 0.001039,
+        "n_seeds_same_sign": 6,
+        "n_seeds": 10
+      },
+      "delta_wb_sens_gap": {
+        "mean": 0.007796,
+        "se": 0.003663,
+        "ci_low": 0.000616,
+        "ci_high": 0.014975,
+        "n_seeds_same_sign": 8,
+        "n_seeds": 10
+      },
+      "absolute": {
+        "FedAvg-noBN": {
+          "sens_b": 0.4594,
+          "sens_w": 0.4781,
+          "sel_b": 0.2342,
+          "sel_w": 0.2115
+        },
+        "Centralised-matched-noBN": {
+          "sens_b": 0.472,
+          "sens_w": 0.4828,
+          "sel_b": 0.2409,
+          "sel_w": 0.2098
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "capacity": 0.2,
+  "reference": "Centralised-matched",
+  "treatment": "FedAvg",
+  "n_total": 1282897,
+  "n_known": 819294,
+  "n_unknown": 463603,
+  "pct_known": 0.6386,
+  "pct_unknown": 0.3614,
+  "n_white": 617782,
+  "n_black": 62770,
+  "policy_a_full_cohort_threshold": {
+    "description": "Threshold set on the pooled cohort including race-unknown rows (the manuscript reported policy).",
+    "wb_sensitivity_gap_delta_treatment_minus_reference": {
+      "mean": 0.024559,
+      "se": 0.002026,
+      "ci_low": 0.020588,
+      "ci_high": 0.028531,
+      "n_seeds_positive": 10,
+      "n_seeds": 10
+    }
+  },
+  "policy_b_race_known_threshold": {
+    "description": "Threshold set on the race-known subset only (sensitivity check).",
+    "wb_sensitivity_gap_delta_treatment_minus_reference": {
+      "mean": 0.02514,
+      "se": 0.001994,
+      "ci_low": 0.021231,
+      "ci_high": 0.029048,
+      "n_seeds_positive": 10,
+      "n_seeds": 10
+    }
+  },
+  "by_model": {
+    "Centralised-matched": {
+      "a": {
+        "sel_w": {
+          "mean": 0.208821,
+          "sd": 0.000853
+        },
+        "sel_b": {
+          "mean": 0.245106,
+          "sd": 0.003767
+        },
+        "sens_w": {
+          "mean": 0.487488,
+          "sd": 0.003217
+        },
+        "sens_b": {
+          "mean": 0.478194,
+          "sd": 0.005453
+        }
+      },
+      "b": {
+        "sel_w": {
+          "mean": 0.210089,
+          "sd": 0.001057
+        },
+        "sel_b": {
+          "mean": 0.246474,
+          "sd": 0.003497
+        },
+        "sens_w": {
+          "mean": 0.489531,
+          "sd": 0.003314
+        },
+        "sens_b": {
+          "mean": 0.48031,
+          "sd": 0.005287
+        }
+      }
+    },
+    "FedAvg": {
+      "a": {
+        "sel_w": {
+          "mean": 0.213974,
+          "sd": 0.000891
+        },
+        "sel_b": {
+          "mean": 0.226349,
+          "sd": 0.00426
+        },
+        "sens_w": {
+          "mean": 0.484229,
+          "sd": 0.006827
+        },
+        "sens_b": {
+          "mean": 0.450376,
+          "sd": 0.008039
+        }
+      },
+      "b": {
+        "sel_w": {
+          "mean": 0.215257,
+          "sd": 0.000963
+        },
+        "sel_b": {
+          "mean": 0.227389,
+          "sd": 0.003887
+        },
+        "sens_w": {
+          "mean": 0.486329,
+          "sd": 0.006082
+        },
+        "sens_b": {
+          "mean": 0.451969,
+          "sd": 0.007469
+        }
+      }
+    }
+  },
+  "magnitude_comparison": {
+    "wb_sensitivity_gap_delta": {
+      "policy_a_full_cohort": 0.024559,
+      "policy_b_race_known": 0.02514,
+      "pct_change_a_to_b": 2.4,
+      "direction_preserved": true
+    },
+    "black_selection_rate_delta": {
+      "policy_a": -0.018757,
+      "policy_b": -0.019086
+    },
+    "white_selection_rate_delta": {
+      "policy_a": 0.005153,
+      "policy_b": 0.005168
+    }
+  }
+}

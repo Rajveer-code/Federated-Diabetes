@@ -1,0 +1,563 @@
+{
+  "n_brfss": 1282897,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "note": "One global threshold per flag rate, applied to every stratum.",
+  "strata_n": {
+    "White": 937736,
+    "Black": 98131,
+    "Hispanic": 117249,
+    "Asian": 34761,
+    "Other": 61654
+  },
+  "strata_prevalence": {
+    "White": 0.12586,
+    "Black": 0.19667,
+    "Hispanic": 0.13563,
+    "Asian": 0.09945,
+    "Other": 0.1591
+  },
+  "by_rate": {
+    "0.10": {
+      "FedAvg": {
+        "White": {
+          "tpr_mean": 0.30775,
+          "tpr_sd": 0.0025,
+          "delta_tpr": -0.00232,
+          "delta_cases_per_100k": -29.2
+        },
+        "Black": {
+          "tpr_mean": 0.22938,
+          "tpr_sd": 0.00877,
+          "delta_tpr": -0.01795,
+          "delta_cases_per_100k": -353.0
+        },
+        "Hispanic": {
+          "tpr_mean": 0.17242,
+          "tpr_sd": 0.00585,
+          "delta_tpr": -0.01991,
+          "delta_cases_per_100k": -270.0
+        },
+        "Asian": {
+          "tpr_mean": 0.09051,
+          "tpr_sd": 0.00619,
+          "delta_tpr": -0.00611,
+          "delta_cases_per_100k": -60.8
+        },
+        "Other": {
+          "tpr_mean": 0.246,
+          "tpr_sd": 0.00936,
+          "delta_tpr": -0.02581,
+          "delta_cases_per_100k": -410.6
+        },
+        "_overall": {
+          "tpr_mean": 0.27749,
+          "tpr_sd": 0.00324
+        }
+      },
+      "FedProx": {
+        "White": {
+          "tpr_mean": 0.30634,
+          "tpr_sd": 0.00232,
+          "delta_tpr": -0.00373,
+          "delta_cases_per_100k": -46.9
+        },
+        "Black": {
+          "tpr_mean": 0.22592,
+          "tpr_sd": 0.0069,
+          "delta_tpr": -0.02141,
+          "delta_cases_per_100k": -421.1
+        },
+        "Hispanic": {
+          "tpr_mean": 0.17111,
+          "tpr_sd": 0.00555,
+          "delta_tpr": -0.02122,
+          "delta_cases_per_100k": -287.8
+        },
+        "Asian": {
+          "tpr_mean": 0.09291,
+          "tpr_sd": 0.00582,
+          "delta_tpr": -0.00371,
+          "delta_cases_per_100k": -36.9
+        },
+        "Other": {
+          "tpr_mean": 0.24427,
+          "tpr_sd": 0.00843,
+          "delta_tpr": -0.02754,
+          "delta_cases_per_100k": -438.2
+        },
+        "_overall": {
+          "tpr_mean": 0.27598,
+          "tpr_sd": 0.00272
+        }
+      },
+      "SCAFFOLD": {
+        "White": {
+          "tpr_mean": 0.30896,
+          "tpr_sd": 0.00254,
+          "delta_tpr": -0.00111,
+          "delta_cases_per_100k": -14.0
+        },
+        "Black": {
+          "tpr_mean": 0.23744,
+          "tpr_sd": 0.00965,
+          "delta_tpr": -0.00989,
+          "delta_cases_per_100k": -194.5
+        },
+        "Hispanic": {
+          "tpr_mean": 0.17188,
+          "tpr_sd": 0.0029,
+          "delta_tpr": -0.02045,
+          "delta_cases_per_100k": -277.4
+        },
+        "Asian": {
+          "tpr_mean": 0.08828,
+          "tpr_sd": 0.0056,
+          "delta_tpr": -0.00834,
+          "delta_cases_per_100k": -82.9
+        },
+        "Other": {
+          "tpr_mean": 0.24861,
+          "tpr_sd": 0.00554,
+          "delta_tpr": -0.0232,
+          "delta_cases_per_100k": -369.1
+        },
+        "_overall": {
+          "tpr_mean": 0.27933,
+          "tpr_sd": 0.00296
+        }
+      },
+      "Centralised-full": {
+        "White": {
+          "tpr_mean": 0.31073,
+          "tpr_sd": 0.00123,
+          "delta_tpr": 0.00066,
+          "delta_cases_per_100k": 8.3
+        },
+        "Black": {
+          "tpr_mean": 0.25403,
+          "tpr_sd": 0.00707,
+          "delta_tpr": 0.0067,
+          "delta_cases_per_100k": 131.8
+        },
+        "Hispanic": {
+          "tpr_mean": 0.1896,
+          "tpr_sd": 0.00723,
+          "delta_tpr": -0.00273,
+          "delta_cases_per_100k": -37.0
+        },
+        "Asian": {
+          "tpr_mean": 0.09607,
+          "tpr_sd": 0.00631,
+          "delta_tpr": -0.00055,
+          "delta_cases_per_100k": -5.5
+        },
+        "Other": {
+          "tpr_mean": 0.26747,
+          "tpr_sd": 0.00769,
+          "delta_tpr": -0.00434,
+          "delta_cases_per_100k": -69.0
+        },
+        "_overall": {
+          "tpr_mean": 0.28545,
+          "tpr_sd": 0.00197
+        }
+      },
+      "Centralised-matched": {
+        "White": {
+          "tpr_mean": 0.31007,
+          "tpr_sd": 0.0017
+        },
+        "Black": {
+          "tpr_mean": 0.24733,
+          "tpr_sd": 0.00503
+        },
+        "Hispanic": {
+          "tpr_mean": 0.19233,
+          "tpr_sd": 0.00365
+        },
+        "Asian": {
+          "tpr_mean": 0.09662,
+          "tpr_sd": 0.00492
+        },
+        "Other": {
+          "tpr_mean": 0.27181,
+          "tpr_sd": 0.00362
+        },
+        "_overall": {
+          "tpr_mean": 0.2848,
+          "tpr_sd": 0.00129
+        }
+      },
+      "_white_black_tpr_gap": {
+        "reference": 0.06274,
+        "FedAvg": 0.07837,
+        "delta": 0.01563
+      }
+    },
+    "0.20": {
+      "FedAvg": {
+        "White": {
+          "tpr_mean": 0.50731,
+          "tpr_sd": 0.00343,
+          "delta_tpr": -0.00152,
+          "delta_cases_per_100k": -19.1
+        },
+        "Black": {
+          "tpr_mean": 0.41597,
+          "tpr_sd": 0.00925,
+          "delta_tpr": -0.0222,
+          "delta_cases_per_100k": -436.6
+        },
+        "Hispanic": {
+          "tpr_mean": 0.32592,
+          "tpr_sd": 0.01103,
+          "delta_tpr": -0.03695,
+          "delta_cases_per_100k": -501.1
+        },
+        "Asian": {
+          "tpr_mean": 0.19583,
+          "tpr_sd": 0.00608,
+          "delta_tpr": -0.00871,
+          "delta_cases_per_100k": -86.6
+        },
+        "Other": {
+          "tpr_mean": 0.40499,
+          "tpr_sd": 0.01032,
+          "delta_tpr": -0.04156,
+          "delta_cases_per_100k": -661.2
+        },
+        "_overall": {
+          "tpr_mean": 0.46635,
+          "tpr_sd": 0.0049
+        }
+      },
+      "FedProx": {
+        "White": {
+          "tpr_mean": 0.50567,
+          "tpr_sd": 0.00506,
+          "delta_tpr": -0.00316,
+          "delta_cases_per_100k": -39.8
+        },
+        "Black": {
+          "tpr_mean": 0.40979,
+          "tpr_sd": 0.01167,
+          "delta_tpr": -0.02838,
+          "delta_cases_per_100k": -558.1
+        },
+        "Hispanic": {
+          "tpr_mean": 0.32166,
+          "tpr_sd": 0.01169,
+          "delta_tpr": -0.04121,
+          "delta_cases_per_100k": -558.9
+        },
+        "Asian": {
+          "tpr_mean": 0.20194,
+          "tpr_sd": 0.00572,
+          "delta_tpr": -0.0026,
+          "delta_cases_per_100k": -25.9
+        },
+        "Other": {
+          "tpr_mean": 0.40481,
+          "tpr_sd": 0.01084,
+          "delta_tpr": -0.04174,
+          "delta_cases_per_100k": -664.1
+        },
+        "_overall": {
+          "tpr_mean": 0.46429,
+          "tpr_sd": 0.00633
+        }
+      },
+      "SCAFFOLD": {
+        "White": {
+          "tpr_mean": 0.50904,
+          "tpr_sd": 0.00277,
+          "delta_tpr": 0.00021,
+          "delta_cases_per_100k": 2.6
+        },
+        "Black": {
+          "tpr_mean": 0.42463,
+          "tpr_sd": 0.0061,
+          "delta_tpr": -0.01354,
+          "delta_cases_per_100k": -266.3
+        },
+        "Hispanic": {
+          "tpr_mean": 0.32777,
+          "tpr_sd": 0.00529,
+          "delta_tpr": -0.0351,
+          "delta_cases_per_100k": -476.0
+        },
+        "Asian": {
+          "tpr_mean": 0.19601,
+          "tpr_sd": 0.00549,
+          "delta_tpr": -0.00853,
+          "delta_cases_per_100k": -84.8
+        },
+        "Other": {
+          "tpr_mean": 0.4107,
+          "tpr_sd": 0.00594,
+          "delta_tpr": -0.03585,
+          "delta_cases_per_100k": -570.4
+        },
+        "_overall": {
+          "tpr_mean": 0.46914,
+          "tpr_sd": 0.00321
+        }
+      },
+      "Centralised-full": {
+        "White": {
+          "tpr_mean": 0.51236,
+          "tpr_sd": 0.00123,
+          "delta_tpr": 0.00353,
+          "delta_cases_per_100k": 44.4
+        },
+        "Black": {
+          "tpr_mean": 0.44604,
+          "tpr_sd": 0.00917,
+          "delta_tpr": 0.00787,
+          "delta_cases_per_100k": 154.8
+        },
+        "Hispanic": {
+          "tpr_mean": 0.36387,
+          "tpr_sd": 0.01212,
+          "delta_tpr": 0.001,
+          "delta_cases_per_100k": 13.6
+        },
+        "Asian": {
+          "tpr_mean": 0.20691,
+          "tpr_sd": 0.00569,
+          "delta_tpr": 0.00237,
+          "delta_cases_per_100k": 23.6
+        },
+        "Other": {
+          "tpr_mean": 0.44157,
+          "tpr_sd": 0.00821,
+          "delta_tpr": -0.00498,
+          "delta_cases_per_100k": -79.2
+        },
+        "_overall": {
+          "tpr_mean": 0.47951,
+          "tpr_sd": 0.00277
+        }
+      },
+      "Centralised-matched": {
+        "White": {
+          "tpr_mean": 0.50883,
+          "tpr_sd": 0.0025
+        },
+        "Black": {
+          "tpr_mean": 0.43817,
+          "tpr_sd": 0.00551
+        },
+        "Hispanic": {
+          "tpr_mean": 0.36287,
+          "tpr_sd": 0.00788
+        },
+        "Asian": {
+          "tpr_mean": 0.20454,
+          "tpr_sd": 0.00342
+        },
+        "Other": {
+          "tpr_mean": 0.44655,
+          "tpr_sd": 0.0069
+        },
+        "_overall": {
+          "tpr_mean": 0.47624,
+          "tpr_sd": 0.00179
+        }
+      },
+      "_white_black_tpr_gap": {
+        "reference": 0.07066,
+        "FedAvg": 0.09134,
+        "delta": 0.02068
+      }
+    },
+    "0.30": {
+      "FedAvg": {
+        "White": {
+          "tpr_mean": 0.65347,
+          "tpr_sd": 0.00249,
+          "delta_tpr": -0.00101,
+          "delta_cases_per_100k": -12.7
+        },
+        "Black": {
+          "tpr_mean": 0.56358,
+          "tpr_sd": 0.00424,
+          "delta_tpr": -0.02416,
+          "delta_cases_per_100k": -475.1
+        },
+        "Hispanic": {
+          "tpr_mean": 0.45944,
+          "tpr_sd": 0.00662,
+          "delta_tpr": -0.04865,
+          "delta_cases_per_100k": -659.8
+        },
+        "Asian": {
+          "tpr_mean": 0.32948,
+          "tpr_sd": 0.00617,
+          "delta_tpr": -0.00295,
+          "delta_cases_per_100k": -29.3
+        },
+        "Other": {
+          "tpr_mean": 0.52844,
+          "tpr_sd": 0.0063,
+          "delta_tpr": -0.051,
+          "delta_cases_per_100k": -811.4
+        },
+        "_overall": {
+          "tpr_mean": 0.60962,
+          "tpr_sd": 0.00277
+        }
+      },
+      "FedProx": {
+        "White": {
+          "tpr_mean": 0.65339,
+          "tpr_sd": 0.00384,
+          "delta_tpr": -0.00109,
+          "delta_cases_per_100k": -13.7
+        },
+        "Black": {
+          "tpr_mean": 0.56189,
+          "tpr_sd": 0.00714,
+          "delta_tpr": -0.02585,
+          "delta_cases_per_100k": -508.4
+        },
+        "Hispanic": {
+          "tpr_mean": 0.45694,
+          "tpr_sd": 0.00902,
+          "delta_tpr": -0.05115,
+          "delta_cases_per_100k": -693.7
+        },
+        "Asian": {
+          "tpr_mean": 0.33636,
+          "tpr_sd": 0.00625,
+          "delta_tpr": 0.00393,
+          "delta_cases_per_100k": 39.1
+        },
+        "Other": {
+          "tpr_mean": 0.5294,
+          "tpr_sd": 0.0091,
+          "delta_tpr": -0.05004,
+          "delta_cases_per_100k": -796.1
+        },
+        "_overall": {
+          "tpr_mean": 0.60939,
+          "tpr_sd": 0.00464
+        }
+      },
+      "SCAFFOLD": {
+        "White": {
+          "tpr_mean": 0.65556,
+          "tpr_sd": 0.00336,
+          "delta_tpr": 0.00108,
+          "delta_cases_per_100k": 13.6
+        },
+        "Black": {
+          "tpr_mean": 0.57134,
+          "tpr_sd": 0.00461,
+          "delta_tpr": -0.0164,
+          "delta_cases_per_100k": -322.5
+        },
+        "Hispanic": {
+          "tpr_mean": 0.46801,
+          "tpr_sd": 0.00615,
+          "delta_tpr": -0.04008,
+          "delta_cases_per_100k": -543.6
+        },
+        "Asian": {
+          "tpr_mean": 0.32809,
+          "tpr_sd": 0.00616,
+          "delta_tpr": -0.00434,
+          "delta_cases_per_100k": -43.2
+        },
+        "Other": {
+          "tpr_mean": 0.53975,
+          "tpr_sd": 0.00923,
+          "delta_tpr": -0.03969,
+          "delta_cases_per_100k": -631.5
+        },
+        "_overall": {
+          "tpr_mean": 0.61355,
+          "tpr_sd": 0.00388
+        }
+      },
+      "Centralised-full": {
+        "White": {
+          "tpr_mean": 0.65891,
+          "tpr_sd": 0.00187,
+          "delta_tpr": 0.00443,
+          "delta_cases_per_100k": 55.8
+        },
+        "Black": {
+          "tpr_mean": 0.59503,
+          "tpr_sd": 0.00952,
+          "delta_tpr": 0.00729,
+          "delta_cases_per_100k": 143.4
+        },
+        "Hispanic": {
+          "tpr_mean": 0.50825,
+          "tpr_sd": 0.01322,
+          "delta_tpr": 0.00016,
+          "delta_cases_per_100k": 2.2
+        },
+        "Asian": {
+          "tpr_mean": 0.33471,
+          "tpr_sd": 0.00635,
+          "delta_tpr": 0.00228,
+          "delta_cases_per_100k": 22.7
+        },
+        "Other": {
+          "tpr_mean": 0.57846,
+          "tpr_sd": 0.00764,
+          "delta_tpr": -0.00098,
+          "delta_cases_per_100k": -15.6
+        },
+        "_overall": {
+          "tpr_mean": 0.62522,
+          "tpr_sd": 0.00364
+        }
+      },
+      "Centralised-matched": {
+        "White": {
+          "tpr_mean": 0.65448,
+          "tpr_sd": 0.00308
+        },
+        "Black": {
+          "tpr_mean": 0.58774,
+          "tpr_sd": 0.00767
+        },
+        "Hispanic": {
+          "tpr_mean": 0.50809,
+          "tpr_sd": 0.01196
+        },
+        "Asian": {
+          "tpr_mean": 0.33243,
+          "tpr_sd": 0.00358
+        },
+        "Other": {
+          "tpr_mean": 0.57944,
+          "tpr_sd": 0.00744
+        },
+        "_overall": {
+          "tpr_mean": 0.62116,
+          "tpr_sd": 0.00322
+        }
+      },
+      "_white_black_tpr_gap": {
+        "reference": 0.06674,
+        "FedAvg": 0.08989,
+        "delta": 0.02315
+      }
+    }
+  }
+}

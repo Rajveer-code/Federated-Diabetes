@@ -1,0 +1,691 @@
+{
+  "design": "2x2 fully crossed: covariate separation (alpha in {0,1}) x label spread (0 vs 0.15). Node prevalences ordered with the covariate. Every cell subsampled to the same cohort size, same model, optimiser, rounds, local epochs and external test set.",
+  "motivation": "Neither single-factor sweep reproduced the fixed-capacity detection reversal, and the size-control arm of 52_covariate_sweep.py ruled out lack of power. A null main effect does not constrain an interaction, so the interaction is measured here rather than argued.",
+  "n_seeds": 10,
+  "per_node": 1972,
+  "cohort_n": 5916,
+  "spread": 0.15,
+  "flag_rate": 0.2,
+  "cells": {
+    "race_gap": {
+      "cell_00": 0.01696,
+      "cell_01": 0.01727,
+      "cell_10": 0.0064,
+      "cell_11": 0.00652,
+      "sd": [
+        0.00257,
+        0.00312,
+        0.00201,
+        0.00296
+      ]
+    },
+    "sens_gap": {
+      "cell_00": 0.07144,
+      "cell_01": 0.07225,
+      "cell_10": 0.0974,
+      "cell_11": 0.09454,
+      "sd": [
+        0.01098,
+        0.00765,
+        0.0194,
+        0.01862
+      ]
+    },
+    "sel_gap": {
+      "cell_00": -0.0022,
+      "cell_01": -0.00194,
+      "cell_10": 0.02509,
+      "cell_11": 0.02143,
+      "sd": [
+        0.00809,
+        0.00672,
+        0.01568,
+        0.01584
+      ]
+    },
+    "xauc_black_white": {
+      "cell_00": 0.73171,
+      "cell_01": 0.73081,
+      "cell_10": 0.70659,
+      "cell_11": 0.70747,
+      "sd": [
+        0.00531,
+        0.00334,
+        0.0065,
+        0.00982
+      ]
+    }
+  },
+  "effects": {
+    "race_gap": {
+      "main_covariate": -0.01065,
+      "main_label": 0.00022,
+      "interaction": -0.00019,
+      "se_interaction": 0.00171,
+      "both_vs_neither": -0.01043
+    },
+    "sens_gap": {
+      "main_covariate": 0.02413,
+      "main_label": -0.00102,
+      "interaction": -0.00366,
+      "se_interaction": 0.0095,
+      "both_vs_neither": 0.0231
+    },
+    "sel_gap": {
+      "main_covariate": 0.02533,
+      "main_label": -0.0017,
+      "interaction": -0.00393,
+      "se_interaction": 0.00779,
+      "both_vs_neither": 0.02363
+    },
+    "xauc_black_white": {
+      "main_covariate": -0.02423,
+      "main_label": -2e-05,
+      "interaction": 0.00178,
+      "se_interaction": 0.00422,
+      "both_vs_neither": -0.02424
+    }
+  },
+  "runs": [
+    {
+      "alpha": 0.0,
+      "spread": 0.0,
+      "seed": 42,
+      "cov_separation": 0.0121,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.0147,
+      "sens_gap": 0.08532,
+      "sel_gap": 0.00879,
+      "xauc_black_white": 0.72771
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.0,
+      "seed": 43,
+      "cov_separation": 0.015,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.01806,
+      "sens_gap": 0.06848,
+      "sel_gap": -0.00492,
+      "xauc_black_white": 0.73404
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.0,
+      "seed": 44,
+      "cov_separation": 0.0161,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.01156,
+      "sens_gap": 0.08135,
+      "sel_gap": 0.00755,
+      "xauc_black_white": 0.72437
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.0,
+      "seed": 45,
+      "cov_separation": 0.0163,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.0171,
+      "sens_gap": 0.06321,
+      "sel_gap": -0.00859,
+      "xauc_black_white": 0.7354
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.0,
+      "seed": 46,
+      "cov_separation": 0.0195,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.01924,
+      "sens_gap": 0.06269,
+      "sel_gap": -0.00831,
+      "xauc_black_white": 0.73981
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.0,
+      "seed": 47,
+      "cov_separation": 0.0211,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.0153,
+      "sens_gap": 0.06247,
+      "sel_gap": -0.0053,
+      "xauc_black_white": 0.73424
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.0,
+      "seed": 48,
+      "cov_separation": 0.0174,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.01662,
+      "sens_gap": 0.08097,
+      "sel_gap": 0.00514,
+      "xauc_black_white": 0.72807
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.0,
+      "seed": 49,
+      "cov_separation": 0.016,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.01799,
+      "sens_gap": 0.07408,
+      "sel_gap": -0.0018,
+      "xauc_black_white": 0.73038
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.0,
+      "seed": 50,
+      "cov_separation": 0.02,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.01854,
+      "sens_gap": 0.08273,
+      "sel_gap": 0.00196,
+      "xauc_black_white": 0.72531
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.0,
+      "seed": 51,
+      "cov_separation": 0.0172,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.02044,
+      "sens_gap": 0.05312,
+      "sel_gap": -0.01656,
+      "xauc_black_white": 0.7378
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.15,
+      "seed": 42,
+      "cov_separation": 0.0239,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01171,
+      "sens_gap": 0.08538,
+      "sel_gap": 0.01161,
+      "xauc_black_white": 0.72704
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.15,
+      "seed": 43,
+      "cov_separation": 0.0274,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01836,
+      "sens_gap": 0.07246,
+      "sel_gap": -0.00243,
+      "xauc_black_white": 0.72884
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.15,
+      "seed": 44,
+      "cov_separation": 0.0236,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01137,
+      "sens_gap": 0.07376,
+      "sel_gap": 0.00296,
+      "xauc_black_white": 0.72889
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.15,
+      "seed": 45,
+      "cov_separation": 0.0213,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01931,
+      "sens_gap": 0.07029,
+      "sel_gap": -0.0046,
+      "xauc_black_white": 0.73195
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.15,
+      "seed": 46,
+      "cov_separation": 0.0297,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01957,
+      "sens_gap": 0.05981,
+      "sel_gap": -0.01065,
+      "xauc_black_white": 0.73835
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.15,
+      "seed": 47,
+      "cov_separation": 0.0354,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01772,
+      "sens_gap": 0.06987,
+      "sel_gap": -0.00184,
+      "xauc_black_white": 0.73236
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.15,
+      "seed": 48,
+      "cov_separation": 0.0278,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01937,
+      "sens_gap": 0.07993,
+      "sel_gap": 0.00281,
+      "xauc_black_white": 0.72918
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.15,
+      "seed": 49,
+      "cov_separation": 0.0184,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01797,
+      "sens_gap": 0.06627,
+      "sel_gap": -0.00926,
+      "xauc_black_white": 0.73262
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.15,
+      "seed": 50,
+      "cov_separation": 0.0242,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01756,
+      "sens_gap": 0.07915,
+      "sel_gap": -5e-05,
+      "xauc_black_white": 0.72738
+    },
+    {
+      "alpha": 0.0,
+      "spread": 0.15,
+      "seed": 51,
+      "cov_separation": 0.0231,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01978,
+      "sens_gap": 0.06555,
+      "sel_gap": -0.00795,
+      "xauc_black_white": 0.73146
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.0,
+      "seed": 42,
+      "cov_separation": 0.1425,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.00763,
+      "sens_gap": 0.12082,
+      "sel_gap": 0.044,
+      "xauc_black_white": 0.69762
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.0,
+      "seed": 43,
+      "cov_separation": 0.145,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.00419,
+      "sens_gap": 0.0902,
+      "sel_gap": 0.02745,
+      "xauc_black_white": 0.70459
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.0,
+      "seed": 44,
+      "cov_separation": 0.1403,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.00452,
+      "sens_gap": 0.09747,
+      "sel_gap": 0.02815,
+      "xauc_black_white": 0.70877
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.0,
+      "seed": 45,
+      "cov_separation": 0.1391,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.00781,
+      "sens_gap": 0.05228,
+      "sel_gap": -0.00955,
+      "xauc_black_white": 0.71658
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.0,
+      "seed": 46,
+      "cov_separation": 0.1413,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.00988,
+      "sens_gap": 0.09874,
+      "sel_gap": 0.01834,
+      "xauc_black_white": 0.70395
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.0,
+      "seed": 47,
+      "cov_separation": 0.1366,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.00426,
+      "sens_gap": 0.09962,
+      "sel_gap": 0.02629,
+      "xauc_black_white": 0.70302
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.0,
+      "seed": 48,
+      "cov_separation": 0.1501,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.00538,
+      "sens_gap": 0.11873,
+      "sel_gap": 0.04521,
+      "xauc_black_white": 0.70398
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.0,
+      "seed": 49,
+      "cov_separation": 0.1372,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.00712,
+      "sens_gap": 0.08512,
+      "sel_gap": 0.01295,
+      "xauc_black_white": 0.70946
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.0,
+      "seed": 50,
+      "cov_separation": 0.1406,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.00484,
+      "sens_gap": 0.10725,
+      "sel_gap": 0.03111,
+      "xauc_black_white": 0.70048
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.0,
+      "seed": 51,
+      "cov_separation": 0.1371,
+      "node_prevalence": [
+        0.1902,
+        0.1902,
+        0.1902
+      ],
+      "race_gap": 0.00836,
+      "sens_gap": 0.10374,
+      "sel_gap": 0.02696,
+      "xauc_black_white": 0.71749
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.15,
+      "seed": 42,
+      "cov_separation": 0.1423,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01028,
+      "sens_gap": 0.10441,
+      "sel_gap": 0.02723,
+      "xauc_black_white": 0.70844
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.15,
+      "seed": 43,
+      "cov_separation": 0.1534,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.00741,
+      "sens_gap": 0.09782,
+      "sel_gap": 0.02554,
+      "xauc_black_white": 0.70517
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.15,
+      "seed": 44,
+      "cov_separation": 0.1464,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.00323,
+      "sens_gap": 0.08787,
+      "sel_gap": 0.02081,
+      "xauc_black_white": 0.71119
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.15,
+      "seed": 45,
+      "cov_separation": 0.1435,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.01024,
+      "sens_gap": 0.04819,
+      "sel_gap": -0.0136,
+      "xauc_black_white": 0.72381
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.15,
+      "seed": 46,
+      "cov_separation": 0.1443,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.00961,
+      "sens_gap": 0.09454,
+      "sel_gap": 0.01497,
+      "xauc_black_white": 0.70251
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.15,
+      "seed": 47,
+      "cov_separation": 0.1446,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.00573,
+      "sens_gap": 0.09385,
+      "sel_gap": 0.02057,
+      "xauc_black_white": 0.70902
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.15,
+      "seed": 48,
+      "cov_separation": 0.1544,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.0023,
+      "sens_gap": 0.12035,
+      "sel_gap": 0.05089,
+      "xauc_black_white": 0.68817
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.15,
+      "seed": 49,
+      "cov_separation": 0.1408,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.0036,
+      "sens_gap": 0.10416,
+      "sel_gap": 0.02746,
+      "xauc_black_white": 0.69888
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.15,
+      "seed": 50,
+      "cov_separation": 0.15,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.00521,
+      "sens_gap": 0.09226,
+      "sel_gap": 0.01634,
+      "xauc_black_white": 0.71
+    },
+    {
+      "alpha": 1.0,
+      "spread": 0.15,
+      "seed": 51,
+      "cov_separation": 0.147,
+      "node_prevalence": [
+        0.1151,
+        0.1902,
+        0.2652
+      ],
+      "race_gap": 0.00761,
+      "sens_gap": 0.10199,
+      "sel_gap": 0.02405,
+      "xauc_black_white": 0.7175
+    }
+  ]
+}

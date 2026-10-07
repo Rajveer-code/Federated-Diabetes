@@ -1,0 +1,1847 @@
+{
+  "design": "Nodes drawn from the pooled positive and negative pools separately, so P(X|Y=1) and P(X|Y=0) are identical across nodes and only P(Y) varies. Every row is used exactly once in every arm, so cohort size and pooled prevalence are invariant and the composition-matched centralised control is the correct reference throughout.",
+  "controls_held_fixed": [
+    "cohort rows",
+    "cohort size",
+    "pooled prevalence",
+    "n_clients=3",
+    "equal node sizes",
+    "model",
+    "optimiser",
+    "rounds",
+    "local epochs",
+    "external test set",
+    "P(X|Y)"
+  ],
+  "flag_rate": 0.2,
+  "n_seeds": 10,
+  "cohort_n": 11906,
+  "pooled_prevalence": 0.18999,
+  "reference_race_gap_matched_centralised": 0.01752,
+  "reference_sens_gap_matched_centralised": 0.07066,
+  "pearson_r_spread_vs_delta_auc_gap": 0.5575,
+  "pearson_r_spread_vs_delta_sens_gap": -0.1027,
+  "pearson_r_spread_vs_xauc_black_white": -0.1222,
+  "summary": {
+    "0.00": {
+      "spread_target": 0.0,
+      "spread_achieved": 0.0001,
+      "n_seeds": 10,
+      "race_gap_mean": 0.0178,
+      "race_gap_sd": 0.00101,
+      "delta_race_gap_vs_matched": 0.00028,
+      "sens_gap_mean": 0.06561,
+      "sens_gap_sd": 0.00871,
+      "delta_sens_gap_vs_matched": -0.00505,
+      "xauc_black_white_mean": 0.73428,
+      "xauc_black_white_sd": 0.00293
+    },
+    "0.07": {
+      "spread_target": 0.07,
+      "spread_achieved": 0.0699,
+      "n_seeds": 10,
+      "race_gap_mean": 0.01811,
+      "race_gap_sd": 0.00103,
+      "delta_race_gap_vs_matched": 0.00059,
+      "sens_gap_mean": 0.06521,
+      "sens_gap_sd": 0.00837,
+      "delta_sens_gap_vs_matched": -0.00545,
+      "xauc_black_white_mean": 0.7353,
+      "xauc_black_white_sd": 0.0031
+    },
+    "0.14": {
+      "spread_target": 0.14,
+      "spread_achieved": 0.14,
+      "n_seeds": 10,
+      "race_gap_mean": 0.0179,
+      "race_gap_sd": 0.00104,
+      "delta_race_gap_vs_matched": 0.00038,
+      "sens_gap_mean": 0.06774,
+      "sens_gap_sd": 0.00856,
+      "delta_sens_gap_vs_matched": -0.00292,
+      "xauc_black_white_mean": 0.73397,
+      "xauc_black_white_sd": 0.00363
+    },
+    "0.21": {
+      "spread_target": 0.21,
+      "spread_achieved": 0.21,
+      "n_seeds": 10,
+      "race_gap_mean": 0.01807,
+      "race_gap_sd": 0.00123,
+      "delta_race_gap_vs_matched": 0.00055,
+      "sens_gap_mean": 0.06705,
+      "sens_gap_sd": 0.00871,
+      "delta_sens_gap_vs_matched": -0.00361,
+      "xauc_black_white_mean": 0.73511,
+      "xauc_black_white_sd": 0.00333
+    },
+    "0.28": {
+      "spread_target": 0.28,
+      "spread_achieved": 0.2801,
+      "n_seeds": 10,
+      "race_gap_mean": 0.01838,
+      "race_gap_sd": 0.00125,
+      "delta_race_gap_vs_matched": 0.00086,
+      "sens_gap_mean": 0.06093,
+      "sens_gap_sd": 0.007,
+      "delta_sens_gap_vs_matched": -0.00973,
+      "xauc_black_white_mean": 0.73708,
+      "xauc_black_white_sd": 0.00215
+    },
+    "0.35": {
+      "spread_target": 0.35,
+      "spread_achieved": 0.3501,
+      "n_seeds": 10,
+      "race_gap_mean": 0.01802,
+      "race_gap_sd": 0.00245,
+      "delta_race_gap_vs_matched": 0.0005,
+      "sens_gap_mean": 0.06735,
+      "sens_gap_sd": 0.01009,
+      "delta_sens_gap_vs_matched": -0.00331,
+      "xauc_black_white_mean": 0.73225,
+      "xauc_black_white_sd": 0.00553
+    }
+  },
+  "runs": [
+    {
+      "spread_target": 0.0,
+      "spread_achieved": 0.0001,
+      "node_prevalence": [
+        0.19,
+        0.19,
+        0.1899
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 42,
+      "auc_external": 0.76497,
+      "auc_White": 0.76725,
+      "auc_Black": 0.74837,
+      "auc_Hispanic": 0.79662,
+      "auc_Asian": 0.80686,
+      "auc_Other": 0.77049,
+      "sens_White": 0.50977,
+      "sens_Black": 0.44593,
+      "sens_Hispanic": 0.36486,
+      "sens_Asian": 0.19728,
+      "sens_Other": 0.44378,
+      "race_gap": 0.01888,
+      "sens_gap": 0.06384,
+      "xauc_black_white": 0.73629
+    },
+    {
+      "spread_target": 0.0,
+      "spread_achieved": 0.0001,
+      "node_prevalence": [
+        0.19,
+        0.19,
+        0.1899
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 43,
+      "auc_external": 0.7654,
+      "auc_White": 0.76725,
+      "auc_Black": 0.74962,
+      "auc_Hispanic": 0.799,
+      "auc_Asian": 0.80578,
+      "auc_Other": 0.77178,
+      "sens_White": 0.50977,
+      "sens_Black": 0.45267,
+      "sens_Hispanic": 0.37184,
+      "sens_Asian": 0.20538,
+      "sens_Other": 0.45428,
+      "race_gap": 0.01763,
+      "sens_gap": 0.05711,
+      "xauc_black_white": 0.73893
+    },
+    {
+      "spread_target": 0.0,
+      "spread_achieved": 0.0001,
+      "node_prevalence": [
+        0.19,
+        0.19,
+        0.1899
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 44,
+      "auc_external": 0.76235,
+      "auc_White": 0.76449,
+      "auc_Black": 0.74778,
+      "auc_Hispanic": 0.79598,
+      "auc_Asian": 0.80479,
+      "auc_Other": 0.7685,
+      "sens_White": 0.50886,
+      "sens_Black": 0.43567,
+      "sens_Hispanic": 0.35216,
+      "sens_Asian": 0.20712,
+      "sens_Other": 0.44306,
+      "race_gap": 0.01671,
+      "sens_gap": 0.07319,
+      "xauc_black_white": 0.73053
+    },
+    {
+      "spread_target": 0.0,
+      "spread_achieved": 0.0001,
+      "node_prevalence": [
+        0.19,
+        0.19,
+        0.1899
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 45,
+      "auc_external": 0.76288,
+      "auc_White": 0.76484,
+      "auc_Black": 0.74833,
+      "auc_Hispanic": 0.79744,
+      "auc_Asian": 0.80631,
+      "auc_Other": 0.77073,
+      "sens_White": 0.50523,
+      "sens_Black": 0.43178,
+      "sens_Hispanic": 0.35077,
+      "sens_Asian": 0.2048,
+      "sens_Other": 0.44551,
+      "race_gap": 0.01651,
+      "sens_gap": 0.07345,
+      "xauc_black_white": 0.73115
+    },
+    {
+      "spread_target": 0.0,
+      "spread_achieved": 0.0001,
+      "node_prevalence": [
+        0.19,
+        0.19,
+        0.1899
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 46,
+      "auc_external": 0.76353,
+      "auc_White": 0.76545,
+      "auc_Black": 0.74663,
+      "auc_Hispanic": 0.79585,
+      "auc_Asian": 0.80467,
+      "auc_Other": 0.76918,
+      "sens_White": 0.50886,
+      "sens_Black": 0.44189,
+      "sens_Hispanic": 0.36417,
+      "sens_Asian": 0.20625,
+      "sens_Other": 0.44235,
+      "race_gap": 0.01882,
+      "sens_gap": 0.06697,
+      "xauc_black_white": 0.73398
+    },
+    {
+      "spread_target": 0.0,
+      "spread_achieved": 0.0001,
+      "node_prevalence": [
+        0.19,
+        0.19,
+        0.1899
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 47,
+      "auc_external": 0.76385,
+      "auc_White": 0.76606,
+      "auc_Black": 0.74897,
+      "auc_Hispanic": 0.79689,
+      "auc_Asian": 0.8067,
+      "auc_Other": 0.76974,
+      "sens_White": 0.50899,
+      "sens_Black": 0.43396,
+      "sens_Hispanic": 0.3504,
+      "sens_Asian": 0.19988,
+      "sens_Other": 0.44133,
+      "race_gap": 0.01709,
+      "sens_gap": 0.07503,
+      "xauc_black_white": 0.7319
+    },
+    {
+      "spread_target": 0.0,
+      "spread_achieved": 0.0001,
+      "node_prevalence": [
+        0.19,
+        0.19,
+        0.1899
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 48,
+      "auc_external": 0.76434,
+      "auc_White": 0.76641,
+      "auc_Black": 0.74955,
+      "auc_Hispanic": 0.79825,
+      "auc_Asian": 0.80741,
+      "auc_Other": 0.77035,
+      "sens_White": 0.51234,
+      "sens_Black": 0.44339,
+      "sens_Hispanic": 0.36631,
+      "sens_Asian": 0.20133,
+      "sens_Other": 0.44989,
+      "race_gap": 0.01686,
+      "sens_gap": 0.06895,
+      "xauc_black_white": 0.73365
+    },
+    {
+      "spread_target": 0.0,
+      "spread_achieved": 0.0001,
+      "node_prevalence": [
+        0.19,
+        0.19,
+        0.1899
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 49,
+      "auc_external": 0.76339,
+      "auc_White": 0.76515,
+      "auc_Black": 0.74574,
+      "auc_Hispanic": 0.79473,
+      "auc_Asian": 0.80477,
+      "auc_Other": 0.76957,
+      "sens_White": 0.50842,
+      "sens_Black": 0.4552,
+      "sens_Hispanic": 0.37895,
+      "sens_Asian": 0.20046,
+      "sens_Other": 0.45805,
+      "race_gap": 0.0194,
+      "sens_gap": 0.05321,
+      "xauc_black_white": 0.73706
+    },
+    {
+      "spread_target": 0.0,
+      "spread_achieved": 0.0001,
+      "node_prevalence": [
+        0.19,
+        0.19,
+        0.1899
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 50,
+      "auc_external": 0.76338,
+      "auc_White": 0.76553,
+      "auc_Black": 0.74745,
+      "auc_Hispanic": 0.79628,
+      "auc_Asian": 0.80634,
+      "auc_Other": 0.76934,
+      "sens_White": 0.50872,
+      "sens_Black": 0.43629,
+      "sens_Hispanic": 0.35543,
+      "sens_Asian": 0.20133,
+      "sens_Other": 0.44,
+      "race_gap": 0.01807,
+      "sens_gap": 0.07243,
+      "xauc_black_white": 0.73205
+    },
+    {
+      "spread_target": 0.0,
+      "spread_achieved": 0.0001,
+      "node_prevalence": [
+        0.19,
+        0.19,
+        0.1899
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 51,
+      "auc_external": 0.76255,
+      "auc_White": 0.76431,
+      "auc_Black": 0.7463,
+      "auc_Hispanic": 0.79378,
+      "auc_Asian": 0.80501,
+      "auc_Other": 0.7687,
+      "sens_White": 0.50469,
+      "sens_Black": 0.45272,
+      "sens_Hispanic": 0.37957,
+      "sens_Asian": 0.20885,
+      "sens_Other": 0.45387,
+      "race_gap": 0.01801,
+      "sens_gap": 0.05197,
+      "xauc_black_white": 0.73723
+    },
+    {
+      "spread_target": 0.07,
+      "spread_achieved": 0.0699,
+      "node_prevalence": [
+        0.155,
+        0.19,
+        0.2249
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 42,
+      "auc_external": 0.7656,
+      "auc_White": 0.76801,
+      "auc_Black": 0.74844,
+      "auc_Hispanic": 0.79576,
+      "auc_Asian": 0.80742,
+      "auc_Other": 0.77018,
+      "sens_White": 0.50749,
+      "sens_Black": 0.44189,
+      "sens_Hispanic": 0.36228,
+      "sens_Asian": 0.18802,
+      "sens_Other": 0.44755,
+      "race_gap": 0.01957,
+      "sens_gap": 0.06561,
+      "xauc_black_white": 0.73845
+    },
+    {
+      "spread_target": 0.07,
+      "spread_achieved": 0.0699,
+      "node_prevalence": [
+        0.155,
+        0.19,
+        0.2249
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 43,
+      "auc_external": 0.76481,
+      "auc_White": 0.76674,
+      "auc_Black": 0.75019,
+      "auc_Hispanic": 0.79892,
+      "auc_Asian": 0.80613,
+      "auc_Other": 0.77117,
+      "sens_White": 0.51081,
+      "sens_Black": 0.45728,
+      "sens_Hispanic": 0.37373,
+      "sens_Asian": 0.20133,
+      "sens_Other": 0.45652,
+      "race_gap": 0.01655,
+      "sens_gap": 0.05353,
+      "xauc_black_white": 0.7377
+    },
+    {
+      "spread_target": 0.07,
+      "spread_achieved": 0.0699,
+      "node_prevalence": [
+        0.155,
+        0.19,
+        0.2249
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 44,
+      "auc_external": 0.76406,
+      "auc_White": 0.7663,
+      "auc_Black": 0.74849,
+      "auc_Hispanic": 0.7964,
+      "auc_Asian": 0.80507,
+      "auc_Other": 0.7696,
+      "sens_White": 0.51035,
+      "sens_Black": 0.44365,
+      "sens_Hispanic": 0.35782,
+      "sens_Asian": 0.20075,
+      "sens_Other": 0.44653,
+      "race_gap": 0.01781,
+      "sens_gap": 0.0667,
+      "xauc_black_white": 0.7345
+    },
+    {
+      "spread_target": 0.07,
+      "spread_achieved": 0.0699,
+      "node_prevalence": [
+        0.155,
+        0.19,
+        0.2249
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 45,
+      "auc_external": 0.76473,
+      "auc_White": 0.76676,
+      "auc_Black": 0.74841,
+      "auc_Hispanic": 0.79872,
+      "auc_Asian": 0.80701,
+      "auc_Other": 0.77078,
+      "sens_White": 0.51038,
+      "sens_Black": 0.43251,
+      "sens_Hispanic": 0.35159,
+      "sens_Asian": 0.19902,
+      "sens_Other": 0.45224,
+      "race_gap": 0.01834,
+      "sens_gap": 0.07787,
+      "xauc_black_white": 0.73385
+    },
+    {
+      "spread_target": 0.07,
+      "spread_achieved": 0.0699,
+      "node_prevalence": [
+        0.155,
+        0.19,
+        0.2249
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 46,
+      "auc_external": 0.76101,
+      "auc_White": 0.76292,
+      "auc_Black": 0.74339,
+      "auc_Hispanic": 0.79387,
+      "auc_Asian": 0.80335,
+      "auc_Other": 0.76745,
+      "sens_White": 0.50393,
+      "sens_Black": 0.42852,
+      "sens_Hispanic": 0.36021,
+      "sens_Asian": 0.20393,
+      "sens_Other": 0.4449,
+      "race_gap": 0.01952,
+      "sens_gap": 0.07541,
+      "xauc_black_white": 0.72943
+    },
+    {
+      "spread_target": 0.07,
+      "spread_achieved": 0.0699,
+      "node_prevalence": [
+        0.155,
+        0.19,
+        0.2249
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 47,
+      "auc_external": 0.7642,
+      "auc_White": 0.76623,
+      "auc_Black": 0.74893,
+      "auc_Hispanic": 0.79724,
+      "auc_Asian": 0.80772,
+      "auc_Other": 0.77018,
+      "sens_White": 0.50949,
+      "sens_Black": 0.43759,
+      "sens_Hispanic": 0.35524,
+      "sens_Asian": 0.19988,
+      "sens_Other": 0.44184,
+      "race_gap": 0.0173,
+      "sens_gap": 0.07191,
+      "xauc_black_white": 0.73376
+    },
+    {
+      "spread_target": 0.07,
+      "spread_achieved": 0.0699,
+      "node_prevalence": [
+        0.155,
+        0.19,
+        0.2249
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 48,
+      "auc_external": 0.76494,
+      "auc_White": 0.76679,
+      "auc_Black": 0.74823,
+      "auc_Hispanic": 0.79804,
+      "auc_Asian": 0.80662,
+      "auc_Other": 0.77081,
+      "sens_White": 0.51286,
+      "sens_Black": 0.44764,
+      "sens_Hispanic": 0.37303,
+      "sens_Asian": 0.20336,
+      "sens_Other": 0.4501,
+      "race_gap": 0.01856,
+      "sens_gap": 0.06522,
+      "xauc_black_white": 0.73624
+    },
+    {
+      "spread_target": 0.07,
+      "spread_achieved": 0.0699,
+      "node_prevalence": [
+        0.155,
+        0.19,
+        0.2249
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 49,
+      "auc_external": 0.76472,
+      "auc_White": 0.7669,
+      "auc_Black": 0.74903,
+      "auc_Hispanic": 0.79698,
+      "auc_Asian": 0.80731,
+      "auc_Other": 0.77018,
+      "sens_White": 0.5096,
+      "sens_Black": 0.45401,
+      "sens_Hispanic": 0.37083,
+      "sens_Asian": 0.19815,
+      "sens_Other": 0.45683,
+      "race_gap": 0.01787,
+      "sens_gap": 0.05558,
+      "xauc_black_white": 0.73665
+    },
+    {
+      "spread_target": 0.07,
+      "spread_achieved": 0.0699,
+      "node_prevalence": [
+        0.155,
+        0.19,
+        0.2249
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 50,
+      "auc_external": 0.76402,
+      "auc_White": 0.76633,
+      "auc_Black": 0.7495,
+      "auc_Hispanic": 0.79759,
+      "auc_Asian": 0.80708,
+      "auc_Other": 0.77022,
+      "sens_White": 0.51182,
+      "sens_Black": 0.44728,
+      "sens_Hispanic": 0.36008,
+      "sens_Asian": 0.19931,
+      "sens_Other": 0.44031,
+      "race_gap": 0.01683,
+      "sens_gap": 0.06455,
+      "xauc_black_white": 0.73254
+    },
+    {
+      "spread_target": 0.07,
+      "spread_achieved": 0.0699,
+      "node_prevalence": [
+        0.155,
+        0.19,
+        0.2249
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 51,
+      "auc_external": 0.76498,
+      "auc_White": 0.76698,
+      "auc_Black": 0.74825,
+      "auc_Hispanic": 0.79605,
+      "auc_Asian": 0.80742,
+      "auc_Other": 0.77023,
+      "sens_White": 0.50739,
+      "sens_Black": 0.45163,
+      "sens_Hispanic": 0.3748,
+      "sens_Asian": 0.20133,
+      "sens_Other": 0.45489,
+      "race_gap": 0.01873,
+      "sens_gap": 0.05576,
+      "xauc_black_white": 0.73986
+    },
+    {
+      "spread_target": 0.14,
+      "spread_achieved": 0.14,
+      "node_prevalence": [
+        0.12,
+        0.19,
+        0.2599
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 42,
+      "auc_external": 0.76504,
+      "auc_White": 0.76733,
+      "auc_Black": 0.7478,
+      "auc_Hispanic": 0.79555,
+      "auc_Asian": 0.80707,
+      "auc_Other": 0.77,
+      "sens_White": 0.50632,
+      "sens_Black": 0.44381,
+      "sens_Hispanic": 0.36492,
+      "sens_Asian": 0.18976,
+      "sens_Other": 0.4501,
+      "race_gap": 0.01952,
+      "sens_gap": 0.06251,
+      "xauc_black_white": 0.73764
+    },
+    {
+      "spread_target": 0.14,
+      "spread_achieved": 0.14,
+      "node_prevalence": [
+        0.12,
+        0.19,
+        0.2599
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 43,
+      "auc_external": 0.76461,
+      "auc_White": 0.76665,
+      "auc_Black": 0.74853,
+      "auc_Hispanic": 0.79812,
+      "auc_Asian": 0.80661,
+      "auc_Other": 0.77029,
+      "sens_White": 0.51299,
+      "sens_Black": 0.45246,
+      "sens_Hispanic": 0.36643,
+      "sens_Asian": 0.19728,
+      "sens_Other": 0.45438,
+      "race_gap": 0.01812,
+      "sens_gap": 0.06053,
+      "xauc_black_white": 0.73686
+    },
+    {
+      "spread_target": 0.14,
+      "spread_achieved": 0.14,
+      "node_prevalence": [
+        0.12,
+        0.19,
+        0.2599
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 44,
+      "auc_external": 0.76181,
+      "auc_White": 0.76411,
+      "auc_Black": 0.74737,
+      "auc_Hispanic": 0.79589,
+      "auc_Asian": 0.80509,
+      "auc_Other": 0.76808,
+      "sens_White": 0.5071,
+      "sens_Black": 0.42935,
+      "sens_Hispanic": 0.35235,
+      "sens_Asian": 0.20509,
+      "sens_Other": 0.43776,
+      "race_gap": 0.01674,
+      "sens_gap": 0.07775,
+      "xauc_black_white": 0.72686
+    },
+    {
+      "spread_target": 0.14,
+      "spread_achieved": 0.14,
+      "node_prevalence": [
+        0.12,
+        0.19,
+        0.2599
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 45,
+      "auc_external": 0.76431,
+      "auc_White": 0.76652,
+      "auc_Black": 0.74906,
+      "auc_Hispanic": 0.79812,
+      "auc_Asian": 0.80769,
+      "auc_Other": 0.77046,
+      "sens_White": 0.50952,
+      "sens_Black": 0.42992,
+      "sens_Hispanic": 0.35329,
+      "sens_Asian": 0.20133,
+      "sens_Other": 0.44755,
+      "race_gap": 0.01746,
+      "sens_gap": 0.0796,
+      "xauc_black_white": 0.73112
+    },
+    {
+      "spread_target": 0.14,
+      "spread_achieved": 0.14,
+      "node_prevalence": [
+        0.12,
+        0.19,
+        0.2599
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 46,
+      "auc_external": 0.76331,
+      "auc_White": 0.7653,
+      "auc_Black": 0.74683,
+      "auc_Hispanic": 0.79675,
+      "auc_Asian": 0.80525,
+      "auc_Other": 0.7693,
+      "sens_White": 0.50595,
+      "sens_Black": 0.42665,
+      "sens_Hispanic": 0.35021,
+      "sens_Asian": 0.20538,
+      "sens_Other": 0.43358,
+      "race_gap": 0.01847,
+      "sens_gap": 0.0793,
+      "xauc_black_white": 0.73233
+    },
+    {
+      "spread_target": 0.14,
+      "spread_achieved": 0.14,
+      "node_prevalence": [
+        0.12,
+        0.19,
+        0.2599
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 47,
+      "auc_external": 0.76493,
+      "auc_White": 0.76722,
+      "auc_Black": 0.74882,
+      "auc_Hispanic": 0.79681,
+      "auc_Asian": 0.80618,
+      "auc_Other": 0.77028,
+      "sens_White": 0.51397,
+      "sens_Black": 0.44821,
+      "sens_Hispanic": 0.36618,
+      "sens_Asian": 0.19815,
+      "sens_Other": 0.44999,
+      "race_gap": 0.0184,
+      "sens_gap": 0.06576,
+      "xauc_black_white": 0.73508
+    },
+    {
+      "spread_target": 0.14,
+      "spread_achieved": 0.14,
+      "node_prevalence": [
+        0.12,
+        0.19,
+        0.2599
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 48,
+      "auc_external": 0.76477,
+      "auc_White": 0.76682,
+      "auc_Black": 0.74902,
+      "auc_Hispanic": 0.79752,
+      "auc_Asian": 0.80701,
+      "auc_Other": 0.77031,
+      "sens_White": 0.51383,
+      "sens_Black": 0.44971,
+      "sens_Hispanic": 0.36976,
+      "sens_Asian": 0.19844,
+      "sens_Other": 0.45407,
+      "race_gap": 0.0178,
+      "sens_gap": 0.06412,
+      "xauc_black_white": 0.73567
+    },
+    {
+      "spread_target": 0.14,
+      "spread_achieved": 0.14,
+      "node_prevalence": [
+        0.12,
+        0.19,
+        0.2599
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 49,
+      "auc_external": 0.7627,
+      "auc_White": 0.7647,
+      "auc_Black": 0.747,
+      "auc_Hispanic": 0.79384,
+      "auc_Asian": 0.80386,
+      "auc_Other": 0.76919,
+      "sens_White": 0.50617,
+      "sens_Black": 0.44971,
+      "sens_Hispanic": 0.36693,
+      "sens_Asian": 0.19902,
+      "sens_Other": 0.4503,
+      "race_gap": 0.0177,
+      "sens_gap": 0.05646,
+      "xauc_black_white": 0.73519
+    },
+    {
+      "spread_target": 0.14,
+      "spread_achieved": 0.14,
+      "node_prevalence": [
+        0.12,
+        0.19,
+        0.2599
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 50,
+      "auc_external": 0.76335,
+      "auc_White": 0.76536,
+      "auc_Black": 0.74946,
+      "auc_Hispanic": 0.79709,
+      "auc_Asian": 0.80713,
+      "auc_Other": 0.77045,
+      "sens_White": 0.50924,
+      "sens_Black": 0.43836,
+      "sens_Hispanic": 0.35631,
+      "sens_Asian": 0.20972,
+      "sens_Other": 0.44184,
+      "race_gap": 0.0159,
+      "sens_gap": 0.07088,
+      "xauc_black_white": 0.73066
+    },
+    {
+      "spread_target": 0.14,
+      "spread_achieved": 0.14,
+      "node_prevalence": [
+        0.12,
+        0.19,
+        0.2599
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 51,
+      "auc_external": 0.76522,
+      "auc_White": 0.76718,
+      "auc_Black": 0.74831,
+      "auc_Hispanic": 0.7956,
+      "auc_Asian": 0.80784,
+      "auc_Other": 0.77098,
+      "sens_White": 0.50532,
+      "sens_Black": 0.44479,
+      "sens_Hispanic": 0.37637,
+      "sens_Asian": 0.20914,
+      "sens_Other": 0.44826,
+      "race_gap": 0.01887,
+      "sens_gap": 0.06053,
+      "xauc_black_white": 0.73833
+    },
+    {
+      "spread_target": 0.21,
+      "spread_achieved": 0.21,
+      "node_prevalence": [
+        0.0849,
+        0.19,
+        0.295
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 42,
+      "auc_external": 0.76509,
+      "auc_White": 0.76743,
+      "auc_Black": 0.75053,
+      "auc_Hispanic": 0.79832,
+      "auc_Asian": 0.80854,
+      "auc_Other": 0.77019,
+      "sens_White": 0.50888,
+      "sens_Black": 0.43904,
+      "sens_Hispanic": 0.36033,
+      "sens_Asian": 0.19352,
+      "sens_Other": 0.4451,
+      "race_gap": 0.0169,
+      "sens_gap": 0.06984,
+      "xauc_black_white": 0.73455
+    },
+    {
+      "spread_target": 0.21,
+      "spread_achieved": 0.21,
+      "node_prevalence": [
+        0.0849,
+        0.19,
+        0.295
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 43,
+      "auc_external": 0.76284,
+      "auc_White": 0.76436,
+      "auc_Black": 0.74611,
+      "auc_Hispanic": 0.7962,
+      "auc_Asian": 0.80472,
+      "auc_Other": 0.76979,
+      "sens_White": 0.50485,
+      "sens_Black": 0.45184,
+      "sens_Hispanic": 0.36976,
+      "sens_Asian": 0.20046,
+      "sens_Other": 0.45163,
+      "race_gap": 0.01825,
+      "sens_gap": 0.05301,
+      "xauc_black_white": 0.73904
+    },
+    {
+      "spread_target": 0.21,
+      "spread_achieved": 0.21,
+      "node_prevalence": [
+        0.0849,
+        0.19,
+        0.295
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 44,
+      "auc_external": 0.76114,
+      "auc_White": 0.76314,
+      "auc_Black": 0.74587,
+      "auc_Hispanic": 0.79424,
+      "auc_Asian": 0.80428,
+      "auc_Other": 0.76784,
+      "sens_White": 0.50306,
+      "sens_Black": 0.42878,
+      "sens_Hispanic": 0.35354,
+      "sens_Asian": 0.21174,
+      "sens_Other": 0.4448,
+      "race_gap": 0.01728,
+      "sens_gap": 0.07428,
+      "xauc_black_white": 0.73021
+    },
+    {
+      "spread_target": 0.21,
+      "spread_achieved": 0.21,
+      "node_prevalence": [
+        0.0849,
+        0.19,
+        0.295
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 45,
+      "auc_external": 0.76537,
+      "auc_White": 0.76728,
+      "auc_Black": 0.75065,
+      "auc_Hispanic": 0.79944,
+      "auc_Asian": 0.80687,
+      "auc_Other": 0.77216,
+      "sens_White": 0.50975,
+      "sens_Black": 0.43505,
+      "sens_Hispanic": 0.35845,
+      "sens_Asian": 0.20943,
+      "sens_Other": 0.44622,
+      "race_gap": 0.01664,
+      "sens_gap": 0.0747,
+      "xauc_black_white": 0.73462
+    },
+    {
+      "spread_target": 0.21,
+      "spread_achieved": 0.21,
+      "node_prevalence": [
+        0.0849,
+        0.19,
+        0.295
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 46,
+      "auc_external": 0.7623,
+      "auc_White": 0.76425,
+      "auc_Black": 0.74655,
+      "auc_Hispanic": 0.79604,
+      "auc_Asian": 0.80624,
+      "auc_Other": 0.76934,
+      "sens_White": 0.50628,
+      "sens_Black": 0.43272,
+      "sens_Hispanic": 0.35329,
+      "sens_Asian": 0.20364,
+      "sens_Other": 0.43613,
+      "race_gap": 0.0177,
+      "sens_gap": 0.07357,
+      "xauc_black_white": 0.73142
+    },
+    {
+      "spread_target": 0.21,
+      "spread_achieved": 0.21,
+      "node_prevalence": [
+        0.0849,
+        0.19,
+        0.295
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 47,
+      "auc_external": 0.76379,
+      "auc_White": 0.76607,
+      "auc_Black": 0.74806,
+      "auc_Hispanic": 0.79749,
+      "auc_Asian": 0.80652,
+      "auc_Other": 0.7699,
+      "sens_White": 0.51011,
+      "sens_Black": 0.43401,
+      "sens_Hispanic": 0.34694,
+      "sens_Asian": 0.19815,
+      "sens_Other": 0.4451,
+      "race_gap": 0.01801,
+      "sens_gap": 0.0761,
+      "xauc_black_white": 0.73154
+    },
+    {
+      "spread_target": 0.21,
+      "spread_achieved": 0.21,
+      "node_prevalence": [
+        0.0849,
+        0.19,
+        0.295
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 48,
+      "auc_external": 0.76416,
+      "auc_White": 0.76623,
+      "auc_Black": 0.74779,
+      "auc_Hispanic": 0.79659,
+      "auc_Asian": 0.80595,
+      "auc_Other": 0.76908,
+      "sens_White": 0.51259,
+      "sens_Black": 0.4407,
+      "sens_Hispanic": 0.36398,
+      "sens_Asian": 0.19902,
+      "sens_Other": 0.44378,
+      "race_gap": 0.01844,
+      "sens_gap": 0.07189,
+      "xauc_black_white": 0.73562
+    },
+    {
+      "spread_target": 0.21,
+      "spread_achieved": 0.21,
+      "node_prevalence": [
+        0.0849,
+        0.19,
+        0.295
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 49,
+      "auc_external": 0.764,
+      "auc_White": 0.76636,
+      "auc_Black": 0.74655,
+      "auc_Hispanic": 0.7935,
+      "auc_Asian": 0.80432,
+      "auc_Other": 0.76955,
+      "sens_White": 0.5055,
+      "sens_Black": 0.44484,
+      "sens_Hispanic": 0.36014,
+      "sens_Asian": 0.19178,
+      "sens_Other": 0.44765,
+      "race_gap": 0.01981,
+      "sens_gap": 0.06066,
+      "xauc_black_white": 0.73691
+    },
+    {
+      "spread_target": 0.21,
+      "spread_achieved": 0.21,
+      "node_prevalence": [
+        0.0849,
+        0.19,
+        0.295
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 50,
+      "auc_external": 0.76576,
+      "auc_White": 0.76779,
+      "auc_Black": 0.75057,
+      "auc_Hispanic": 0.79796,
+      "auc_Asian": 0.80798,
+      "auc_Other": 0.77087,
+      "sens_White": 0.51,
+      "sens_Black": 0.44837,
+      "sens_Hispanic": 0.36593,
+      "sens_Asian": 0.20654,
+      "sens_Other": 0.44225,
+      "race_gap": 0.01723,
+      "sens_gap": 0.06164,
+      "xauc_black_white": 0.73695
+    },
+    {
+      "spread_target": 0.21,
+      "spread_achieved": 0.21,
+      "node_prevalence": [
+        0.0849,
+        0.19,
+        0.295
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 51,
+      "auc_external": 0.76558,
+      "auc_White": 0.76784,
+      "auc_Black": 0.74742,
+      "auc_Hispanic": 0.79509,
+      "auc_Asian": 0.80625,
+      "auc_Other": 0.77054,
+      "sens_White": 0.50593,
+      "sens_Black": 0.45111,
+      "sens_Hispanic": 0.37473,
+      "sens_Asian": 0.20162,
+      "sens_Other": 0.45193,
+      "race_gap": 0.02042,
+      "sens_gap": 0.05482,
+      "xauc_black_white": 0.74027
+    },
+    {
+      "spread_target": 0.28,
+      "spread_achieved": 0.2801,
+      "node_prevalence": [
+        0.0499,
+        0.19,
+        0.33
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 42,
+      "auc_external": 0.76376,
+      "auc_White": 0.76578,
+      "auc_Black": 0.74638,
+      "auc_Hispanic": 0.79515,
+      "auc_Asian": 0.80617,
+      "auc_Other": 0.76925,
+      "sens_White": 0.50177,
+      "sens_Black": 0.44862,
+      "sens_Hispanic": 0.36901,
+      "sens_Asian": 0.19178,
+      "sens_Other": 0.45316,
+      "race_gap": 0.0194,
+      "sens_gap": 0.05314,
+      "xauc_black_white": 0.73814
+    },
+    {
+      "spread_target": 0.28,
+      "spread_achieved": 0.2801,
+      "node_prevalence": [
+        0.0499,
+        0.19,
+        0.33
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 43,
+      "auc_external": 0.76421,
+      "auc_White": 0.76589,
+      "auc_Black": 0.74779,
+      "auc_Hispanic": 0.79667,
+      "auc_Asian": 0.80555,
+      "auc_Other": 0.77085,
+      "sens_White": 0.51175,
+      "sens_Black": 0.45707,
+      "sens_Hispanic": 0.3697,
+      "sens_Asian": 0.19757,
+      "sens_Other": 0.45254,
+      "race_gap": 0.0181,
+      "sens_gap": 0.05468,
+      "xauc_black_white": 0.73902
+    },
+    {
+      "spread_target": 0.28,
+      "spread_achieved": 0.2801,
+      "node_prevalence": [
+        0.0499,
+        0.19,
+        0.33
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 44,
+      "auc_external": 0.76361,
+      "auc_White": 0.76555,
+      "auc_Black": 0.74615,
+      "auc_Hispanic": 0.79481,
+      "auc_Asian": 0.80653,
+      "auc_Other": 0.76907,
+      "sens_White": 0.50375,
+      "sens_Black": 0.43961,
+      "sens_Hispanic": 0.36423,
+      "sens_Asian": 0.20943,
+      "sens_Other": 0.44704,
+      "race_gap": 0.0194,
+      "sens_gap": 0.06414,
+      "xauc_black_white": 0.73561
+    },
+    {
+      "spread_target": 0.28,
+      "spread_achieved": 0.2801,
+      "node_prevalence": [
+        0.0499,
+        0.19,
+        0.33
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 45,
+      "auc_external": 0.76456,
+      "auc_White": 0.76656,
+      "auc_Black": 0.74966,
+      "auc_Hispanic": 0.79888,
+      "auc_Asian": 0.80633,
+      "auc_Other": 0.77168,
+      "sens_White": 0.50797,
+      "sens_Black": 0.43914,
+      "sens_Hispanic": 0.35876,
+      "sens_Asian": 0.19931,
+      "sens_Other": 0.44582,
+      "race_gap": 0.0169,
+      "sens_gap": 0.06883,
+      "xauc_black_white": 0.73553
+    },
+    {
+      "spread_target": 0.28,
+      "spread_achieved": 0.2801,
+      "node_prevalence": [
+        0.0499,
+        0.19,
+        0.33
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 46,
+      "auc_external": 0.76267,
+      "auc_White": 0.76452,
+      "auc_Black": 0.74737,
+      "auc_Hispanic": 0.7961,
+      "auc_Asian": 0.80544,
+      "auc_Other": 0.76976,
+      "sens_White": 0.50838,
+      "sens_Black": 0.44064,
+      "sens_Hispanic": 0.35801,
+      "sens_Asian": 0.2022,
+      "sens_Other": 0.44021,
+      "race_gap": 0.01715,
+      "sens_gap": 0.06774,
+      "xauc_black_white": 0.73417
+    },
+    {
+      "spread_target": 0.28,
+      "spread_achieved": 0.2801,
+      "node_prevalence": [
+        0.0499,
+        0.19,
+        0.33
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 47,
+      "auc_external": 0.76428,
+      "auc_White": 0.7661,
+      "auc_Black": 0.74739,
+      "auc_Hispanic": 0.7969,
+      "auc_Asian": 0.80571,
+      "auc_Other": 0.77028,
+      "sens_White": 0.51226,
+      "sens_Black": 0.44598,
+      "sens_Hispanic": 0.3592,
+      "sens_Asian": 0.19757,
+      "sens_Other": 0.43705,
+      "race_gap": 0.01871,
+      "sens_gap": 0.06627,
+      "xauc_black_white": 0.73663
+    },
+    {
+      "spread_target": 0.28,
+      "spread_achieved": 0.2801,
+      "node_prevalence": [
+        0.0499,
+        0.19,
+        0.33
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 48,
+      "auc_external": 0.76327,
+      "auc_White": 0.76525,
+      "auc_Black": 0.74866,
+      "auc_Hispanic": 0.79727,
+      "auc_Asian": 0.80614,
+      "auc_Other": 0.76929,
+      "sens_White": 0.51304,
+      "sens_Black": 0.44469,
+      "sens_Hispanic": 0.35442,
+      "sens_Asian": 0.1941,
+      "sens_Other": 0.44357,
+      "race_gap": 0.01659,
+      "sens_gap": 0.06836,
+      "xauc_black_white": 0.73416
+    },
+    {
+      "spread_target": 0.28,
+      "spread_achieved": 0.2801,
+      "node_prevalence": [
+        0.0499,
+        0.19,
+        0.33
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 49,
+      "auc_external": 0.76452,
+      "auc_White": 0.76643,
+      "auc_Black": 0.74716,
+      "auc_Hispanic": 0.79562,
+      "auc_Asian": 0.80518,
+      "auc_Other": 0.77084,
+      "sens_White": 0.50692,
+      "sens_Black": 0.45676,
+      "sens_Hispanic": 0.37247,
+      "sens_Asian": 0.19555,
+      "sens_Other": 0.4606,
+      "race_gap": 0.01927,
+      "sens_gap": 0.05016,
+      "xauc_black_white": 0.74016
+    },
+    {
+      "spread_target": 0.28,
+      "spread_achieved": 0.2801,
+      "node_prevalence": [
+        0.0499,
+        0.19,
+        0.33
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 50,
+      "auc_external": 0.76561,
+      "auc_White": 0.76746,
+      "auc_Black": 0.74949,
+      "auc_Hispanic": 0.79861,
+      "auc_Asian": 0.80622,
+      "auc_Other": 0.77142,
+      "sens_White": 0.50947,
+      "sens_Black": 0.44997,
+      "sens_Hispanic": 0.36706,
+      "sens_Asian": 0.20104,
+      "sens_Other": 0.45163,
+      "race_gap": 0.01797,
+      "sens_gap": 0.0595,
+      "xauc_black_white": 0.73913
+    },
+    {
+      "spread_target": 0.28,
+      "spread_achieved": 0.2801,
+      "node_prevalence": [
+        0.0499,
+        0.19,
+        0.33
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 51,
+      "auc_external": 0.76428,
+      "auc_White": 0.76637,
+      "auc_Black": 0.74603,
+      "auc_Hispanic": 0.79416,
+      "auc_Asian": 0.80734,
+      "auc_Other": 0.7695,
+      "sens_White": 0.50198,
+      "sens_Black": 0.44552,
+      "sens_Hispanic": 0.37882,
+      "sens_Asian": 0.20712,
+      "sens_Other": 0.4501,
+      "race_gap": 0.02034,
+      "sens_gap": 0.05646,
+      "xauc_black_white": 0.73821
+    },
+    {
+      "spread_target": 0.35,
+      "spread_achieved": 0.3501,
+      "node_prevalence": [
+        0.0149,
+        0.19,
+        0.365
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 42,
+      "auc_external": 0.76281,
+      "auc_White": 0.765,
+      "auc_Black": 0.7436,
+      "auc_Hispanic": 0.79374,
+      "auc_Asian": 0.80433,
+      "auc_Other": 0.76819,
+      "sens_White": 0.50339,
+      "sens_Black": 0.43712,
+      "sens_Hispanic": 0.357,
+      "sens_Asian": 0.18774,
+      "sens_Other": 0.4399,
+      "race_gap": 0.0214,
+      "sens_gap": 0.06626,
+      "xauc_black_white": 0.73584
+    },
+    {
+      "spread_target": 0.35,
+      "spread_achieved": 0.3501,
+      "node_prevalence": [
+        0.0149,
+        0.19,
+        0.365
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 43,
+      "auc_external": 0.76271,
+      "auc_White": 0.76375,
+      "auc_Black": 0.74687,
+      "auc_Hispanic": 0.7976,
+      "auc_Asian": 0.80546,
+      "auc_Other": 0.77013,
+      "sens_White": 0.5113,
+      "sens_Black": 0.46179,
+      "sens_Hispanic": 0.37612,
+      "sens_Asian": 0.2103,
+      "sens_Other": 0.45397,
+      "race_gap": 0.01688,
+      "sens_gap": 0.04951,
+      "xauc_black_white": 0.73682
+    },
+    {
+      "spread_target": 0.35,
+      "spread_achieved": 0.3501,
+      "node_prevalence": [
+        0.0149,
+        0.19,
+        0.365
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 44,
+      "auc_external": 0.75811,
+      "auc_White": 0.7598,
+      "auc_Black": 0.74019,
+      "auc_Hispanic": 0.79086,
+      "auc_Asian": 0.80037,
+      "auc_Other": 0.76485,
+      "sens_White": 0.49587,
+      "sens_Black": 0.41717,
+      "sens_Hispanic": 0.357,
+      "sens_Asian": 0.21117,
+      "sens_Other": 0.43134,
+      "race_gap": 0.01961,
+      "sens_gap": 0.0787,
+      "xauc_black_white": 0.72584
+    },
+    {
+      "spread_target": 0.35,
+      "spread_achieved": 0.3501,
+      "node_prevalence": [
+        0.0149,
+        0.19,
+        0.365
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 45,
+      "auc_external": 0.76217,
+      "auc_White": 0.76441,
+      "auc_Black": 0.74882,
+      "auc_Hispanic": 0.79823,
+      "auc_Asian": 0.80728,
+      "auc_Other": 0.76942,
+      "sens_White": 0.50489,
+      "sens_Black": 0.42028,
+      "sens_Hispanic": 0.34096,
+      "sens_Asian": 0.19728,
+      "sens_Other": 0.43582,
+      "race_gap": 0.01559,
+      "sens_gap": 0.08461,
+      "xauc_black_white": 0.72629
+    },
+    {
+      "spread_target": 0.35,
+      "spread_achieved": 0.3501,
+      "node_prevalence": [
+        0.0149,
+        0.19,
+        0.365
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 46,
+      "auc_external": 0.75657,
+      "auc_White": 0.75795,
+      "auc_Black": 0.73946,
+      "auc_Hispanic": 0.79062,
+      "auc_Asian": 0.80114,
+      "auc_Other": 0.7653,
+      "sens_White": 0.49146,
+      "sens_Black": 0.42018,
+      "sens_Hispanic": 0.34864,
+      "sens_Asian": 0.20625,
+      "sens_Other": 0.42328,
+      "race_gap": 0.01849,
+      "sens_gap": 0.07129,
+      "xauc_black_white": 0.7275
+    },
+    {
+      "spread_target": 0.35,
+      "spread_achieved": 0.3501,
+      "node_prevalence": [
+        0.0149,
+        0.19,
+        0.365
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 47,
+      "auc_external": 0.76253,
+      "auc_White": 0.76412,
+      "auc_Black": 0.74577,
+      "auc_Hispanic": 0.79546,
+      "auc_Asian": 0.80343,
+      "auc_Other": 0.76922,
+      "sens_White": 0.50541,
+      "sens_Black": 0.44401,
+      "sens_Hispanic": 0.35159,
+      "sens_Asian": 0.19555,
+      "sens_Other": 0.43164,
+      "race_gap": 0.01835,
+      "sens_gap": 0.0614,
+      "xauc_black_white": 0.73495
+    },
+    {
+      "spread_target": 0.35,
+      "spread_achieved": 0.3501,
+      "node_prevalence": [
+        0.0149,
+        0.19,
+        0.365
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 48,
+      "auc_external": 0.76474,
+      "auc_White": 0.7674,
+      "auc_Black": 0.74724,
+      "auc_Hispanic": 0.79659,
+      "auc_Asian": 0.80568,
+      "auc_Other": 0.76913,
+      "sens_White": 0.50993,
+      "sens_Black": 0.43966,
+      "sens_Hispanic": 0.35863,
+      "sens_Asian": 0.19873,
+      "sens_Other": 0.44734,
+      "race_gap": 0.02016,
+      "sens_gap": 0.07027,
+      "xauc_black_white": 0.73471
+    },
+    {
+      "spread_target": 0.35,
+      "spread_achieved": 0.3501,
+      "node_prevalence": [
+        0.0149,
+        0.19,
+        0.365
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 49,
+      "auc_external": 0.75828,
+      "auc_White": 0.75981,
+      "auc_Black": 0.74689,
+      "auc_Hispanic": 0.79499,
+      "auc_Asian": 0.80485,
+      "auc_Other": 0.7672,
+      "sens_White": 0.49384,
+      "sens_Black": 0.42489,
+      "sens_Hispanic": 0.35788,
+      "sens_Asian": 0.1996,
+      "sens_Other": 0.43613,
+      "race_gap": 0.01292,
+      "sens_gap": 0.06894,
+      "xauc_black_white": 0.72452
+    },
+    {
+      "spread_target": 0.35,
+      "spread_achieved": 0.3501,
+      "node_prevalence": [
+        0.0149,
+        0.19,
+        0.365
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 50,
+      "auc_external": 0.76482,
+      "auc_White": 0.76622,
+      "auc_Black": 0.74693,
+      "auc_Hispanic": 0.79745,
+      "auc_Asian": 0.80396,
+      "auc_Other": 0.77132,
+      "sens_White": 0.51148,
+      "sens_Black": 0.45427,
+      "sens_Hispanic": 0.37165,
+      "sens_Asian": 0.20885,
+      "sens_Other": 0.45438,
+      "race_gap": 0.01929,
+      "sens_gap": 0.0572,
+      "xauc_black_white": 0.73902
+    },
+    {
+      "spread_target": 0.35,
+      "spread_achieved": 0.3501,
+      "node_prevalence": [
+        0.0149,
+        0.19,
+        0.365
+      ],
+      "node_sizes": [
+        3968,
+        3968,
+        3970
+      ],
+      "seed": 51,
+      "auc_external": 0.76641,
+      "auc_White": 0.7688,
+      "auc_Black": 0.75133,
+      "auc_Hispanic": 0.79795,
+      "auc_Asian": 0.80725,
+      "auc_Other": 0.77162,
+      "sens_White": 0.51025,
+      "sens_Black": 0.44495,
+      "sens_Hispanic": 0.37096,
+      "sens_Asian": 0.19699,
+      "sens_Other": 0.44622,
+      "race_gap": 0.01747,
+      "sens_gap": 0.0653,
+      "xauc_black_white": 0.73706
+    }
+  ]
+}

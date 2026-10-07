@@ -1,0 +1,1188 @@
+{
+  "n_seeds": 10,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "n_brfss": 1282897,
+  "runs": [
+    {
+      "model": "FedAvg",
+      "seed": 42,
+      "internal_val": 0.7915446473426966,
+      "internal_pool": 0.7842339703613153,
+      "external": 0.7571950821214852,
+      "gap_val": 0.03434956522121135,
+      "gap_pool": 0.027038888239830028,
+      "fair_gap": 0.05929110278529581,
+      "auc_young": 0.7304084347980416,
+      "auc_elderly": 0.6711173320127458
+    },
+    {
+      "model": "FedProx",
+      "seed": 42,
+      "internal_val": 0.7877773543578493,
+      "internal_pool": 0.7818846795907435,
+      "external": 0.7549729702819152,
+      "gap_val": 0.03280438407593411,
+      "gap_pool": 0.026911709308828247,
+      "fair_gap": 0.06299955400058133,
+      "auc_young": 0.7291385861709043,
+      "auc_elderly": 0.666139032170323
+    },
+    {
+      "model": "FedNova",
+      "seed": 42,
+      "internal_val": 0.7915915668482796,
+      "internal_pool": 0.7843023575274569,
+      "external": 0.7572440476344502,
+      "gap_val": 0.03434751921382939,
+      "gap_pool": 0.027058309893006727,
+      "fair_gap": 0.05958099920291826,
+      "auc_young": 0.7304817135137878,
+      "auc_elderly": 0.6709007143108695
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 42,
+      "internal_val": 0.7921677612644006,
+      "internal_pool": 0.7844099715073266,
+      "external": 0.7574224437686725,
+      "gap_val": 0.03474531749572807,
+      "gap_pool": 0.026987527738654093,
+      "fair_gap": 0.05868190584660793,
+      "auc_young": 0.7296675061829717,
+      "auc_elderly": 0.6709856003363638
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 42,
+      "internal_val": 0.7908786192390572,
+      "internal_pool": 0.783879890006233,
+      "external": 0.7589509981913569,
+      "gap_val": 0.031927621047700305,
+      "gap_pool": 0.02492889181487612,
+      "fair_gap": 0.04970101480155653,
+      "auc_young": 0.7223697105879994,
+      "auc_elderly": 0.6726686957864428
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 42,
+      "internal_val": 0.7910971954723821,
+      "internal_pool": null,
+      "external": 0.7659509273546016,
+      "gap_val": 0.025146268117780535,
+      "gap_pool": null,
+      "fair_gap": 0.04836133383016372,
+      "auc_young": 0.7335798596269512,
+      "auc_elderly": 0.6852185257967874
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 42,
+      "internal_val": 0.7963118435320203,
+      "internal_pool": null,
+      "external": 0.7671293085676648,
+      "gap_val": 0.029182534964355522,
+      "gap_pool": null,
+      "fair_gap": 0.04441783348378614,
+      "auc_young": 0.7307963853165212,
+      "auc_elderly": 0.6863785518327351
+    },
+    {
+      "model": "XGBoost",
+      "seed": 42,
+      "internal_val": 0.7781380990143877,
+      "internal_pool": null,
+      "external": 0.7411901479448451,
+      "gap_val": 0.03694795106954263,
+      "gap_pool": null,
+      "fair_gap": 0.04383959227227041,
+      "auc_young": 0.691363103502576,
+      "auc_elderly": 0.6475235112303056
+    },
+    {
+      "model": "FedAvg",
+      "seed": 43,
+      "internal_val": 0.7854348122132617,
+      "internal_pool": 0.7844933234262801,
+      "external": 0.7588452297823499,
+      "gap_val": 0.026589582430911807,
+      "gap_pool": 0.02564809364393017,
+      "fair_gap": 0.0568982195516603,
+      "auc_young": 0.7300477446008409,
+      "auc_elderly": 0.6731495250491806
+    },
+    {
+      "model": "FedProx",
+      "seed": 43,
+      "internal_val": 0.7846554906693124,
+      "internal_pool": 0.7832973846415918,
+      "external": 0.7589694195762671,
+      "gap_val": 0.025686071093045326,
+      "gap_pool": 0.024327965065324753,
+      "fair_gap": 0.060800182847654094,
+      "auc_young": 0.7336271070878941,
+      "auc_elderly": 0.67282692424024
+    },
+    {
+      "model": "FedNova",
+      "seed": 43,
+      "internal_val": 0.7858479327380278,
+      "internal_pool": 0.7844620175412271,
+      "external": 0.7584863888051568,
+      "gap_val": 0.027361543932870935,
+      "gap_pool": 0.02597562873607029,
+      "fair_gap": 0.05759128209684872,
+      "auc_young": 0.7298841080429455,
+      "auc_elderly": 0.6722928259460967
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 43,
+      "internal_val": 0.7854039140022679,
+      "internal_pool": 0.7844972636497438,
+      "external": 0.7586193788016615,
+      "gap_val": 0.02678453520060642,
+      "gap_pool": 0.02587788484808229,
+      "fair_gap": 0.05857025918608705,
+      "auc_young": 0.7307323315959259,
+      "auc_elderly": 0.6721620724098388
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 43,
+      "internal_val": 0.7891689182307456,
+      "internal_pool": 0.7860897886248231,
+      "external": 0.7605612132425452,
+      "gap_val": 0.028607704988200422,
+      "gap_pool": 0.02552857538227793,
+      "fair_gap": 0.05060037348345481,
+      "auc_young": 0.727984255566092,
+      "auc_elderly": 0.6773838820826372
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 43,
+      "internal_val": 0.7975165849008454,
+      "internal_pool": null,
+      "external": 0.7661702494058528,
+      "gap_val": 0.03134633549499266,
+      "gap_pool": null,
+      "fair_gap": 0.0482092969154716,
+      "auc_young": 0.7341139815987413,
+      "auc_elderly": 0.6859046846832697
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 43,
+      "internal_val": 0.7790026002470776,
+      "internal_pool": null,
+      "external": 0.7684540581321087,
+      "gap_val": 0.010548542114968917,
+      "gap_pool": null,
+      "fair_gap": 0.04549457707060234,
+      "auc_young": 0.7337737904578867,
+      "auc_elderly": 0.6882792133872844
+    },
+    {
+      "model": "XGBoost",
+      "seed": 43,
+      "internal_val": 0.7538757572815011,
+      "internal_pool": null,
+      "external": 0.738415049950103,
+      "gap_val": 0.015460707331398149,
+      "gap_pool": null,
+      "fair_gap": 0.0413063946180654,
+      "auc_young": 0.6852845908275336,
+      "auc_elderly": 0.6439781962094682
+    },
+    {
+      "model": "FedAvg",
+      "seed": 44,
+      "internal_val": 0.7740694202694552,
+      "internal_pool": 0.7854421346338734,
+      "external": 0.7613191287115526,
+      "gap_val": 0.012750291557902638,
+      "gap_pool": 0.02412300592232075,
+      "fair_gap": 0.047288161951403285,
+      "auc_young": 0.7264041474149029,
+      "auc_elderly": 0.6791159854634996
+    },
+    {
+      "model": "FedProx",
+      "seed": 44,
+      "internal_val": 0.7731733721506414,
+      "internal_pool": 0.7839433923747932,
+      "external": 0.7602156570936558,
+      "gap_val": 0.01295771505698562,
+      "gap_pool": 0.023727735281137363,
+      "fair_gap": 0.05389612977436942,
+      "auc_young": 0.7295429273519852,
+      "auc_elderly": 0.6756467975776158
+    },
+    {
+      "model": "FedNova",
+      "seed": 44,
+      "internal_val": 0.7737135186539367,
+      "internal_pool": 0.7853414835146448,
+      "external": 0.7611762968787481,
+      "gap_val": 0.012537221775188567,
+      "gap_pool": 0.02416518663589673,
+      "fair_gap": 0.047489215697652076,
+      "auc_young": 0.7264239057662912,
+      "auc_elderly": 0.6789346900686392
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 44,
+      "internal_val": 0.7741884356006898,
+      "internal_pool": 0.7855412609405972,
+      "external": 0.7619629398099029,
+      "gap_val": 0.012225495790786911,
+      "gap_pool": 0.023578321130694246,
+      "fair_gap": 0.04679036890191812,
+      "auc_young": 0.7267457588621784,
+      "auc_elderly": 0.6799553899602603
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 44,
+      "internal_val": 0.773575048893558,
+      "internal_pool": 0.7850772996277623,
+      "external": 0.7616749787672782,
+      "gap_val": 0.011900070126279805,
+      "gap_pool": 0.023402320860484105,
+      "fair_gap": 0.04791242214447111,
+      "auc_young": 0.7293443232698088,
+      "auc_elderly": 0.6814319011253377
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 44,
+      "internal_val": 0.7911412540325028,
+      "internal_pool": null,
+      "external": 0.7630175386046096,
+      "gap_val": 0.02812371542789316,
+      "gap_pool": null,
+      "fair_gap": 0.04676727247212942,
+      "auc_young": 0.7289045905714958,
+      "auc_elderly": 0.6821373180993664
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 44,
+      "internal_val": 0.7822599896421694,
+      "internal_pool": null,
+      "external": 0.7661042354134298,
+      "gap_val": 0.016155754228739605,
+      "gap_pool": null,
+      "fair_gap": 0.050600232065194595,
+      "auc_young": 0.735089608036969,
+      "auc_elderly": 0.6844893759717744
+    },
+    {
+      "model": "XGBoost",
+      "seed": 44,
+      "internal_val": 0.7684350504674511,
+      "internal_pool": null,
+      "external": 0.7392075269663133,
+      "gap_val": 0.029227523501137775,
+      "gap_pool": null,
+      "fair_gap": 0.059396901016209425,
+      "auc_young": 0.7015920432962235,
+      "auc_elderly": 0.6421951422800141
+    },
+    {
+      "model": "FedAvg",
+      "seed": 45,
+      "internal_val": 0.7746685022492753,
+      "internal_pool": 0.7850057413913674,
+      "external": 0.7592933156820408,
+      "gap_val": 0.015375186567234467,
+      "gap_pool": 0.025712425709326525,
+      "fair_gap": 0.05774675833958298,
+      "auc_young": 0.7322295962354866,
+      "auc_elderly": 0.6744828378959036
+    },
+    {
+      "model": "FedProx",
+      "seed": 45,
+      "internal_val": 0.7757224745576121,
+      "internal_pool": 0.7848815838705172,
+      "external": 0.7610178865930547,
+      "gap_val": 0.014704587964557425,
+      "gap_pool": 0.023863697277462514,
+      "fair_gap": 0.05481222280012743,
+      "auc_young": 0.7320626262720625,
+      "auc_elderly": 0.6772504034719351
+    },
+    {
+      "model": "FedNova",
+      "seed": 45,
+      "internal_val": 0.7747486087222216,
+      "internal_pool": 0.7850504062532317,
+      "external": 0.7590729763352482,
+      "gap_val": 0.015675632386973448,
+      "gap_pool": 0.025977429917983574,
+      "fair_gap": 0.058081336759223,
+      "auc_young": 0.731960179733196,
+      "auc_elderly": 0.673878842973973
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 45,
+      "internal_val": 0.7742302054044403,
+      "internal_pool": 0.785144175475315,
+      "external": 0.7598238154541228,
+      "gap_val": 0.01440638995031751,
+      "gap_pool": 0.0253203600211922,
+      "fair_gap": 0.0569009928621147,
+      "auc_young": 0.7317327271053198,
+      "auc_elderly": 0.6748317342432051
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 45,
+      "internal_val": 0.7766608646692691,
+      "internal_pool": 0.7868520464441157,
+      "external": 0.7641262785589005,
+      "gap_val": 0.012534586110368617,
+      "gap_pool": 0.022725767885215187,
+      "fair_gap": 0.04829238106839018,
+      "auc_young": 0.7309705815844517,
+      "auc_elderly": 0.6826782005160615
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 45,
+      "internal_val": 0.8063574785686575,
+      "internal_pool": null,
+      "external": 0.7640727656919981,
+      "gap_val": 0.04228471287665936,
+      "gap_pool": null,
+      "fair_gap": 0.04907379974256021,
+      "auc_young": 0.7331723858422837,
+      "auc_elderly": 0.6840985860997235
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 45,
+      "internal_val": 0.7919438195579579,
+      "internal_pool": null,
+      "external": 0.7642798185816267,
+      "gap_val": 0.02766400097633115,
+      "gap_pool": null,
+      "fair_gap": 0.050922853093409826,
+      "auc_young": 0.7320761268793001,
+      "auc_elderly": 0.6811532737858903
+    },
+    {
+      "model": "XGBoost",
+      "seed": 45,
+      "internal_val": 0.7735987932048314,
+      "internal_pool": null,
+      "external": 0.7389818942186791,
+      "gap_val": 0.03461689898615228,
+      "gap_pool": null,
+      "fair_gap": 0.05274401241888815,
+      "auc_young": 0.6957683494519642,
+      "auc_elderly": 0.643024337033076
+    },
+    {
+      "model": "FedAvg",
+      "seed": 46,
+      "internal_val": 0.7748962335080798,
+      "internal_pool": 0.7831801629935508,
+      "external": 0.7582522237169116,
+      "gap_val": 0.0166440097911682,
+      "gap_pool": 0.024927939276639166,
+      "fair_gap": 0.05285010816897984,
+      "auc_young": 0.7264832514859486,
+      "auc_elderly": 0.6736331433169688
+    },
+    {
+      "model": "FedProx",
+      "seed": 46,
+      "internal_val": 0.7727070380402752,
+      "internal_pool": 0.7817110263861112,
+      "external": 0.7587609335501999,
+      "gap_val": 0.013946104490075273,
+      "gap_pool": 0.022950092835911318,
+      "fair_gap": 0.058871178047583905,
+      "auc_young": 0.7314074065027233,
+      "auc_elderly": 0.6725362284551394
+    },
+    {
+      "model": "FedNova",
+      "seed": 46,
+      "internal_val": 0.7749116826135767,
+      "internal_pool": 0.7830798087404737,
+      "external": 0.7580534758642726,
+      "gap_val": 0.01685820674930405,
+      "gap_pool": 0.02502633287620104,
+      "fair_gap": 0.053113179996970405,
+      "auc_young": 0.7263416422714231,
+      "auc_elderly": 0.6732284622744527
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 46,
+      "internal_val": 0.7755553953426096,
+      "internal_pool": 0.7835164178856351,
+      "external": 0.7590900213122618,
+      "gap_val": 0.016465374030347868,
+      "gap_pool": 0.02442639657337331,
+      "fair_gap": 0.052689244693948534,
+      "auc_young": 0.7274617866370955,
+      "auc_elderly": 0.674772541943147
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 46,
+      "internal_val": 0.7760348898021027,
+      "internal_pool": 0.785807657829699,
+      "external": 0.7603417922544853,
+      "gap_val": 0.015693097547617385,
+      "gap_pool": 0.025465865575213686,
+      "fair_gap": 0.05139183862715879,
+      "auc_young": 0.7282811070710258,
+      "auc_elderly": 0.676889268443867
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 46,
+      "internal_val": 0.781252682136371,
+      "internal_pool": null,
+      "external": 0.7648448097178264,
+      "gap_val": 0.016407872418544578,
+      "gap_pool": null,
+      "fair_gap": 0.04735544301550931,
+      "auc_young": 0.7317653976512859,
+      "auc_elderly": 0.6844099546357766
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 46,
+      "internal_val": 0.7933015989901115,
+      "internal_pool": null,
+      "external": 0.7663388145952972,
+      "gap_val": 0.026962784394814365,
+      "gap_pool": null,
+      "fair_gap": 0.0456665258278488,
+      "auc_young": 0.730664391273278,
+      "auc_elderly": 0.6849978654454292
+    },
+    {
+      "model": "XGBoost",
+      "seed": 46,
+      "internal_val": 0.7744289032028353,
+      "internal_pool": null,
+      "external": 0.738412437121553,
+      "gap_val": 0.03601646608128228,
+      "gap_pool": null,
+      "fair_gap": 0.0448304236304935,
+      "auc_young": 0.6894822099008534,
+      "auc_elderly": 0.6446517862703599
+    },
+    {
+      "model": "FedAvg",
+      "seed": 47,
+      "internal_val": 0.7745420484598385,
+      "internal_pool": 0.7835278067507148,
+      "external": 0.7579458937707777,
+      "gap_val": 0.016596154689060838,
+      "gap_pool": 0.02558191297993706,
+      "fair_gap": 0.045186037723886185,
+      "auc_young": 0.719318477032656,
+      "auc_elderly": 0.6741324393087698
+    },
+    {
+      "model": "FedProx",
+      "seed": 47,
+      "internal_val": 0.7732546230017725,
+      "internal_pool": 0.7829271115873443,
+      "external": 0.7589492111896512,
+      "gap_val": 0.014305411812121305,
+      "gap_pool": 0.023977900397693097,
+      "fair_gap": 0.053163329315757846,
+      "auc_young": 0.7268300578963633,
+      "auc_elderly": 0.6736667285806055
+    },
+    {
+      "model": "FedNova",
+      "seed": 47,
+      "internal_val": 0.7744722413905567,
+      "internal_pool": 0.7835089962318509,
+      "external": 0.7578523850975819,
+      "gap_val": 0.0166198562929748,
+      "gap_pool": 0.02565661113426898,
+      "fair_gap": 0.045223590855735685,
+      "auc_young": 0.7191497418312518,
+      "auc_elderly": 0.6739261509755161
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 47,
+      "internal_val": 0.7744739579578342,
+      "internal_pool": 0.7835095899641538,
+      "external": 0.7582248630000197,
+      "gap_val": 0.01624909495781457,
+      "gap_pool": 0.025284726964134085,
+      "fair_gap": 0.04543278114571281,
+      "auc_young": 0.7199598312063258,
+      "auc_elderly": 0.674527050060613
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 47,
+      "internal_val": 0.7768433929897681,
+      "internal_pool": 0.7841577702178264,
+      "external": 0.7593618902531789,
+      "gap_val": 0.017481502736589216,
+      "gap_pool": 0.024795879964647494,
+      "fair_gap": 0.04725741172059972,
+      "auc_young": 0.7219241532340452,
+      "auc_elderly": 0.6746667415134455
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 47,
+      "internal_val": 0.7781817432770644,
+      "internal_pool": null,
+      "external": 0.7637563870548483,
+      "gap_val": 0.01442535622221608,
+      "gap_pool": null,
+      "fair_gap": 0.0476392312839915,
+      "auc_young": 0.7311805481179932,
+      "auc_elderly": 0.6835413168340017
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 47,
+      "internal_val": 0.7874911661730513,
+      "internal_pool": null,
+      "external": 0.7673094015189471,
+      "gap_val": 0.02018176465410415,
+      "gap_pool": null,
+      "fair_gap": 0.044841845104724,
+      "auc_young": 0.7310886162778089,
+      "auc_elderly": 0.6862467711730849
+    },
+    {
+      "model": "XGBoost",
+      "seed": 47,
+      "internal_val": 0.7635622845490297,
+      "internal_pool": null,
+      "external": 0.740071217543969,
+      "gap_val": 0.02349106700506076,
+      "gap_pool": null,
+      "fair_gap": 0.03943238001801819,
+      "auc_young": 0.683558068674811,
+      "auc_elderly": 0.6441256886567928
+    },
+    {
+      "model": "FedAvg",
+      "seed": 48,
+      "internal_val": 0.7872452185018488,
+      "internal_pool": 0.7835412601849379,
+      "external": 0.7595362963931007,
+      "gap_val": 0.02770892210874809,
+      "gap_pool": 0.02400496379183714,
+      "fair_gap": 0.052887441569794524,
+      "auc_young": 0.7278369702567116,
+      "auc_elderly": 0.674949528686917
+    },
+    {
+      "model": "FedProx",
+      "seed": 48,
+      "internal_val": 0.7869682789810916,
+      "internal_pool": 0.7828657142696758,
+      "external": 0.759803568048543,
+      "gap_val": 0.027164710932548575,
+      "gap_pool": 0.023062146221132784,
+      "fair_gap": 0.05408066506922882,
+      "auc_young": 0.7291423953441011,
+      "auc_elderly": 0.6750617302748723
+    },
+    {
+      "model": "FedNova",
+      "seed": 48,
+      "internal_val": 0.7871359303851863,
+      "internal_pool": 0.7834349821027494,
+      "external": 0.7593848015029985,
+      "gap_val": 0.02775112888218778,
+      "gap_pool": 0.024050180599750948,
+      "fair_gap": 0.053309381552869795,
+      "auc_young": 0.7280120133444472,
+      "auc_elderly": 0.6747026317915774
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 48,
+      "internal_val": 0.7873722444803779,
+      "internal_pool": 0.7836049379744056,
+      "external": 0.7597026588267799,
+      "gap_val": 0.027669585653598006,
+      "gap_pool": 0.02390227914762566,
+      "fair_gap": 0.053133654135793074,
+      "auc_young": 0.7280416732605968,
+      "auc_elderly": 0.6749080191248037
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 48,
+      "internal_val": 0.787436329658735,
+      "internal_pool": 0.7844636233172277,
+      "external": 0.7583159281513917,
+      "gap_val": 0.029120401507343296,
+      "gap_pool": 0.026147695165836038,
+      "fair_gap": 0.052795165361096075,
+      "auc_young": 0.7270724412331147,
+      "auc_elderly": 0.6742772758720186
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 48,
+      "internal_val": 0.7906594708166398,
+      "internal_pool": null,
+      "external": 0.7637876843610046,
+      "gap_val": 0.02687178645563515,
+      "gap_pool": null,
+      "fair_gap": 0.049901704837944094,
+      "auc_young": 0.731324426790939,
+      "auc_elderly": 0.6814227219529949
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 48,
+      "internal_val": 0.7796068070368511,
+      "internal_pool": null,
+      "external": 0.7663828282812406,
+      "gap_val": 0.013223978755610544,
+      "gap_pool": null,
+      "fair_gap": 0.048451627264841535,
+      "auc_young": 0.7320405138035952,
+      "auc_elderly": 0.6835888865387537
+    },
+    {
+      "model": "XGBoost",
+      "seed": 48,
+      "internal_val": 0.7690392572572249,
+      "internal_pool": null,
+      "external": 0.7419590548754521,
+      "gap_val": 0.027080202381772778,
+      "gap_pool": null,
+      "fair_gap": 0.04901024080345118,
+      "auc_young": 0.6983766444745024,
+      "auc_elderly": 0.6493664036710513
+    },
+    {
+      "model": "FedAvg",
+      "seed": 49,
+      "internal_val": 0.8056863007631858,
+      "internal_pool": 0.7849369898894945,
+      "external": 0.7595691332194744,
+      "gap_val": 0.046117167543711424,
+      "gap_pool": 0.02536785667002006,
+      "fair_gap": 0.048805785966279935,
+      "auc_young": 0.726455179094562,
+      "auc_elderly": 0.6776493931282821
+    },
+    {
+      "model": "FedProx",
+      "seed": 49,
+      "internal_val": 0.8077198607978375,
+      "internal_pool": 0.784125209398588,
+      "external": 0.7605383858671828,
+      "gap_val": 0.04718147493065472,
+      "gap_pool": 0.023586823531405177,
+      "fair_gap": 0.04968277997222503,
+      "auc_young": 0.7291535217773876,
+      "auc_elderly": 0.6794707418051625
+    },
+    {
+      "model": "FedNova",
+      "seed": 49,
+      "internal_val": 0.8061984100009498,
+      "internal_pool": 0.7848687916381765,
+      "external": 0.7595224903558564,
+      "gap_val": 0.04667591964509343,
+      "gap_pool": 0.025346301282320072,
+      "fair_gap": 0.04862338319570325,
+      "auc_young": 0.7263649262011629,
+      "auc_elderly": 0.6777415430054596
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 49,
+      "internal_val": 0.806685342918645,
+      "internal_pool": 0.7853664067774434,
+      "external": 0.7600478271911654,
+      "gap_val": 0.04663751572747965,
+      "gap_pool": 0.025318579586278034,
+      "fair_gap": 0.049134785845849294,
+      "auc_young": 0.7270528654925518,
+      "auc_elderly": 0.6779180796467025
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 49,
+      "internal_val": 0.8060833999933625,
+      "internal_pool": 0.7834899293285839,
+      "external": 0.7606185934813646,
+      "gap_val": 0.04546480651199791,
+      "gap_pool": 0.022871335847219232,
+      "fair_gap": 0.04514533890671113,
+      "auc_young": 0.7239198913203356,
+      "auc_elderly": 0.6787745524136245
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 49,
+      "internal_val": 0.7943455129503558,
+      "internal_pool": null,
+      "external": 0.7636583309461406,
+      "gap_val": 0.030687182004215274,
+      "gap_pool": null,
+      "fair_gap": 0.048302466659736254,
+      "auc_young": 0.7320673303082701,
+      "auc_elderly": 0.6837648636485338
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 49,
+      "internal_val": 0.7853460972017672,
+      "internal_pool": null,
+      "external": 0.7678627163512611,
+      "gap_val": 0.017483380850506047,
+      "gap_pool": null,
+      "fair_gap": 0.04215660810803068,
+      "auc_young": 0.7315808291817544,
+      "auc_elderly": 0.6894242210737237
+    },
+    {
+      "model": "XGBoost",
+      "seed": 49,
+      "internal_val": 0.7733607519137711,
+      "internal_pool": null,
+      "external": 0.7430271862930923,
+      "gap_val": 0.030333565620678793,
+      "gap_pool": null,
+      "fair_gap": 0.039333366045621876,
+      "auc_young": 0.689473879535494,
+      "auc_elderly": 0.6501405134898721
+    },
+    {
+      "model": "FedAvg",
+      "seed": 50,
+      "internal_val": 0.7821058160732492,
+      "internal_pool": 0.7835724986004111,
+      "external": 0.7576957497116107,
+      "gap_val": 0.02441006636163856,
+      "gap_pool": 0.025876748888800427,
+      "fair_gap": 0.055410841013727286,
+      "auc_young": 0.7274980364018854,
+      "auc_elderly": 0.6720871953881581
+    },
+    {
+      "model": "FedProx",
+      "seed": 50,
+      "internal_val": 0.7809602935101169,
+      "internal_pool": 0.7825953906510263,
+      "external": 0.7580003822512424,
+      "gap_val": 0.02295991125887442,
+      "gap_pool": 0.024595008399783902,
+      "fair_gap": 0.05847407340404587,
+      "auc_young": 0.7301855245852976,
+      "auc_elderly": 0.6717114511812518
+    },
+    {
+      "model": "FedNova",
+      "seed": 50,
+      "internal_val": 0.782267173397327,
+      "internal_pool": 0.7836107943339371,
+      "external": 0.7575948409898209,
+      "gap_val": 0.024672332407506103,
+      "gap_pool": 0.026015953344116216,
+      "fair_gap": 0.055331149365911436,
+      "auc_young": 0.7274756254125285,
+      "auc_elderly": 0.6721444760466171
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 50,
+      "internal_val": 0.7829360624464288,
+      "internal_pool": 0.7839124238376395,
+      "external": 0.7584337397788532,
+      "gap_val": 0.02450232266757557,
+      "gap_pool": 0.025478684058786283,
+      "fair_gap": 0.054229397557573944,
+      "auc_young": 0.727176845882442,
+      "auc_elderly": 0.6729474483248681
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 50,
+      "internal_val": 0.7809408390809727,
+      "internal_pool": 0.7849822349897457,
+      "external": 0.7605631477863526,
+      "gap_val": 0.02037769129462008,
+      "gap_pool": 0.02441908720339314,
+      "fair_gap": 0.05290756668665664,
+      "auc_young": 0.7296120829811614,
+      "auc_elderly": 0.6767045162945048
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 50,
+      "internal_val": 0.7789891020865447,
+      "internal_pool": null,
+      "external": 0.7641636916771357,
+      "gap_val": 0.01482541040940899,
+      "gap_pool": null,
+      "fair_gap": 0.049633113482984825,
+      "auc_young": 0.7347415567011563,
+      "auc_elderly": 0.6851084432181714
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 50,
+      "internal_val": 0.7846832230116471,
+      "internal_pool": null,
+      "external": 0.7677014298590118,
+      "gap_val": 0.01698179315263526,
+      "gap_pool": null,
+      "fair_gap": 0.04103820613858955,
+      "auc_young": 0.7291702634352538,
+      "auc_elderly": 0.6881320572966643
+    },
+    {
+      "model": "XGBoost",
+      "seed": 50,
+      "internal_val": 0.7685362011577035,
+      "internal_pool": null,
+      "external": 0.7398398534215704,
+      "gap_val": 0.028696347736133054,
+      "gap_pool": null,
+      "fair_gap": 0.03838757588420416,
+      "auc_young": 0.6871060342272877,
+      "auc_elderly": 0.6487184583430835
+    },
+    {
+      "model": "FedAvg",
+      "seed": 51,
+      "internal_val": 0.7775523352753431,
+      "internal_pool": 0.7848424919959488,
+      "external": 0.7580994658338942,
+      "gap_val": 0.01945286944144886,
+      "gap_pool": 0.026743026162054595,
+      "fair_gap": 0.05362395838107725,
+      "auc_young": 0.7261549678303021,
+      "auc_elderly": 0.6725310094492248
+    },
+    {
+      "model": "FedProx",
+      "seed": 51,
+      "internal_val": 0.7773051495873944,
+      "internal_pool": 0.7839405721463553,
+      "external": 0.7589376983506988,
+      "gap_val": 0.018367451236695587,
+      "gap_pool": 0.025002873795656466,
+      "fair_gap": 0.05644229305918469,
+      "auc_young": 0.7294057332147746,
+      "auc_elderly": 0.67296344015559
+    },
+    {
+      "model": "FedNova",
+      "seed": 51,
+      "internal_val": 0.77762099796644,
+      "internal_pool": 0.7848726913798921,
+      "external": 0.7582070361885438,
+      "gap_val": 0.019413961777896227,
+      "gap_pool": 0.026665655191348336,
+      "fair_gap": 0.05310705338034083,
+      "auc_young": 0.7259966689658466,
+      "auc_elderly": 0.6728896155855058
+    },
+    {
+      "model": "FedAvg-EqualW",
+      "seed": 51,
+      "internal_val": 0.7779952096329179,
+      "internal_pool": 0.785094180516642,
+      "external": 0.7588798302853623,
+      "gap_val": 0.019115379347555583,
+      "gap_pool": 0.026214350231279715,
+      "fair_gap": 0.05257593644701386,
+      "auc_young": 0.7263341123151992,
+      "auc_elderly": 0.6737581758681853
+    },
+    {
+      "model": "SCAFFOLD",
+      "seed": 51,
+      "internal_val": 0.7765933463563571,
+      "internal_pool": 0.7845122553903877,
+      "external": 0.7570979851851147,
+      "gap_val": 0.019495361171242398,
+      "gap_pool": 0.027414270205272984,
+      "fair_gap": 0.05015002882696995,
+      "auc_young": 0.7203851940885293,
+      "auc_elderly": 0.6702351652615594
+    },
+    {
+      "model": "Centralised-matched",
+      "seed": 51,
+      "internal_val": 0.7773892613839881,
+      "internal_pool": null,
+      "external": 0.764416687178395,
+      "gap_val": 0.012972574205593168,
+      "gap_pool": null,
+      "fair_gap": 0.04381920472716183,
+      "auc_young": 0.7277354181144172,
+      "auc_elderly": 0.6839162133872554
+    },
+    {
+      "model": "Centralised-full",
+      "seed": 51,
+      "internal_val": 0.7824326201535333,
+      "internal_pool": null,
+      "external": 0.7675320731093098,
+      "gap_val": 0.0149005470442235,
+      "gap_pool": null,
+      "fair_gap": 0.04022726065943594,
+      "auc_young": 0.727043073074491,
+      "auc_elderly": 0.6868158124150551
+    },
+    {
+      "model": "XGBoost",
+      "seed": 51,
+      "internal_val": 0.7630558567598332,
+      "internal_pool": null,
+      "external": 0.7416655835330705,
+      "gap_val": 0.02139027322676268,
+      "gap_pool": null,
+      "fair_gap": 0.03258237657093466,
+      "auc_young": 0.6839434819989473,
+      "auc_elderly": 0.6513611054280126
+    }
+  ],
+  "summary": {
+    "Centralised-full": {
+      "internal_val": {
+        "mean": 0.7862,
+        "sd": 0.0059
+      },
+      "external": {
+        "mean": 0.7669,
+        "sd": 0.0012
+      },
+      "gap_val": {
+        "mean": 0.0193,
+        "sd": 0.0065
+      },
+      "fair_gap": {
+        "mean": 0.0454,
+        "sd": 0.0037
+      },
+      "auc_young": {
+        "mean": 0.7313,
+        "sd": 0.0022
+      },
+      "auc_elderly": {
+        "mean": 0.686,
+        "sd": 0.0025
+      }
+    },
+    "Centralised-matched": {
+      "internal_val": {
+        "mean": 0.7887,
+        "sd": 0.0096
+      },
+      "external": {
+        "mean": 0.7644,
+        "sd": 0.001
+      },
+      "gap_val": {
+        "mean": 0.0243,
+        "sd": 0.0095
+      },
+      "fair_gap": {
+        "mean": 0.0479,
+        "sd": 0.0017
+      },
+      "auc_young": {
+        "mean": 0.7319,
+        "sd": 0.0022
+      },
+      "auc_elderly": {
+        "mean": 0.684,
+        "sd": 0.0014
+      }
+    },
+    "FedAvg": {
+      "internal_val": {
+        "mean": 0.7828,
+        "sd": 0.0102
+      },
+      "external": {
+        "mean": 0.7588,
+        "sd": 0.0012
+      },
+      "gap_val": {
+        "mean": 0.024,
+        "sd": 0.0103
+      },
+      "fair_gap": {
+        "mean": 0.053,
+        "sd": 0.0047
+      },
+      "auc_young": {
+        "mean": 0.7273,
+        "sd": 0.0035
+      },
+      "auc_elderly": {
+        "mean": 0.6743,
+        "sd": 0.0025
+      }
+    },
+    "FedAvg-EqualW": {
+      "internal_val": {
+        "mean": 0.7831,
+        "sd": 0.0104
+      },
+      "external": {
+        "mean": 0.7592,
+        "sd": 0.0013
+      },
+      "gap_val": {
+        "mean": 0.0239,
+        "sd": 0.0106
+      },
+      "fair_gap": {
+        "mean": 0.0528,
+        "sd": 0.0046
+      },
+      "auc_young": {
+        "mean": 0.7275,
+        "sd": 0.0032
+      },
+      "auc_elderly": {
+        "mean": 0.6747,
+        "sd": 0.0026
+      }
+    },
+    "FedNova": {
+      "internal_val": {
+        "mean": 0.7829,
+        "sd": 0.0103
+      },
+      "external": {
+        "mean": 0.7587,
+        "sd": 0.0012
+      },
+      "gap_val": {
+        "mean": 0.0242,
+        "sd": 0.0104
+      },
+      "fair_gap": {
+        "mean": 0.0531,
+        "sd": 0.0048
+      },
+      "auc_young": {
+        "mean": 0.7272,
+        "sd": 0.0035
+      },
+      "auc_elderly": {
+        "mean": 0.6741,
+        "sd": 0.0025
+      }
+    },
+    "FedProx": {
+      "internal_val": {
+        "mean": 0.782,
+        "sd": 0.0107
+      },
+      "external": {
+        "mean": 0.759,
+        "sd": 0.0017
+      },
+      "gap_val": {
+        "mean": 0.023,
+        "sd": 0.0108
+      },
+      "fair_gap": {
+        "mean": 0.0563,
+        "sd": 0.004
+      },
+      "auc_young": {
+        "mean": 0.73,
+        "sd": 0.0019
+      },
+      "auc_elderly": {
+        "mean": 0.6737,
+        "sd": 0.0036
+      }
+    },
+    "SCAFFOLD": {
+      "internal_val": {
+        "mean": 0.7834,
+        "sd": 0.0101
+      },
+      "external": {
+        "mean": 0.7602,
+        "sd": 0.0019
+      },
+      "gap_val": {
+        "mean": 0.0233,
+        "sd": 0.0105
+      },
+      "fair_gap": {
+        "mean": 0.0496,
+        "sd": 0.0025
+      },
+      "auc_young": {
+        "mean": 0.7262,
+        "sd": 0.0037
+      },
+      "auc_elderly": {
+        "mean": 0.6766,
+        "sd": 0.0038
+      }
+    },
+    "XGBoost": {
+      "internal_val": {
+        "mean": 0.7686,
+        "sd": 0.007
+      },
+      "external": {
+        "mean": 0.7403,
+        "sd": 0.0016
+      },
+      "gap_val": {
+        "mean": 0.0283,
+        "sd": 0.0068
+      },
+      "fair_gap": {
+        "mean": 0.0441,
+        "sd": 0.0078
+      },
+      "auc_young": {
+        "mean": 0.6906,
+        "sd": 0.0062
+      },
+      "auc_elderly": {
+        "mean": 0.6465,
+        "sd": 0.0033
+      }
+    }
+  }
+}

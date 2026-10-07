@@ -88,10 +88,12 @@ def load_brfss_clean(
 
     df = df.rename(columns=BRFSS_COL_MAP)
 
-    # Sex encoding: BRFSS 0=Female,1=Male -> NHANES 1=Male,2=Female.
+    # Sex encoding: brfss_final*.csv Gender is 0=Male,1=Female (SEXVAR 1->0, 2->1
+    # in the processing notebook) -> NHANES 1=Male,2=Female. The pre-2026-10-07
+    # map {1->1, 0->2} had this backwards and swapped sex for every respondent.
     # Guarded so a file already in NHANES coding passes through untouched.
     if df['RIAGENDR'].max() <= 1.0:
-        df['RIAGENDR'] = df['RIAGENDR'].map({1.0: 1.0, 0.0: 2.0})
+        df['RIAGENDR'] = df['RIAGENDR'].map({0.0: 1.0, 1.0: 2.0})
         if verbose:
             print("  Sex remapped: BRFSS 0/1 -> NHANES 1/2")
 

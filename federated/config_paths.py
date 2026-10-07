@@ -39,8 +39,8 @@ PROJECT_ROOT = Path(r"D:\Projects\diabetes_prediction_project\federated")
 PROJECT_ROOT_STR = str(PROJECT_ROOT)
 
 # Derived directories
-DATA_DIR      = PROJECT_ROOT / "data"
-RESULTS_DIR   = PROJECT_ROOT / "results"
+DATA_DIR      = PROJECT_ROOT / os.environ.get("FL_DATA_SUBDIR", "data")
+RESULTS_DIR   = PROJECT_ROOT / os.environ.get("FL_RESULTS_SUBDIR", "results")
 MODELS_DIR    = PROJECT_ROOT / "models"
 PLOTS_DIR     = PROJECT_ROOT / "plots"
 ARTEFACTS_DIR = PROJECT_ROOT / "artefacts"   # NEW: canonical artefacts dir

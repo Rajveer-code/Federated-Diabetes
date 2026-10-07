@@ -157,6 +157,17 @@ def main():
     y_pool  = df_pool[TARGET_COL].values.astype(np.float32)
     print(f"Federated cohort: n={len(y_fed):,}   Full NHANES pool: n={len(y_pool):,}")
 
+    # NHANES rows outside the node caps (60_nhanes_label_variants.py): an internal
+    # hold-out unseen by the FL models and the matched control, same label.
+    hold_path = os.path.join(os.path.dirname(str(NODE_PATHS[0])), 'nhanes_holdout.csv')
+    X_hold = None
+    if os.path.exists(hold_path):
+        df_hold = pd.read_csv(hold_path)
+        X_hold = scaler.transform(df_hold[FEATURE_COLS].values.astype(np.float32))
+        cache('_y_holdout', df_hold[TARGET_COL].values)
+        cache('_race_holdout', df_hold['RIDRETH3'].values)
+        print(f"NHANES internal hold-out: n={len(df_hold):,}")
+
     records = []
 
     for seed in seed_list:
@@ -195,6 +206,8 @@ def main():
             fg, ay, ae = fairness_gap(y_b, p_ext, age_b)
             cache(f'{name}_seed{seed}_external', p_ext)
             cache(f'{name}_seed{seed}_internal', p_val)
+            if X_hold is not None:
+                cache(f'{name}_seed{seed}_holdout', score(m, X_hold))
             records.append(dict(model=name, seed=seed,
                                 internal_val=a_val, internal_pool=a_pool,
                                 external=a_ext,
@@ -216,6 +229,8 @@ def main():
             fg, ay, ae = fairness_gap(y_b, p_ext, age_b)
             cache(f'{name}_seed{seed}_external', p_ext)
             cache(f'{name}_seed{seed}_internal', p_int)
+            if X_hold is not None:
+                cache(f'{name}_seed{seed}_holdout', score(m, X_hold))
             cache(f'_y_internal_{name}_seed{seed}', yte)
             records.append(dict(model=name, seed=seed,
                                 internal_val=a_val, internal_pool=None,

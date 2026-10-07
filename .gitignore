@@ -89,3 +89,6 @@ Numerical_Changes_Summary.txt
 
 # Nested repo clone (local copy of remote, not part of project)
 federated/Federated-Diabetes/
+REBUTTAL_PLAN.md
+federated/data_sr/
+rebuttal/

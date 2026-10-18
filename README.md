@@ -7,11 +7,12 @@ What if hospitals could collaborate on a shared diabetes model without sharing a
 [![Flower FL](https://img.shields.io/badge/Flower-1.5%2B-blueviolet.svg)](https://flower.dev)
 [![Opacus DP](https://img.shields.io/badge/Opacus-1.4%2B-ff69b4.svg)](https://opacus.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
-[![Under review: CMPB Elsevier](https://img.shields.io/badge/Under_review-CMPB%20Elsevier-orange.svg)](https://www.journals.elsevier.com/computer-methods-and-programs-in-biomedicine)
+[![Submitted: ML4H 2026 Findings](https://img.shields.io/badge/Submitted-ML4H%202026%20Findings-orange.svg)](https://ahli.cc/ml4h/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21739555.svg)](https://doi.org/10.5281/zenodo.21739555)
 **Author:** Rajveer Singh Pall  
 **Affiliation:** Gyan Ganga Institute of Technology and Sciences, Jabalpur, India  
-**Status:** Under review — With Editor at *Computer Methods and Programs in Biomedicine* (CMPB, Elsevier)
+**Paper:** *Higher AUC, Fewer Cases Flagged: Subgroup Fairness Metrics Can Reverse at the Decision Threshold in Federated Diabetes Screening*, submitted to the ML4H 2026 Findings track. It is built on the corrected 10-seed results below.
+**History:** an earlier full-length manuscript from this pipeline was declined by *Computer Methods and Programs in Biomedicine* (August 2026). Its three headline findings did not survive the correctness review below, and it is not being resubmitted. The "CMPB" names in scripts and folders refer to that version.
 > All commits are solely authored by Rajveer Singh Pall  
 > (verified via Insights → Contributors graph).  
 > AI coding tools were used locally for development assistance and hold no commit authorship.
@@ -273,7 +274,7 @@ Federated-Diabetes/
 └── .gitignore
 ```
 
-> **Not tracked** (reproducible or sensitive): raw data (`data/`), model weights (`models/`), scaler artefacts (`artefacts/`), prediction arrays (`*.npy`), manuscript DOCX (under review).
+> **Not tracked** (reproducible or sensitive): raw data (`data/`), model weights (`models/`), scaler artefacts (`artefacts/`), prediction arrays (`*.npy`), manuscript files (kept out of the public repo).
 
 ---
 
@@ -462,12 +463,12 @@ In the elderly subgroup (age ≥60, prevalence 20.24%), at the Youden-optimal th
 ## Citation
 
 ```bibtex
-@unpublished{pall2026fl_diabetes,
-  title   = {Privacy-Preserving Federated Learning for Diabetes Risk Prediction
-             Across Demographically Heterogeneous Hospital Nodes},
+@unpublished{pall2026higherauc,
+  title   = {Higher {AUC}, Fewer Cases Flagged: Subgroup Fairness Metrics Can Reverse
+             at the Decision Threshold in Federated Diabetes Screening},
   author  = {Pall, Rajveer Singh},
   year    = {2026},
-  note    = {Manuscript under review at Computer Methods and Programs in Biomedicine},
+  note    = {Submitted to the ML4H 2026 Findings track},
   url     = {https://github.com/Rajveer-code/Federated-Diabetes}
 }
 ```

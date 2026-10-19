@@ -442,9 +442,10 @@ SCAFFOLD's convergence guarantee (Karimireddy et al., ICML 2020) requires SGD, s
 The previously reported SCAFFOLD deficit (internal AUC 0.642, inverted elderly gap −0.092) did **not**. It came from `08_scaffold_baseline.py`, which counted its local budget in *batches* rather than epochs and so ran roughly 1/18th the local training of every other strategy, with an AdamW learning rate (1e-3) applied to plain SGD. With the budget matched and `eta_local` selected on held-out node validation (1.0, an interior optimum), SCAFFOLD ties the centralised control on external AUC (Δ=−0.0001, *p*=0.91) and has the best age-fairness gap of any model tested. Use `fl_core.run_scaffold()`; script 08 is retained only as a record of the superseded run.
 
 ### Generalisation Gap as Primary Metric
-Raw AUC comparisons across different training sets confound data composition effects with model quality. The generalisation gap (internal − external AUC) isolates population robustness. FedAvg's gap (0.031) is 40% smaller than the matched centralised DiabetesNet (0.052); a sample-matched sensitivity analysis (n=11,906) shows a gap of 0.024, indicating that data composition partially explains the advantage. Federation additionally provides privacy preservation, demographic equity, and feasibility under regulatory constraints.
+Raw AUC comparisons across different training sets confound data composition with model quality, so the generalisation gap (internal − external AUC) is the more honest robustness measure. The earlier claim that FedAvg's gap is 40% smaller than the centralised model's **did not replicate** after the August 2026 correctness review (see the note at the top and [`FINDINGS_LOG.md`](FINDINGS_LOG.md)).
 
 ### Number Needed to Screen (NNS)
+> Pre-correction, single-seed analysis kept for the record. It predates the fixes in `FINDINGS_LOG.md` and is not used in the ML4H submission.
 In the elderly subgroup (age ≥60, prevalence 20.24%), at the Youden-optimal threshold FedAvg achieves NNS=8.6 (sens=0.577, spec=0.672, threshold=0.656) versus XGBoost NNS=8.0 (sens=0.618, spec=0.517, threshold=0.757). At a sensitivity-prioritising threshold of 0.35, both converge to NNS=5.1.
 
 ---

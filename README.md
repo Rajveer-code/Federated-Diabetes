@@ -446,6 +446,7 @@ Raw AUC comparisons across different training sets confound data composition wit
 
 ### Number Needed to Screen (NNS)
 > Pre-correction, single-seed analysis kept for the record. It predates the fixes in `FINDINGS_LOG.md` and is not used in the ML4H submission.
+
 In the elderly subgroup (age ≥60, prevalence 20.24%), at the Youden-optimal threshold FedAvg achieves NNS=8.6 (sens=0.577, spec=0.672, threshold=0.656) versus XGBoost NNS=8.0 (sens=0.618, spec=0.517, threshold=0.757). At a sensitivity-prioritising threshold of 0.35, both converge to NNS=5.1.
 
 ---

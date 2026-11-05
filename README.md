@@ -7,11 +7,13 @@ What if hospitals could collaborate on a shared diabetes model without sharing a
 [![Flower FL](https://img.shields.io/badge/Flower-1.5%2B-blueviolet.svg)](https://flower.dev)
 [![Opacus DP](https://img.shields.io/badge/Opacus-1.4%2B-ff69b4.svg)](https://opacus.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
-[![Submitted: ML4H 2026 Findings](https://img.shields.io/badge/Submitted-ML4H%202026%20Findings-orange.svg)](https://ahli.cc/ml4h/)
+![Status: manuscript](https://img.shields.io/badge/Status-Manuscript%202026-lightgrey.svg)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21739555.svg)](https://doi.org/10.5281/zenodo.21739555)
 **Author:** Rajveer Singh Pall  
 **Affiliation:** Gyan Ganga Institute of Technology and Sciences, Jabalpur, India  
-**Paper:** *Higher AUC, Fewer Cases Flagged: Subgroup Fairness Metrics Can Reverse at the Decision Threshold in Federated Diabetes Screening*, submitted to the ML4H 2026 Findings track. It is built on the corrected 10-seed results below.
+**Paper:** *Higher AUC, Fewer Cases Flagged: Subgroup Fairness Metrics Can Reverse at the Decision Threshold in Federated Diabetes Screening*, manuscript, 2026.
+
+> **Correction (October 2026).** The BRFSS external cohort behind the tables below was rebuilt from the raw XPT files after three coding errors were found (sex, smoking scale, 2022 race; commit "fix(brfss): rebuild external cohort from raw XPT"). On the corrected cohort (`federated/results_v2/`, 10 seeds), FedAvg raises Black within-group AUC by **+0.0063** against a matched-composition centralised model, while at 20% screening capacity Black sensitivity falls by **0.0222** and the White–Black sensitivity gap widens from **0.071 to 0.091** (`xauc.json`, `clinical_translation.json`). The conclusion is unchanged: the AUC gain and the detection loss move in opposite directions. Tables below predate the correction and are kept for the record.
 **History:** an earlier full-length manuscript from this pipeline was declined by *Computer Methods and Programs in Biomedicine* (August 2026). Its three headline findings did not survive the correctness review below, and it is not being resubmitted. The "CMPB" names in scripts and folders refer to that version.
 > All commits are solely authored by Rajveer Singh Pall  
 > (verified via Insights → Contributors graph).  
@@ -470,7 +472,7 @@ In the elderly subgroup (age ≥60, prevalence 20.24%), at the Youden-optimal th
              at the Decision Threshold in Federated Diabetes Screening},
   author  = {Pall, Rajveer Singh},
   year    = {2026},
-  note    = {Submitted to the ML4H 2026 Findings track},
+  note    = {Manuscript, 2026},
   url     = {https://github.com/Rajveer-code/Federated-Diabetes}
 }
 ```
